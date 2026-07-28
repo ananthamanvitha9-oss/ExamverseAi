@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamVerse AI | Exam Table</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    /* ---- Table Styles ---- */
+    .table-wrapper {
+      overflow-x: auto; /* Makes table scroll on small screens */
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      margin-top: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse; /* Merges cell borders into one line */
+      font-size: 0.95rem;
+    }
+
+    /* <thead> — Table Head styles */
+    thead {
+      background: linear-gradient(135deg, rgba(79,140,255,0.2), rgba(111,215,255,0.1));
+    }
+
+    /* <th> — Table Header Cell styles */
+    th {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-weight: 700;
+      color: var(--primary-2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* <tbody> — Table Body styles */
+    tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(79,140,255,0.06); /* Row highlight on hover */
+    }
+
+    /* <td> — Table Data Cell styles */
+    td {
+      padding: 1rem 1.25rem;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none; /* No border on last row */
+    }
+
+    td:first-child {
+      font-weight: 700;
+      color: var(--text); /* Exam name in bright white */
+    }
+
+    /* <tfoot> — Table Footer styles */
+    tfoot td {
+      background: rgba(255,255,255,0.02);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-style: italic;
+      border-top: 1px solid var(--border);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .badge-blue  { background: rgba(79,140,255,0.15); color: #6fd7ff; }
+    .badge-green { background: rgba(126,231,135,0.15); color: #7ee787; }
+    .badge-amber { background: rgba(255,200,97,0.15);  color: #ffc861; }
+
+    .tag-box {
+      display: inline-block;
+      background: rgba(79, 140, 255, 0.12);
+      border: 1px solid rgba(79, 140, 255, 0.25);
+      border-radius: 6px;
+      padding: 0.2rem 0.6rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--primary-2);
+      margin: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="header">
+    <div class="container nav">
+      <a href="./index.html">
+        <img src="./images/logo.jpg" alt="ExamVerse AI" width="180" height="45"
+          style="border-radius:6px; vertical-align:middle;">
+      </a>
+      <nav class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./courses.html">Courses</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="container" style="padding: 4rem 0; max-width: 860px;">
+
+    <p class="eyebrow" style="display:block; margin-bottom:0.5rem;">Module 7</p>
+    <h1 style="margin-bottom: 0.5rem;">HTML Tables</h1>
+    <p class="lead" style="margin-bottom: 3rem;">
+      The <span class="tag-box">&lt;table&gt;</span> element organises data into rows and columns. Learn the anatomy: <span class="tag-box">&lt;thead&gt;</span> <span class="tag-box">&lt;tbody&gt;</span> <span class="tag-box">&lt;tfoot&gt;</span> <span class="tag-box">&lt;tr&gt;</span> <span class="tag-box">&lt;th&gt;</span> <span class="tag-box">&lt;td&gt;</span>
+    </p>
+
+    <!-- ---- Tag Reference Card ---- -->
+    <section class="card" style="margin-bottom: 2.5rem;">
+      <h2 style="color:var(--primary-2); margin-bottom:1.25rem;">Table Tags Explained</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Tag</th>
+              <th>Full Name</th>
+              <th>What It Does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tag-box">&lt;table&gt;</span></td>
+              <td>Table</td>
+              <td>The root wrapper for the entire table structure.</td>
+            </tr>
+            <tr>
+              <td><span class="tag-box">&lt;thead&gt;</span></td>
+              <td>Table Head</td>
+              <td>Groups the header row(s). Typically contains column labels.</td>
+            </tr>
+            <tr>
+              <td><span class="tag-box">&lt;tbody&gt;</span></td>
+              <td>Table Body</td>
+              <td>Groups the main data rows of the table.</td>
+            </tr>
+            <tr>
+              <td><span class="tag-box">&lt;tfoot&gt;</span></td>
+              <td>Table Footer</td>
+              <td>Groups footer rows — used for totals, summaries, or notes.</td>
+            </tr>
+            <tr>
+              <td><span class="tag-box">&lt;tr&gt;</span></td>
+              <td>Table Row</td>
+              <td>Defines a single horizontal row inside thead, tbody, or tfoot.</td>
+            </tr>
+            <tr>
+              <td><span class="tag-box">&lt;th&gt;</span></td>
+              <td>Table Header Cell</td>
+              <td>A header cell — bold by default. Tells the browser this is a column label.</td>
+            </tr>
+            <tr>
+              <td><span class="tag-box">&lt;td&gt;</span></td>
+              <td>Table Data Cell</td>
+              <td>A regular data cell — holds the actual data value in a row.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---- Main Exam Table ---- -->
+    <section class="card">
+      <h2 style="color:var(--primary-2); margin-bottom: 0.5rem;">ExamVerse AI — Course Overview</h2>
+      <p style="color:var(--muted); margin-bottom: 0;">
+        All available preparation tracks offered by ExamVerse AI.
+      </p>
+
+      <div class="table-wrapper">
+        <!--
+          <table>          Root element
+            <thead>        Header section
+              <tr>         Header row
+                <th>       Header cell (column label)
+            <tbody>        Data section
+              <tr>         Data row
+                <td>       Data cell
+            <tfoot>        Footer section
+        -->
+        <table>
+
+          <!-- Table Header -->
+          <thead>
+            <tr>
+              <th>Exam</th>
+              <th>Subjects</th>
+              <th>Duration</th>
+              <th>Difficulty</th>
+              <th>Enroll</th>
+            </tr>
+          </thead>
+
+          <!-- Table Body — main data rows -->
+          <tbody>
+            <tr>
+              <td>UPSC</td>
+              <td>9</td>
+              <td>12 Months</td>
+              <td><span class="badge badge-blue">Very High</span></td>
+              <td><a href="./register.html" class="btn btn-primary" style="padding:0.4rem 0.9rem; font-size:0.82rem;">Enroll</a></td>
+            </tr>
+            <tr>
+              <td>SSC</td>
+              <td>6</td>
+              <td>6 Months</td>
+              <td><span class="badge badge-amber">High</span></td>
+              <td><a href="./register.html" class="btn btn-primary" style="padding:0.4rem 0.9rem; font-size:0.82rem;">Enroll</a></td>
+            </tr>
+            <tr>
+              <td>Banking</td>
+              <td>5</td>
+              <td>5 Months</td>
+              <td><span class="badge badge-amber">High</span></td>
+              <td><a href="./register.html" class="btn btn-primary" style="padding:0.4rem 0.9rem; font-size:0.82rem;">Enroll</a></td>
+            </tr>
+            <tr>
+              <td>Railways</td>
+              <td>4</td>
+              <td>4 Months</td>
+              <td><span class="badge badge-green">Moderate</span></td>
+              <td><a href="./register.html" class="btn btn-primary" style="padding:0.4rem 0.9rem; font-size:0.82rem;">Enroll</a></td>
+            </tr>
+            <tr>
+              <td>JEE</td>
+              <td>3</td>
+              <td>12 Months</td>
+              <td><span class="badge badge-blue">Very High</span></td>
+              <td><a href="./register.html" class="btn btn-primary" style="padding:0.4rem 0.9rem; font-size:0.82rem;">Enroll</a></td>
+            </tr>
+            <tr>
+              <td>NEET</td>
+              <td>3</td>
+              <td>12 Months</td>
+              <td><span class="badge badge-blue">Very High</span></td>
+              <td><a href="./register.html" class="btn btn-primary" style="padding:0.4rem 0.9rem; font-size:0.82rem;">Enroll</a></td>
+            </tr>
+          </tbody>
+
+          <!-- Table Footer — summary row -->
+          <tfoot>
+            <tr>
+              <td colspan="5">
+                * All durations are estimated preparation timelines. Individual results may vary based on study hours.
+              </td>
+            </tr>
+          </tfoot>
+
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> ExamVerse AI. HTML Tables Practice.</p>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
