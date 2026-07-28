@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamVerse AI | HTML Element Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container nav">
+      <a href="./index.html" class="brand">ExamVerse AI</a>
+      <nav class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./practice.html" style="color: var(--text);">Practice</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Element Showcase -->
+  <main class="container" style="padding: 4rem 0; max-width: 800px;">
+    <!-- Comment Demonstration: The following section demonstrates headings from H1 to H6 -->
+    <section class="card" style="margin-bottom: 2.5rem;">
+      <h2 style="color: var(--primary-2); margin-bottom: 1.5rem;">1. Heading Elements (h1 - h6)</h2>
+      <h1>Heading 1 (Main Title)</h1>
+      <h2>Heading 2 (Sub-section)</h2>
+      <h3>Heading 3 (Topic Header)</h3>
+      <h4>Heading 4 (Sub-topic Header)</h4>
+      <h5>Heading 5 (Minor Header)</h5>
+      <h6>Heading 6 (Micro Header)</h6>
+    </section>
+
+    <!-- Horizontal Rule Demonstration -->
+    <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+    <section class="card">
+      <h2 style="color: var(--primary-2); margin-bottom: 1.5rem;">2. Formatting Elements</h2>
+      
+      <p style="margin-bottom: 1.25rem;">
+        This is a standard <strong>Paragraph (p)</strong> element.<br>
+        Using a <strong>Line Break (br)</strong> tag breaks this paragraph onto a new line without adding margins.
+      </p>
+
+      <p style="margin-bottom: 1.25rem;">
+        We can apply text emphasizing styles:
+        this text is <strong>Strongly Bolded (strong)</strong>, and this text is <em>Emphasized / Italicized (em)</em>.
+      </p>
+
+      <p style="margin-bottom: 0;">
+        We also support scientific notations:
+        - Superscript: 2<sup>10</sup> = 1024 <br>
+        - Subscript: Water is represented as H<sub>2</sub>O.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> ExamVerse AI. HTML Element Practice Page.</p>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
