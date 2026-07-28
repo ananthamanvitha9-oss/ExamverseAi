@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamVerse AI | Image Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    .image-demo-section {
+      margin-bottom: 2.5rem;
+    }
+    .image-demo-section h3 {
+      color: var(--primary-2);
+      margin-bottom: 0.5rem;
+    }
+    .image-demo-section p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .code-tag {
+      display: inline-block;
+      background: rgba(79, 140, 255, 0.12);
+      border: 1px solid rgba(79, 140, 255, 0.25);
+      border-radius: 6px;
+      padding: 0.2rem 0.6rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--primary-2);
+      margin: 0.2rem;
+    }
+    .img-wrapper {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: inline-block;
+    }
+    .attr-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin-top: 1rem;
+    }
+    .attr-table th {
+      background: rgba(79,140,255,0.1);
+      color: var(--primary-2);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .attr-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    .attr-table td:first-child {
+      color: var(--primary-2);
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+    .attr-table tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="header">
+    <div class="container nav">
+      <!-- Logo using <img> tag — with alt, width, height attributes -->
+      <a href="./index.html">
+        <img
+          src="./images/logo.jpg"
+          alt="ExamVerse AI - Home"
+          width="200"
+          height="50"
+          style="border-radius: 6px; vertical-align: middle;"
+        >
+      </a>
+      <nav class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./courses.html">Courses</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="container" style="padding: 4rem 0; max-width: 820px;">
+
+    <p class="eyebrow" style="display: block; margin-bottom: 0.5rem;">Module 6</p>
+    <h1 style="margin-bottom: 0.5rem;">HTML Image Element</h1>
+    <p class="lead" style="margin-bottom: 3rem;">
+      Everything you need to know about using images in HTML — the <span class="code-tag">&lt;img&gt;</span> tag and its key attributes.
+    </p>
+
+    <!-- ---- Attributes Table ---- -->
+    <section class="card image-demo-section">
+      <h3>Key Attributes of &lt;img&gt;</h3>
+      <table class="attr-table">
+        <thead>
+          <tr>
+            <th>Attribute</th>
+            <th>What it does</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>src</td>
+            <td>The path or URL of the image to display. Without this, no image is shown.</td>
+            <td><span class="code-tag">src="./images/logo.jpg"</span></td>
+          </tr>
+          <tr>
+            <td>alt</td>
+            <td>Alternative text shown when the image cannot load. Critical for accessibility (screen readers) and SEO.</td>
+            <td><span class="code-tag">alt="ExamVerse AI Logo"</span></td>
+          </tr>
+          <tr>
+            <td>width</td>
+            <td>Sets the display width of the image in pixels. Prevents layout shift while image loads.</td>
+            <td><span class="code-tag">width="200"</span></td>
+          </tr>
+          <tr>
+            <td>height</td>
+            <td>Sets the display height of the image in pixels. Use both width and height together to avoid content jumping on page load.</td>
+            <td><span class="code-tag">height="50"</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ---- Example 1: Logo full size ---- -->
+    <section class="card image-demo-section">
+      <h3>Example 1 — Full Size Logo (natural width)</h3>
+      <p>No width/height set — uses the image's natural pixel dimensions.</p>
+      <div class="img-wrapper">
+        <img src="./images/logo.jpg" alt="ExamVerse AI Logo — Full Size">
+      </div>
+    </section>
+
+    <!-- ---- Example 2: Resized with width & height ---- -->
+    <section class="card image-demo-section">
+      <h3>Example 2 — Resized with width="300" height="75"</h3>
+      <p>Setting explicit pixel dimensions scales the image in the browser.</p>
+      <div class="img-wrapper">
+        <img
+          src="./images/logo.jpg"
+          alt="ExamVerse AI Logo — Resized to 300x75"
+          width="300"
+          height="75"
+        >
+      </div>
+    </section>
+
+    <!-- ---- Example 3: Thumbnail ---- -->
+    <section class="card image-demo-section">
+      <h3>Example 3 — Thumbnail (width="100" height="25")</h3>
+      <p>The same image, shrunk to thumbnail size. The <span class="code-tag">alt</span> text remains important — if the image fails, browsers show the alt text instead.</p>
+      <div class="img-wrapper">
+        <img
+          src="./images/logo.jpg"
+          alt="ExamVerse AI Logo — Thumbnail"
+          width="100"
+          height="25"
+        >
+      </div>
+    </section>
+
+    <!-- ---- Example 4: Broken image fallback (alt attribute) ---- -->
+    <section class="card image-demo-section">
+      <h3>Example 4 — Broken Image (alt fallback in action)</h3>
+      <p>This image path is intentionally wrong. The browser shows the <span class="code-tag">alt</span> text as a fallback.</p>
+      <div class="img-wrapper">
+        <img
+          src="./images/this-does-not-exist.jpg"
+          alt="[Image could not be loaded — ExamVerse AI]"
+          width="300"
+          height="75"
+        >
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> ExamVerse AI. Image Element Practice.</p>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
