@@ -8,67 +8,437 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    /* ---- Form Layout ---- */
+    .register-wrapper {
+      max-width: 600px;
+      margin: 4rem auto;
+      padding: 2.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .register-wrapper h2 {
+      font-size: 1.9rem;
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+
+    .register-wrapper .subtitle {
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    /* Two-column grid for some fields */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    /* Span full width inside the grid */
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    /* Labels */
+    .form-group label {
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* All input / select / textarea */
+    .form-group input,
+    .form-group select {
+      padding: 0.85rem 1.1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2);
+    }
+
+    /* select dropdown option colour */
+    .form-group select option {
+      background: #0f1d31;
+      color: var(--text);
+    }
+
+    /* Radio Buttons — Gender */
+    .radio-group {
+      display: flex;
+      gap: 1.25rem;
+      padding: 0.6rem 0;
+      flex-wrap: wrap;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .radio-group input[type="radio"] {
+      accent-color: var(--primary);
+      width: 1rem;
+      height: 1rem;
+      cursor: pointer;
+    }
+
+    /* Divider */
+    .form-divider {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 1.75rem 0;
+    }
+
+    /* Section heading inside the form */
+    .form-section-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary-2);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    /* Submit Button */
+    .btn-submit-full {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Success/Error message */
+    .form-message {
+      padding: 1rem 1.25rem;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-top: 1.25rem;
+      text-align: center;
+    }
+    .form-message.success {
+      background: rgba(126, 231, 135, 0.1);
+      border: 1px solid rgba(126, 231, 135, 0.3);
+      color: #a7f3d0;
+    }
+    .form-message.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+    .hidden { display: none; }
+
+    /* Footer link */
+    .form-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .form-footer a {
+      color: var(--primary-2);
+      text-decoration: none;
+    }
+    .form-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .register-wrapper { padding: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- ===================== NAVBAR ===================== -->
   <header class="header">
     <div class="container nav">
-      <a href="./index.html" class="brand">ExamVerse AI</a>
+      <a href="./index.html">
+        <img src="./images/logo.jpg" alt="ExamVerse AI" width="180" height="45"
+          style="border-radius:6px; vertical-align:middle;">
+      </a>
       <nav class="nav-links">
         <a href="./index.html">Home</a>
         <a href="./about.html">About</a>
+        <a href="./courses.html">Courses</a>
         <a href="./contact.html">Contact</a>
         <a href="./login.html" class="btn btn-secondary">Login</a>
-        <a href="./register.html" class="btn btn-primary" style="box-shadow: 0 0 10px var(--primary);">Register</a>
+        <a href="./register.html" class="btn btn-primary"
+          style="box-shadow: 0 0 12px rgba(79,140,255,0.4);">Register</a>
       </nav>
     </div>
   </header>
 
+  <!-- ===================== MAIN CONTENT ===================== -->
   <main class="container">
-    <div class="form-container">
-      <h2>Create Account</h2>
-      <p class="subtitle">Join ExamVerse AI waitlist & platform registration</p>
+    <div class="register-wrapper">
 
-      <form id="register-form">
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" required placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" required placeholder="name@example.com">
-        </div>
-        <div class="form-group">
-          <label for="exam">Target Exam</label>
-          <select id="exam" required>
-            <option value="" disabled selected>Select Target Exam</option>
-            <option value="UPSC">UPSC Civil Services</option>
-            <option value="JEE">JEE Main & Advanced</option>
-            <option value="NEET">NEET UG</option>
-            <option value="SSC">SSC CGL</option>
-            <option value="CAT">CAT (Management)</option>
-            <option value="Other">Other Exam</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" required placeholder="••••••••">
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Create Account</button>
-      </form>
-      <div id="form-message" class="form-message hidden" style="margin-top: 1rem; text-align: center;"></div>
-      
+      <h2>Create Your Account</h2>
+      <p class="subtitle">Join ExamVerse AI and start your exam preparation journey today.</p>
+
+      <!-- ================ REGISTRATION FORM ================ -->
+      <!--
+        <form>     — Root container for all input fields
+        action     — Where to send the form data (URL)
+        method     — How to send data: GET or POST
+      -->
+      <form id="register-form" action="#" method="POST" novalidate>
+
+        <!-- ---- Section 1: Personal Info ---- -->
+        <p class="form-section-title">Personal Information</p>
+        <div class="form-grid">
+
+          <!-- NAME — type="text" for plain text input -->
+          <div class="form-group full">
+            <label for="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="e.g. Rajesh Kumar"
+              required
+              autocomplete="name"
+            >
+          </div>
+
+          <!-- EMAIL — type="email" auto-validates email format -->
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@example.com"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <!-- PHONE — type="tel" for telephone numbers -->
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="e.g. 9876543210"
+              pattern="[0-9]{10}"
+              maxlength="10"
+              required
+            >
+          </div>
+
+          <!-- DATE OF BIRTH — type="date" gives a calendar picker -->
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input
+              type="date"
+              id="dob"
+              name="dob"
+              max="2008-12-31"
+              required
+            >
+          </div>
+
+          <!-- GENDER — type="radio" for mutually exclusive choices -->
+          <div class="form-group">
+            <label>Gender</label>
+            <div class="radio-group">
+              <label>
+                <input type="radio" name="gender" value="male" required> Male
+              </label>
+              <label>
+                <input type="radio" name="gender" value="female"> Female
+              </label>
+              <label>
+                <input type="radio" name="gender" value="other"> Other
+              </label>
+            </div>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <hr class="form-divider">
+
+        <!-- ---- Section 2: Location & Preferences ---- -->
+        <p class="form-section-title">Location &amp; Preferences</p>
+        <div class="form-grid">
+
+          <!-- STATE — <select> gives a dropdown list -->
+          <div class="form-group">
+            <label for="state">State</label>
+            <select id="state" name="state" required>
+              <option value="" disabled selected>Select your state</option>
+              <option value="AP">Andhra Pradesh</option>
+              <option value="AR">Arunachal Pradesh</option>
+              <option value="AS">Assam</option>
+              <option value="BR">Bihar</option>
+              <option value="CG">Chhattisgarh</option>
+              <option value="DL">Delhi</option>
+              <option value="GA">Goa</option>
+              <option value="GJ">Gujarat</option>
+              <option value="HR">Haryana</option>
+              <option value="HP">Himachal Pradesh</option>
+              <option value="JH">Jharkhand</option>
+              <option value="KA">Karnataka</option>
+              <option value="KL">Kerala</option>
+              <option value="MP">Madhya Pradesh</option>
+              <option value="MH">Maharashtra</option>
+              <option value="MN">Manipur</option>
+              <option value="ML">Meghalaya</option>
+              <option value="MZ">Mizoram</option>
+              <option value="NL">Nagaland</option>
+              <option value="OD">Odisha</option>
+              <option value="PB">Punjab</option>
+              <option value="RJ">Rajasthan</option>
+              <option value="SK">Sikkim</option>
+              <option value="TN">Tamil Nadu</option>
+              <option value="TG">Telangana</option>
+              <option value="TR">Tripura</option>
+              <option value="UP">Uttar Pradesh</option>
+              <option value="UK">Uttarakhand</option>
+              <option value="WB">West Bengal</option>
+            </select>
+          </div>
+
+          <!-- LANGUAGE — another <select> dropdown -->
+          <div class="form-group">
+            <label for="language">Preferred Language</label>
+            <select id="language" name="language" required>
+              <option value="" disabled selected>Select language</option>
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="te">Telugu</option>
+              <option value="ta">Tamil</option>
+              <option value="mr">Marathi</option>
+              <option value="bn">Bengali</option>
+              <option value="gu">Gujarati</option>
+              <option value="kn">Kannada</option>
+              <option value="ml">Malayalam</option>
+              <option value="pa">Punjabi</option>
+            </select>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <hr class="form-divider">
+
+        <!-- ---- Section 3: Security ---- -->
+        <p class="form-section-title">Account Security</p>
+        <div class="form-grid">
+
+          <!-- PASSWORD — type="password" hides characters -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Min. 8 characters"
+              minlength="8"
+              required
+              autocomplete="new-password"
+            >
+          </div>
+
+          <!-- CONFIRM PASSWORD — must match password -->
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm_password"
+              placeholder="Re-enter your password"
+              minlength="8"
+              required
+              autocomplete="new-password"
+            >
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <!-- SUBMIT BUTTON — type="submit" sends the form -->
+        <button type="submit" id="submit-btn" class="btn btn-primary btn-submit-full">
+          Create My Account
+        </button>
+
+      </form><!-- /register-form -->
+
+      <!-- Feedback message area -->
+      <div id="form-message" class="form-message hidden"></div>
+
       <div class="form-footer">
         Already have an account? <a href="./login.html">Log in here</a>
       </div>
-    </div>
+
+    </div><!-- /register-wrapper -->
   </main>
 
+  <!-- ===================== FOOTER ===================== -->
   <footer class="footer">
     <div class="container">
-      <p>© <span id="year"></span> ExamVerse AI. All rights reserved. Built for competitive exam learners.</p>
+      <p>© <span id="year"></span> ExamVerse AI. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="./js/script.js"></script>
+  <!-- ===================== SCRIPT ===================== -->
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('register-form');
+    const messageBox = document.getElementById('form-message');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); // Stop browser from reloading
+
+      const name     = document.getElementById('name').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm  = document.getElementById('confirm-password').value;
+
+      // Validation: Passwords must match
+      if (password !== confirm) {
+        messageBox.textContent = '❌ Passwords do not match. Please re-enter them.';
+        messageBox.className = 'form-message error';
+        return;
+      }
+
+      // Success feedback
+      messageBox.textContent = `✅ Account created successfully for ${name}! Please log in.`;
+      messageBox.className = 'form-message success';
+      form.reset();
+    });
+  </script>
+
 </body>
 </html>
