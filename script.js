@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         testsContainer.innerHTML = '';
         tests.forEach(test => {
-          const card = document.createElement('div');
+          const card = document.createElement('article');
           card.className = 'test-card';
           
           card.innerHTML = `
@@ -146,7 +146,7 @@ function renderFallbackTests(container) {
   container.appendChild(infoHeader);
 
   fallbackTests.forEach(test => {
-    const card = document.createElement('div');
+    const card = document.createElement('article');
     card.className = 'test-card';
     card.innerHTML = `
       <div>

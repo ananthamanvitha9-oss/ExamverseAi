@@ -1,0 +1,44 @@
+/* ==========================================
+   ExamVerse AI - CSS Custom Properties (Variables)
+   ========================================== */
+
+:root {
+  /* Color Tokens */
+  --bg: #07111f;
+  --surface: #0f1d31;
+  --surface-2: #14263f;
+  --surface-card: rgba(255, 255, 255, 0.04);
+  --text: #f5f7fb;
+  --muted: #9fb0c9;
+  --primary: #4f8cff;
+  --primary-2: #6fd7ff;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-focus: rgba(79, 140, 255, 0.5);
+  
+  /* Status Colors */
+  --success: #7ee787;
+  --success-bg: rgba(126, 231, 135, 0.1);
+  --error: #fca5a5;
+  --error-bg: rgba(239, 68, 68, 0.1);
+  --warning: #ffc861;
+  --warning-bg: rgba(255, 200, 97, 0.15);
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Courier New', monospace;
+
+  /* Elevation & Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.35);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}

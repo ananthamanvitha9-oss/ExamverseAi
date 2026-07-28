@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 3: CSS Box Model | ExamVerse AI</title>
+  <meta name="description" content="Learn the CSS Box Model: content, padding, border, and margin with interactive examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    /* ================================================
+       STEP 3: CSS BOX MODEL — CONCEPT STYLES
+       Every element is a rectangular box made of:
+         1. Content  — the actual text/image
+         2. Padding  — space INSIDE the border
+         3. Border   — the visible edge line
+         4. Margin   — space OUTSIDE the border
+       ================================================ */
+
+    .page-hero {
+      padding: 5rem 0 3rem;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 1rem;
+    }
+
+    .page-hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    /* ── Box Model Diagram ─────────────────────────── */
+    .diagram-section {
+      margin: 3rem 0;
+    }
+
+    .diagram-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.6rem;
+    }
+
+    /* The visual box-model diagram built with CSS only */
+    .box-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .diagram-visual {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      /* MARGIN layer — outermost */
+      padding: 2.5rem;
+      background: rgba(255, 200, 97, 0.08);
+      border: 2px dashed rgba(255, 200, 97, 0.5);
+      border-radius: 1rem;
+    }
+
+    .diagram-visual::before {
+      content: 'MARGIN';
+      position: absolute;
+      top: 0.4rem;
+      left: 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--warning);
+      letter-spacing: 0.1em;
+    }
+
+    /* BORDER layer */
+    .diagram-border {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      border: 3px solid rgba(79, 140, 255, 0.7);
+      border-radius: 0.7rem;
+      background: rgba(79, 140, 255, 0.06);
+      position: relative;
+    }
+
+    .diagram-border::before {
+      content: 'BORDER';
+      position: absolute;
+      top: -0.85rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary-2);
+      letter-spacing: 0.1em;
+      background: var(--bg);
+      padding: 0 0.4rem;
+    }
+
+    /* PADDING layer */
+    .diagram-padding {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(126, 231, 135, 0.08);
+      border: 2px dashed rgba(126, 231, 135, 0.4);
+      border-radius: 0.4rem;
+      position: relative;
+    }
+
+    .diagram-padding::before {
+      content: 'PADDING';
+      position: absolute;
+      bottom: -0.85rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--success);
+      letter-spacing: 0.1em;
+      background: var(--bg);
+      padding: 0 0.4rem;
+    }
+
+    /* CONTENT box */
+    .diagram-content {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #04111f;
+      padding: 1rem 1.5rem;
+      border-radius: 0.3rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    /* Diagram legend */
+    .diagram-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.95rem;
+    }
+
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .legend-dot.content  { background: var(--primary); }
+    .legend-dot.padding  { background: var(--success); opacity: 0.7; }
+    .legend-dot.border   { background: var(--primary-2); }
+    .legend-dot.margin   { background: var(--warning); opacity: 0.7; }
+
+    .legend-item strong  { color: var(--text); }
+    .legend-item span    { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── Code Snippet Block ────────────────────────── */
+    .code-section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin: 3rem 0;
+    }
+
+    .code-section h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #c9d1d9;
+    }
+
+    .c-comment  { color: #6a9955; }
+    .c-property { color: #9cdcfe; }
+    .c-value    { color: #ce9178; }
+    .c-selector { color: #4ec9b0; }
+
+    /* ── Practice: 3 Cards with Different Spacing ─── */
+    .practice-section {
+      margin: 4rem 0;
+    }
+
+    .practice-section > h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.6rem;
+    }
+
+    .practice-section > p {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .cards-demo {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* --- Card A: Compact spacing (small padding, medium border, small margin) --- */
+    .card-a {
+      /* content width is determined by text inside */
+      width: 280px;
+
+      /* PADDING — small inner breathing room */
+      padding: 1rem;            /* 16px on all sides */
+
+      /* BORDER — thick, accent coloured */
+      border: 3px solid var(--primary-2);
+      border-radius: 0.75rem;
+
+      /* MARGIN — small gap between cards */
+      margin: 0.5rem;
+
+      background: rgba(111, 215, 255, 0.04);
+      position: relative;
+    }
+
+    /* --- Card B: Comfortable spacing (generous padding, thin border, large margin) --- */
+    .card-b {
+      width: 280px;
+
+      /* PADDING — generous inner space feels premium */
+      padding: 2rem 2.5rem;     /* 32px top/bottom, 40px left/right */
+
+      /* BORDER — thin subtle border */
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+
+      /* MARGIN — larger gap pushes away from other cards */
+      margin: 1.5rem;
+
+      background: rgba(255, 255, 255, 0.04);
+      position: relative;
+    }
+
+    /* --- Card C: Asymmetric spacing (shows padding can be set per side) --- */
+    .card-c {
+      width: 280px;
+
+      /* PADDING — different values per side: top right bottom left */
+      padding: 0.5rem 1.5rem 2rem 1rem;
+
+      /* BORDER — only bottom and left border (accent effect) */
+      border: none;
+      border-left: 4px solid var(--primary);
+      border-bottom: 4px solid var(--primary-2);
+      border-radius: 0 1rem 0 0;
+
+      /* MARGIN — auto on left pushes card right */
+      margin: 0;
+
+      background: rgba(79, 140, 255, 0.06);
+      position: relative;
+    }
+
+    /* Spacing labels that appear on the cards */
+    .spacing-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      margin-bottom: 0.8rem;
+    }
+
+    .tag-blue   { background: rgba(79,140,255,0.15); color: var(--primary-2); border: 1px solid rgba(79,140,255,0.3); }
+    .tag-green  { background: rgba(126,231,135,0.12); color: var(--success); border: 1px solid rgba(126,231,135,0.3); }
+    .tag-yellow { background: rgba(255,200,97,0.12); color: var(--warning); border: 1px solid rgba(255,200,97,0.3); }
+
+    .demo-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    /* Visual padding indicator strips */
+    .padding-indicator {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+    }
+
+    .padding-indicator code {
+      font-family: 'Courier New', monospace;
+      color: var(--primary-2);
+      font-size: 0.8rem;
+    }
+
+    /* ── Concept Notes ─────────────────────────────── */
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 3rem 0;
+    }
+
+    .note-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .note-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    .note-card.content-card::before { background: var(--primary); }
+    .note-card.padding-card::before  { background: var(--success); }
+    .note-card.border-card::before   { background: var(--primary-2); }
+    .note-card.margin-card::before   { background: var(--warning); }
+
+    .note-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .note-card p  { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+    .note-card .prop-example {
+      margin-top: 0.8rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--primary-2);
+      background: rgba(0,0,0,0.3);
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.4rem;
+    }
+
+    /* ── Interview Q ───────────────────────────────── */
+    .interview-box {
+      background: rgba(255, 200, 97, 0.06);
+      border: 1px solid rgba(255, 200, 97, 0.25);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin: 3rem 0;
+    }
+
+    .interview-box h3 {
+      color: var(--warning);
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .interview-box p {
+      color: var(--text);
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+
+    .interview-box details summary {
+      cursor: pointer;
+      color: var(--primary-2);
+      font-weight: 600;
+      font-size: 0.9rem;
+      list-style: none;
+      padding: 0.5rem 0;
+    }
+
+    .interview-box details[open] summary::after {
+      content: ' ↑ Hide Answer';
+    }
+
+    .interview-box details summary::after {
+      content: ' → Show Answer';
+    }
+
+    .interview-box details p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 0.8rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.2);
+      border-radius: 0.5rem;
+    }
+
+    /* ── Breadcrumb nav ────────────────────────────── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding: 1rem 0;
+    }
+
+    .breadcrumb a { color: var(--primary-2); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* Features grid fix */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav">
+      <a href="./index.html">
+        <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="180" height="45" style="border-radius:6px; vertical-align:middle;">
+      </a>
+      <nav class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./courses.html">Courses</a>
+        <a href="./boxmodel.html" style="color: var(--text);">Box Model</a>
+        <a href="./flexbox.html">Flexbox</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Start Learning</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="./index.html">Home</a>
+        <span>›</span>
+        <a href="#">CSS Module</a>
+        <span>›</span>
+        <span>Step 3 — Box Model</span>
+      </nav>
+
+      <!-- Page Hero -->
+      <section class="page-hero">
+        <p class="eyebrow">CSS Module — Step 3</p>
+        <h1>The CSS Box Model</h1>
+        <p>Every HTML element is a rectangular box. Understanding its four layers — Content, Padding, Border, and Margin — is the foundation of all CSS layout.</p>
+        <div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;">
+          <span class="spacing-tag tag-blue">Content</span>
+          <span class="spacing-tag tag-green">Padding</span>
+          <span class="spacing-tag tag-blue">Border</span>
+          <span class="spacing-tag tag-yellow">Margin</span>
+        </div>
+      </section>
+
+      <!-- Visual Diagram -->
+      <section class="diagram-section">
+        <h2>Visual Diagram</h2>
+        <div class="box-diagram">
+
+          <!-- CSS-only box model diagram -->
+          <div class="diagram-visual">
+            <div class="diagram-border">
+              <div class="diagram-padding">
+                <div class="diagram-content">CONTENT</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legend -->
+          <div class="diagram-legend">
+            <div class="legend-item">
+              <div class="legend-dot content"></div>
+              <div>
+                <strong>Content</strong><br>
+                <span>The actual text, image, or element inside</span>
+              </div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot padding"></div>
+              <div>
+                <strong>Padding</strong><br>
+                <span>Space between content and border (inside)</span>
+              </div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot border"></div>
+              <div>
+                <strong>Border</strong><br>
+                <span>The visible edge line around the element</span>
+              </div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot margin"></div>
+              <div>
+                <strong>Margin</strong><br>
+                <span>Space outside the border (between elements)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Concept Notes -->
+      <section>
+        <h2 style="margin-bottom:1.5rem; font-size:1.6rem;">The Four Layers Explained</h2>
+        <div class="notes-grid">
+
+          <article class="note-card content-card">
+            <h3>📦 Content</h3>
+            <p>The innermost area where text, images, or child elements live. Its size is set with <code>width</code> and <code>height</code>.</p>
+            <div class="prop-example">width: 300px;<br>height: auto;</div>
+          </article>
+
+          <article class="note-card padding-card">
+            <h3>🟩 Padding</h3>
+            <p>Transparent space between the content and the border. Makes the element feel airy and readable. Padding is always inside the border.</p>
+            <div class="prop-example">padding: 1rem;<br>padding: 1rem 2rem;<br>padding-top: 0.5rem;</div>
+          </article>
+
+          <article class="note-card border-card">
+            <h3>🔷 Border</h3>
+            <p>A visible (or invisible) line wrapping around the padding. Defined by width, style, and color. A border adds to the total element size.</p>
+            <div class="prop-example">border: 2px solid #fff;<br>border-radius: 12px;<br>border-left: 4px solid blue;</div>
+          </article>
+
+          <article class="note-card margin-card">
+            <h3>🟡 Margin</h3>
+            <p>Transparent space outside the border, pushing other elements away. Margins of adjacent elements can <em>collapse</em> into one.</p>
+            <div class="prop-example">margin: 1rem auto;<br>margin-bottom: 2rem;<br>margin: 0;</div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Code Snippet -->
+      <section class="code-section">
+        <h2>📝 CSS Syntax</h2>
+        <pre><span class="c-comment">/* Box Model shorthand: TOP  RIGHT  BOTTOM  LEFT (clockwise) */</span>
+
+<span class="c-selector">.card</span> {
+  <span class="c-comment">/* Width of the content area */</span>
+  <span class="c-property">width</span>: <span class="c-value">300px</span>;
+
+  <span class="c-comment">/* Padding: same on all 4 sides */</span>
+  <span class="c-property">padding</span>: <span class="c-value">1.5rem</span>;
+
+  <span class="c-comment">/* Padding: top/bottom  left/right (2 values) */</span>
+  <span class="c-property">padding</span>: <span class="c-value">1rem 2rem</span>;
+
+  <span class="c-comment">/* Padding: top  right  bottom  left (4 values) */</span>
+  <span class="c-property">padding</span>: <span class="c-value">0.5rem 1.5rem 2rem 1rem</span>;
+
+  <span class="c-comment">/* Border: size  style  color */</span>
+  <span class="c-property">border</span>: <span class="c-value">2px solid rgba(79, 140, 255, 0.5)</span>;
+  <span class="c-property">border-radius</span>: <span class="c-value">12px</span>;
+
+  <span class="c-comment">/* Margin: auto horizontally = centered in parent */</span>
+  <span class="c-property">margin</span>: <span class="c-value">1rem auto</span>;
+}
+
+<span class="c-comment">/* box-sizing: border-box — padding + border are INCLUDED in width */</span>
+<span class="c-comment">/* (This is set globally in style.css with * { box-sizing: border-box; }) */</span>
+<span class="c-selector">*</span> {
+  <span class="c-property">box-sizing</span>: <span class="c-value">border-box</span>;
+}</pre>
+      </section>
+
+      <!-- PRACTICE: 3 Cards with Different Spacing -->
+      <section class="practice-section">
+        <h2>🧪 Practice: 3 Cards with Different Spacing</h2>
+        <p>Same HTML structure, different CSS box model values — notice how spacing changes the feel entirely.</p>
+
+        <div class="cards-demo">
+
+          <!-- Card A: Compact -->
+          <article class="card card-a demo-card">
+            <span class="spacing-tag tag-blue">Card A — Compact</span>
+            <h3>Small Padding</h3>
+            <p>Tight spacing works well for dense data-heavy UIs like tables or dashboards where space is at a premium.</p>
+            <div class="padding-indicator">
+              <code>padding: 1rem</code> · <code>border: 3px solid</code> · <code>margin: 0.5rem</code>
+            </div>
+          </article>
+
+          <!-- Card B: Comfortable -->
+          <article class="card card-b demo-card">
+            <span class="spacing-tag tag-green">Card B — Comfortable</span>
+            <h3>Generous Padding</h3>
+            <p>More breathing room makes content easier to read and gives a premium feel — great for feature cards and landing pages.</p>
+            <div class="padding-indicator">
+              <code>padding: 2rem 2.5rem</code> · <code>border: 1px solid</code> · <code>margin: 1.5rem</code>
+            </div>
+          </article>
+
+          <!-- Card C: Asymmetric -->
+          <article class="card card-c demo-card">
+            <span class="spacing-tag tag-yellow">Card C — Asymmetric</span>
+            <h3>Different Per Side</h3>
+            <p>Padding and border can be set individually for each side — useful for accent effects, highlights, and creative layouts.</p>
+            <div class="padding-indicator">
+              <code>padding: 0.5rem 1.5rem 2rem 1rem</code><br>
+              <code>border-left: 4px</code> · <code>border-bottom: 4px</code>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Common Mistakes -->
+      <section class="code-section" style="border-color: rgba(239,68,68,0.2); background: rgba(239,68,68,0.04);">
+        <h2>⚠️ Common Mistakes</h2>
+        <pre><span class="c-comment">/* ❌ MISTAKE 1: Forgetting box-sizing — padding adds to width unexpectedly */</span>
+<span class="c-selector">.card</span> { <span class="c-property">width</span>: <span class="c-value">300px</span>; <span class="c-property">padding</span>: <span class="c-value">20px</span>; } <span class="c-comment">/* actual width = 340px! */</span>
+
+<span class="c-comment">/* ✅ FIX: Use box-sizing: border-box globally (already done in style.css) */</span>
+<span class="c-selector">*</span> { <span class="c-property">box-sizing</span>: <span class="c-value">border-box</span>; } <span class="c-comment">/* width stays 300px */</span>
+
+<span class="c-comment">/* ❌ MISTAKE 2: Using margin for inner spacing */</span>
+<span class="c-selector">.card h3</span> { <span class="c-property">margin-left</span>: <span class="c-value">20px</span>; } <span class="c-comment">/* use padding on .card instead */</span>
+
+<span class="c-comment">/* ❌ MISTAKE 3: Margin collapsing confusion */</span>
+<span class="c-comment">/* Two vertical margins of 20px don't add to 40px — they collapse to 20px! */</span>
+<span class="c-selector">.section-a</span> { <span class="c-property">margin-bottom</span>: <span class="c-value">20px</span>; }
+<span class="c-selector">.section-b</span> { <span class="c-property">margin-top</span>: <span class="c-value">20px</span>; }
+<span class="c-comment">/* Gap between them = 20px, not 40px */</span></pre>
+      </section>
+
+      <!-- Interview Question -->
+      <div class="interview-box">
+        <h3>🎯 Interview Question</h3>
+        <p>What is the difference between <strong>padding</strong> and <strong>margin</strong>? And what does <code>box-sizing: border-box</code> do?</p>
+        <details>
+          <summary>Answer</summary>
+          <p>
+            <strong>Padding</strong> is space inside the border — it pushes content away from the edge and takes the element's background color.<br><br>
+            <strong>Margin</strong> is space outside the border — it pushes other elements away and is always transparent.<br><br>
+            <strong>box-sizing: border-box</strong> changes how width/height is calculated. By default (<code>content-box</code>), padding and border are added on top of the declared width. With <code>border-box</code>, padding and border are <em>included</em> inside the declared width — making layouts much more predictable.
+          </p>
+        </details>
+      </div>
+
+      <!-- Next Step CTA -->
+      <section style="text-align: center; padding: 3rem 0 4rem;">
+        <p class="eyebrow">Up Next</p>
+        <h2 style="font-size:1.8rem; margin-bottom:0.8rem;">Step 4 — Flexbox</h2>
+        <p style="color:var(--muted); margin-bottom:1.5rem;">Use Flexbox to build a navigation bar and feature cards section.</p>
+        <a href="./flexbox.html" class="btn btn-primary">Go to Step 4 →</a>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© <span id="year"></span> ExamVerse AI. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./boxmodel.html">Box Model</a>
+        <a href="./flexbox.html">Flexbox</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>

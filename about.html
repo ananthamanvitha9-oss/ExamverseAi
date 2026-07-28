@@ -7,22 +7,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="header">
-    <div class="container nav">
-      <a href="./index.html" class="brand">ExamVerse AI</a>
+  <!-- Header with Navigation -->
+  <header class="hero" style="min-height: auto; padding-bottom: 1rem;">
+    <nav class="nav container">
+      <a class="brand" href="./index.html">
+        <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="160" height="40" style="border-radius:6px; vertical-align:middle; margin-right:8px;">
+        <span>ExamVerse AI</span>
+      </a>
       <nav class="nav-links">
         <a href="./index.html">Home</a>
         <a href="./about.html" style="color: var(--text);">About</a>
         <a href="./contact.html">Contact</a>
-        <a href="./login.html" class="btn btn-secondary">Login</a>
-        <a href="./register.html" class="btn btn-primary">Register</a>
+        <a href="./login.html" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Login</a>
+        <a href="./register.html" class="btn btn-primary" style="padding: 0.5rem 1.1rem;">Register</a>
       </nav>
-    </div>
+    </nav>
   </header>
 
+  <!-- Main About Content -->
   <main class="container" style="padding: 4rem 0;">
     <div style="max-width: 800px; margin: 0 auto;">
       <section>
@@ -51,12 +56,29 @@
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
-    <div class="container">
+    <div class="container footer-content">
       <p>© <span id="year"></span> ExamVerse AI. All rights reserved. Built for competitive exam learners.</p>
+      
+      <div class="footer-links">
+        <a href="./contact.html">Contact Support</a>
+        <span>•</span>
+        <a href="mailto:support@examverse.ai">support@examverse.ai</a>
+        <span>•</span>
+        <a href="./about.html">About Us</a>
+      </div>
+
+      <div class="social-links">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter ↗</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer">Telegram ↗</a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+      </div>
     </div>
   </footer>
 
-  <script src="./js/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

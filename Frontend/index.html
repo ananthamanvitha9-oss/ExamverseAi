@@ -7,65 +7,176 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .footer-links a:hover {
+      color: var(--primary-2);
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .social-links a:hover {
+      color: var(--text);
+      background: rgba(79, 140, 255, 0.2);
+      border-color: var(--primary-2);
+    }
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .pill-grid span {
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .pill-highlight {
+      border-color: var(--primary-2) !important;
+      color: var(--primary-2) !important;
+      background: rgba(79, 140, 255, 0.12) !important;
+    }
+  </style>
 </head>
 <body>
+  <!-- Header with Logo and Navigation -->
   <header class="header">
     <div class="container nav">
       <a href="./index.html">
-        <img src="./images/logo.jpg" alt="ExamVerse AI" width="180" height="45" style="border-radius:6px; vertical-align:middle;">
+        <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="180" height="45" style="border-radius:6px; vertical-align:middle;">
       </a>
       <nav class="nav-links">
         <a href="./index.html" style="color: var(--text);">Home</a>
         <a href="./about.html">About</a>
+        <a href="./courses.html">Courses</a>
         <a href="./contact.html">Contact</a>
         <a href="./login.html" class="btn btn-secondary">Login</a>
-        <a href="./register.html" class="btn btn-primary">Register</a>
+        <a href="./register.html" class="btn btn-primary">Start Learning</a>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- Hero Section -->
     <section class="container hero">
       <p class="eyebrow">AI-Powered Exam Preparation</p>
       <h1>Study Smarter. Succeed Faster.</h1>
       <p class="lead">
-        ExamVerse AI is India's most advanced AI-powered learning companion, built specifically for UPSC, JEE, NEET, SSC CGL, and CAT aspirants.
+        ExamVerse AI is India's most advanced AI-powered learning companion, built specifically for UPSC, SSC, Banking, Railways, JEE, and NEET aspirants.
       </p>
       <div class="hero-actions">
-        <a href="./register.html" class="btn btn-primary">Start For Free</a>
-        <a href="./about.html" class="btn btn-secondary">Learn More</a>
+        <a href="./register.html" class="btn btn-primary">Start Learning</a>
+        <a href="./about.html" class="btn btn-secondary">Explore Features</a>
       </div>
 
-      <div class="features-grid">
-        <div class="card">
-          <h3>24/7 AI Tutor</h3>
-          <p>Get instant explanation and guidance for complex concepts, questions, and derivations whenever you study.</p>
+      <!-- Features Section -->
+      <section style="margin-top: 4rem;">
+        <h2 style="margin-bottom: 1.5rem; text-align: center;">Core Features</h2>
+        <div class="features-grid">
+          <article class="card">
+            <h3>AI Tutor</h3>
+            <p>Get 24/7 instant explanations and guidance for complex concepts, questions, and derivations.</p>
+          </article>
+          <article class="card">
+            <h3>Mock Tests</h3>
+            <p>Practice realistic full-length tests designed according to the latest pattern of competitive exams.</p>
+          </article>
+          <article class="card">
+            <h3>Current Affairs</h3>
+            <p>Stay updated with curated daily and weekly current affairs summaries and quiz sets.</p>
+          </article>
+          <article class="card">
+            <h3>PYQs</h3>
+            <p>Access previous year questions categorized by subject, topic, and exam level.</p>
+          </article>
+          <article class="card">
+            <h3>Notes</h3>
+            <p>Organize clean, searchable notes, lecture summaries, and formula flashcards.</p>
+          </article>
+          <article class="card">
+            <h3>Progress Tracking</h3>
+            <p>Track your strengths, identify weak sub-topics, and monitor continuous score growth.</p>
+          </article>
         </div>
-        <div class="card">
-          <h3>Realistic Mock Tests</h3>
-          <p>Practice tests designed exactly according to the latest pattern of your targeted competitive exams.</p>
+      </section>
+
+      <!-- Supported Exams Section -->
+      <section style="margin-top: 4rem;">
+        <h2 style="margin-bottom: 1rem; text-align: center;">Supported Exams</h2>
+        <p style="text-align: center; color: var(--muted); margin-bottom: 1.5rem;">Targeted preparation tracks built for India's top competitive exams:</p>
+        <div class="pill-grid" style="justify-content: center;">
+          <span class="pill-highlight">UPSC</span>
+          <span class="pill-highlight">SSC</span>
+          <span class="pill-highlight">Banking</span>
+          <span class="pill-highlight">Railways</span>
+          <span class="pill-highlight">JEE</span>
+          <span class="pill-highlight">NEET</span>
+          <span>GATE</span>
+          <span>CAT</span>
+          <span>Defence</span>
+          <span>State PSCs</span>
+          <span>UGC NET</span>
         </div>
-        <div class="card">
-          <h3>Syllabus Analytics</h3>
-          <p>Track your strengths and identify weak sub-topics dynamically based on your quiz scores.</p>
-        </div>
-      </div>
+      </section>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
+  <!-- Footer with Copyright, Contact, and Social Media -->
+  <footer class="footer" style="margin-top: 4rem; padding: 3rem 0 2rem; border-top: 1px solid var(--border);">
+    <div class="container" style="text-align: center;">
       <p>© <span id="year"></span> ExamVerse AI. All rights reserved. Built for competitive exam learners.</p>
-      <div style="margin-top: 1rem;">
-        <!-- Relative link to support page -->
-        <a href="./contact.html" style="color: var(--muted); text-decoration: none; margin-right: 1.5rem;">Contact Support</a>
-        <!-- Absolute link opening in a new tab -->
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none;">GitHub Repository ↗</a>
+      
+      <div class="footer-links">
+        <a href="./contact.html">Contact Support</a>
+        <span>•</span>
+        <a href="mailto:support@examverse.ai">support@examverse.ai</a>
+        <span>•</span>
+        <a href="./about.html">About Us</a>
+      </div>
+
+      <div class="social-links">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter ↗</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer">Telegram ↗</a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
       </div>
     </div>
   </footer>
-
 
   <script src="./js/script.js"></script>
 </body>

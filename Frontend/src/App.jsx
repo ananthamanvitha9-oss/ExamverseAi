@@ -157,7 +157,7 @@ function App() {
           ) : (
             <div className="tests-grid">
               {tests.map(test => (
-                <div key={test.id} className="test-card">
+                <article key={test.id} className="test-card">
                   <div>
                     <div className="test-meta">
                       <span>Test ID: #{test.id}</span>
@@ -177,14 +177,14 @@ function App() {
                   >
                     Start Practice
                   </button>
-                </div>
+                </article>
               ))}
             </div>
           )}
         </section>
 
         {/* CTA Waitlist section */}
-        <section className="cta-box">
+        <aside className="cta-box">
           <h2>Ready to study with the smartest AI companion?</h2>
           <p>Join the next generation of exam preparation with ExamVerse AI.</p>
           
@@ -207,7 +207,7 @@ function App() {
                 onChange={handleInputChange}
               />
             </div>
-            <div class="form-row">
+            <div className="form-row">
               <input 
                 type="tel" 
                 name="phone" 
@@ -240,7 +240,7 @@ function App() {
               {formStatus.message}
             </div>
           )}
-        </section>
+        </aside>
       </main>
 
       <section id="about" className="container section">

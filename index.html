@@ -6,7 +6,7 @@
     <title>ExamVerse AI | India's Smartest Exam Prep Platform</title>
     <meta
       name="description"
-      content="ExamVerse AI brings AI tutoring, mock tests, PYQs, notes, planning, and voice-led practice into one platform for every competitive exam in India."
+      content="ExamVerse AI brings AI tutoring, mock tests, PYQs, notes, current affairs, progress tracking, and voice-led practice into one platform for every competitive exam in India."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,17 +17,24 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Header with Logo and Navigation -->
     <header class="hero">
       <nav class="nav container">
-        <a class="brand" href="#">ExamVerse AI</a>
-        <div class="nav-links">
-          <a href="#features">Features</a>
-          <a href="#exams">Exams</a>
-          <a href="#cta">Get Started</a>
-        </div>
+        <a class="brand" href="./index.html">
+          <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="160" height="40" style="border-radius:6px; vertical-align:middle; margin-right:8px;">
+          <span>ExamVerse AI</span>
+        </a>
+        <nav class="nav-links">
+          <a href="./index.html" style="color: var(--text);">Home</a>
+          <a href="./about.html">About</a>
+          <a href="./contact.html">Contact</a>
+          <a href="./login.html" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Login</a>
+          <a href="./register.html" class="btn btn-primary" style="padding: 0.5rem 1.1rem;">Register</a>
+        </nav>
       </nav>
 
-      <div class="container hero-content">
+      <!-- Hero Section -->
+      <section class="container hero-content">
         <div class="hero-copy">
           <p class="eyebrow">AI-powered learning for every Indian exam</p>
           <h1>One app for every exam. One smarter path to success.</h1>
@@ -43,11 +50,12 @@
             <li>AI Tutor</li>
             <li>Mock Tests</li>
             <li>PYQs</li>
-            <li>Voice Assistant</li>
+            <li>Current Affairs</li>
+            <li>Progress Tracking</li>
           </ul>
         </div>
 
-        <div class="hero-card">
+        <aside class="hero-card">
           <div class="card-top">
             <span class="dot"></span>
             <span class="dot"></span>
@@ -69,11 +77,12 @@
               <span>Practice questions</span>
             </div>
           </div>
-        </div>
-      </div>
+        </aside>
+      </section>
     </header>
 
     <main>
+      <!-- Features Section -->
       <section id="features" class="section container">
         <div class="section-heading">
           <p class="eyebrow">Core Features</p>
@@ -83,43 +92,52 @@
         <div class="feature-grid">
           <article class="card">
             <h3>AI Tutor</h3>
-            <p>Get concept explanations, doubt resolution, and personalized study support instantly.</p>
+            <p>Get concept explanations, doubt resolution, and personalized study support instantly 24/7.</p>
           </article>
+
           <article class="card">
             <h3>Mock Tests</h3>
-            <p>Practice full-length tests with real exam-style questions and instant feedback.</p>
+            <p>Practice full-length tests with real exam-style questions, timers, and instant feedback.</p>
           </article>
-          <article class="card">
-            <h3>PYQs</h3>
-            <p>Access previous year questions by subject, topic, and exam category.</p>
-          </article>
+
           <article class="card">
             <h3>Current Affairs</h3>
-            <p>Stay updated with curated daily and weekly current affairs summaries.</p>
+            <p>Stay updated with curated daily and weekly current affairs summaries and quiz sets.</p>
           </article>
+
+          <article class="card">
+            <h3>PYQs</h3>
+            <p>Access previous year questions organized by exam, subject, topic, and difficulty.</p>
+          </article>
+
           <article class="card">
             <h3>Notes</h3>
-            <p>Organize clean, searchable notes from lectures, books, and revision sessions.</p>
+            <p>Organize clean, searchable notes, lecture summaries, and key formula sheets.</p>
           </article>
+
+          <article class="card">
+            <h3>Progress Tracking</h3>
+            <p>Track performance analytics, identify weak areas, and build momentum week after week.</p>
+          </article>
+
           <article class="card">
             <h3>Study Planner</h3>
-            <p>Create day-wise plans that fit your schedule, goals, and exam timeline.</p>
+            <p>Create day-wise plans that adapt to your schedule, goals, and exam timeline.</p>
           </article>
-          <article class="card">
-            <h3>Progress Tracker</h3>
-            <p>Track performance, identify weak areas, and build momentum week after week.</p>
-          </article>
+
           <article class="card">
             <h3>AI Voice Assistant</h3>
-            <p>Learn hands-free with voice-based interaction for revision and quick support.</p>
+            <p>Learn hands-free with voice-based interaction for quick revision and audio support.</p>
           </article>
+
           <article class="card">
             <h3>AI Interview Practice</h3>
-            <p>Prepare for interviews with realistic AI-led mock interviews and feedback.</p>
+            <p>Prepare for personality tests and interviews with realistic AI mock interviewers.</p>
           </article>
         </div>
       </section>
 
+      <!-- Exams Section -->
       <section id="exams" class="section section-alt">
         <div class="container">
           <div class="section-heading">
@@ -127,19 +145,19 @@
             <h2>Built for India’s most competitive exam journeys.</h2>
           </div>
           <div class="pill-list">
-            <span>UPSC</span>
-            <span>SSC</span>
-            <span>Banking</span>
-            <span>Railways</span>
+            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">UPSC</span>
+            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">SSC</span>
+            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">Banking</span>
+            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">Railways</span>
+            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">JEE</span>
+            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">NEET</span>
+            <span>GATE</span>
+            <span>CAT</span>
             <span>Defence</span>
             <span>Police</span>
             <span>APPSC</span>
             <span>TSPSC</span>
             <span>All State PSCs</span>
-            <span>JEE</span>
-            <span>NEET</span>
-            <span>GATE</span>
-            <span>CAT</span>
             <span>CLAT</span>
             <span>CUET</span>
             <span>UGC NET</span>
@@ -156,6 +174,7 @@
         </div>
       </section>
 
+      <!-- Practice Zone / Mock Tests Section -->
       <section id="mock-tests" class="section container">
         <div class="section-heading">
           <p class="eyebrow">Practice Zone</p>
@@ -166,8 +185,9 @@
         </div>
       </section>
 
+      <!-- CTA / Registration Section -->
       <section id="cta" class="section container">
-        <div class="cta-box">
+        <aside class="cta-box">
           <h2>Ready to study with the smartest AI companion?</h2>
           <p>Join the next generation of exam preparation with ExamVerse AI.</p>
           
@@ -181,24 +201,45 @@
               <select id="student-exam" required>
                 <option value="" disabled selected>Select Target Exam</option>
                 <option value="UPSC">UPSC Civil Services</option>
-                <option value="JEE Advanced">JEE Advanced</option>
+                <option value="JEE Advanced">JEE (Main & Advanced)</option>
+                <option value="NEET">NEET (Medical Entrance)</option>
                 <option value="SSC CGL">SSC CGL</option>
+                <option value="Banking">Banking (IBPS/SBI PO)</option>
+                <option value="Railways">Railways (RRB NTPC)</option>
                 <option value="CAT">CAT (Management)</option>
                 <option value="GATE">GATE</option>
                 <option value="Other">Other Exam</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary btn-submit">Join the Waitlist</button>
+            <button type="submit" class="btn btn-primary btn-submit">Start Learning — Join Waitlist</button>
           </form>
           <div id="form-message" class="form-message hidden"></div>
-        </div>
+        </aside>
       </section>
-
     </main>
 
+    <!-- Footer with Copyright, Contact, and Social Media Links -->
     <footer class="footer">
       <div class="container footer-content">
-        <p>© <span id="year"></span> ExamVerse AI. Built for learners, by learners.</p>
+        <p>© <span id="year"></span> ExamVerse AI. All rights reserved. Built for competitive exam learners in India.</p>
+        
+        <div class="footer-links">
+          <a href="./Frontend/contact.html">Contact Support</a>
+          <span>•</span>
+          <a href="mailto:support@examverse.ai">support@examverse.ai</a>
+          <span>•</span>
+          <a href="./Frontend/about.html">About Us</a>
+          <span>•</span>
+          <a href="./Frontend/courses.html">Courses</a>
+        </div>
+
+        <div class="social-links">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub">GitHub ↗</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter / X">Twitter ↗</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn ↗</a>
+          <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" title="Telegram">Telegram ↗</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube">YouTube ↗</a>
+        </div>
       </div>
     </footer>
 
