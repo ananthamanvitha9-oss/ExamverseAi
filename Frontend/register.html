@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamVerse AI | Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="./index.html" class="brand">ExamVerse AI</a>
+      <nav class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary" style="box-shadow: 0 0 10px var(--primary);">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="form-container">
+      <h2>Create Account</h2>
+      <p class="subtitle">Join ExamVerse AI waitlist & platform registration</p>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+          <label for="exam">Target Exam</label>
+          <select id="exam" required>
+            <option value="" disabled selected>Select Target Exam</option>
+            <option value="UPSC">UPSC Civil Services</option>
+            <option value="JEE">JEE Main & Advanced</option>
+            <option value="NEET">NEET UG</option>
+            <option value="SSC">SSC CGL</option>
+            <option value="CAT">CAT (Management)</option>
+            <option value="Other">Other Exam</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Create Account</button>
+      </form>
+      <div id="form-message" class="form-message hidden" style="margin-top: 1rem; text-align: center;"></div>
+      
+      <div class="form-footer">
+        Already have an account? <a href="./login.html">Log in here</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> ExamVerse AI. All rights reserved. Built for competitive exam learners.</p>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>

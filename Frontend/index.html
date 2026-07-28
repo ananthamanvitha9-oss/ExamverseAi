@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ExamVerse AI</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamVerse AI | Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="./index.html" class="brand">ExamVerse AI</a>
+      <nav class="nav-links">
+        <a href="./index.html" style="color: var(--text);">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <p class="eyebrow">AI-Powered Exam Preparation</p>
+      <h1>Study Smarter. Succeed Faster.</h1>
+      <p class="lead">
+        ExamVerse AI is India's most advanced AI-powered learning companion, built specifically for UPSC, JEE, NEET, SSC CGL, and CAT aspirants.
+      </p>
+      <div class="hero-actions">
+        <a href="./register.html" class="btn btn-primary">Start For Free</a>
+        <a href="./about.html" class="btn btn-secondary">Learn More</a>
+      </div>
+
+      <div class="features-grid">
+        <div class="card">
+          <h3>24/7 AI Tutor</h3>
+          <p>Get instant explanation and guidance for complex concepts, questions, and derivations whenever you study.</p>
+        </div>
+        <div class="card">
+          <h3>Realistic Mock Tests</h3>
+          <p>Practice tests designed exactly according to the latest pattern of your targeted competitive exams.</p>
+        </div>
+        <div class="card">
+          <h3>Syllabus Analytics</h3>
+          <p>Track your strengths and identify weak sub-topics dynamically based on your quiz scores.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> ExamVerse AI. All rights reserved. Built for competitive exam learners.</p>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
 </html>
