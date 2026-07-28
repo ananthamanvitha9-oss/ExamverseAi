@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamVerse AI | Courses List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    /* Specific styling tweaks for lists showcase */
+    ol, ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--muted);
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+    dt {
+      font-weight: 700;
+      color: var(--primary-2);
+      margin-top: 1.25rem;
+      font-size: 1.1rem;
+    }
+    dd {
+      color: var(--muted);
+      margin-left: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container nav">
+      <a href="./index.html" class="brand">ExamVerse AI</a>
+      <nav class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./courses.html" style="color: var(--text);">Courses</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Lists Practice -->
+  <main class="container" style="padding: 4rem 0; max-width: 800px;">
+    
+    <!-- 1. Unordered List Showcase -->
+    <section class="card" style="margin-bottom: 2rem;">
+      <h2 style="color: var(--primary-2); margin-bottom: 1rem;">1. Supported Courses (Unordered List)</h2>
+      <p style="margin-bottom: 1rem; color: var(--muted);">We offer dedicated AI learning prep for the following exams:</p>
+      <ul>
+        <li>UPSC Civil Services</li>
+        <li>SSC (Combined Graduate Level)</li>
+        <li>Banking Exams (PO & Clerk)</li>
+        <li>Railways Recruitment Board (RRB)</li>
+        <li>JEE (Main & Advanced)</li>
+        <li>NEET (UG Medical Entrance)</li>
+      </ul>
+    </section>
+
+    <!-- 2. Ordered List Showcase -->
+    <section class="card" style="margin-bottom: 2rem;">
+      <h2 style="color: var(--primary-2); margin-bottom: 1rem;">2. How to Start Learning (Ordered List)</h2>
+      <p style="margin-bottom: 1rem; color: var(--muted);">Follow these ordered steps to kickstart your preparation:</p>
+      <ol>
+        <li>Create your free account.</li>
+        <li>Select your target competitive exam from the list.</li>
+        <li>Take our diagnostic 15-minute quick assessment.</li>
+        <li>Receive your personalized daily study plan.</li>
+        <li>Connect with your AI Tutor to solve your first doubt!</li>
+      </ol>
+    </section>
+
+    <!-- 3. Description List Showcase -->
+    <section class="card">
+      <h2 style="color: var(--primary-2); margin-bottom: 1rem;">3. Exam Overview (Description List)</h2>
+      <p style="margin-bottom: 1rem; color: var(--muted);">Understand the core scope of each course category:</p>
+      <dl>
+        <dt>UPSC (Union Public Service Commission)</dt>
+        <dd>Prepares aspirants for administrative services (IAS, IPS, IFS) with general studies, optionals, and essay writing support.</dd>
+        
+        <dt>SSC (Staff Selection Commission)</dt>
+        <dd>Targets government staff appointments through exams like SSC CGL and CHSL covering quant, English, and general reasoning.</dd>
+        
+        <dt>Banking</dt>
+        <dd>Specialized study sets for SBI, IBPS, and RBI Officer recruitments, prioritizing high-speed numerical and logical aptitude.</dd>
+        
+        <dt>Railways</dt>
+        <dd>Comprehensive study tracks for non-technical popular categories (NTPC) and junior engineer job profiles.</dd>
+        
+        <dt>JEE (Joint Entrance Examination)</dt>
+        <dd>Covers intensive PCM (Physics, Chemistry, Mathematics) coaching models for admissions to IITs, NITs, and IIITs.</dd>
+        
+        <dt>NEET (National Eligibility cum Entrance Test)</dt>
+        <dd>Focuses on advanced Biology, Physics, and Chemistry practice sheets for medical undergraduate admissions in India.</dd>
+      </dl>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> ExamVerse AI. List Elements Practice.</p>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
