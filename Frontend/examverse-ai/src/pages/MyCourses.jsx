@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
-import CourseCard from '../components/Dashboard/CourseCard';
+import CourseCard from '../components/dashboard/CourseCard';
 import styles from './Dashboard.module.css';
 
 const MyCourses = () => {

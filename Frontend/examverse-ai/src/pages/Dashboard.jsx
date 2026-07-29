@@ -1,11 +1,11 @@
 import React from 'react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
-import WelcomeCard from '../components/Dashboard/WelcomeCard';
-import ProgressCard from '../components/Dashboard/ProgressCard';
-import CourseCard from '../components/Dashboard/CourseCard';
-import DailyGoal from '../components/Dashboard/DailyGoal';
-import StatisticsCard from '../components/Dashboard/StatisticsCard';
-import AITutorCard from '../components/Dashboard/AITutorCard';
+import WelcomeCard from '../components/dashboard/WelcomeCard';
+import ProgressCard from '../components/dashboard/ProgressCard';
+import CourseCard from '../components/dashboard/CourseCard';
+import DailyGoal from '../components/dashboard/DailyGoal';
+import StatisticsCard from '../components/dashboard/StatisticsCard';
+import AITutorCard from '../components/dashboard/AITutorCard';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
