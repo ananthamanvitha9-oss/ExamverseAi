@@ -1,0 +1,195 @@
+/* Navbar.module.css */
+
+.header {
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 9999; /* Ensure it stays above all other content */
+    width: 100%;
+}
+
+.navContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #111827; /* Dark gray */
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: #2563eb; /* Primary AI Blue */
+}
+
+/* Desktop Links */
+.navLinks {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navLinks a {
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.navLinks a:hover,
+.navLinks a:focus-visible {
+    color: #2563eb;
+    outline: none; /* Focus handled by color shift for clean UI, but normally keep outline for strict accessibility */
+}
+
+.mobileAuth {
+    display: none; /* Hidden on desktop */
+}
+
+/* Auth Buttons */
+.authButtons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.loginBtn {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.loginBtn:hover,
+.loginBtn:focus-visible {
+    background-color: #f3f4f6;
+}
+
+.registerBtn {
+    text-decoration: none;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.registerBtn:hover,
+.registerBtn:focus-visible {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Hamburger Menu (Hidden on Desktop, Tablet Landscape) */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 10000; /* Must stay above the sliding menu */
+}
+
+.bar {
+    width: 24px;
+    height: 2px;
+    background-color: #111827;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Mobile & Tablet Responsive Styles */
+@media screen and (max-width: 1024px) {
+    .navLinks {
+        gap: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navContainer {
+        padding: 0 1.5rem;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .authButtons {
+        display: none; /* Hide desktop auth buttons */
+    }
+
+    .navLinks {
+        position: fixed;
+        top: 72px;
+        left: -100%; /* Hidden off-screen by default */
+        flex-direction: column;
+        background-color: #ffffff;
+        width: 100%;
+        height: calc(100vh - 72px);
+        text-align: center;
+        padding: 3rem 0;
+        gap: 2rem;
+        box-shadow: inset 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+    }
+
+    .navLinks.active {
+        left: 0; /* Slide in when active */
+    }
+
+    .navLinks a {
+        font-size: 1.25rem;
+    }
+
+    .mobileAuth {
+        display: block; /* Show auth links in mobile menu */
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .mobileAuth a {
+        display: block;
+        padding: 1rem;
+        border-radius: 8px;
+        background-color: #f3f4f6;
+    }
+    
+    .mobileAuth .mobileRegister {
+        background-color: #2563eb;
+        color: white;
+        margin-top: 1rem;
+    }
+
+    /* Hamburger Animation to 'X' */
+    .barOne {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .barTwo {
+        opacity: 0;
+    }
+    
+    .barThree {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}

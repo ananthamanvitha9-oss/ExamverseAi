@@ -1,0 +1,34 @@
+.btn {
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Variants */
+.primary {
+    background-color: #2563eb;
+    color: white;
+}
+.primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.outline {
+    background-color: transparent;
+    border: 2px solid #2563eb;
+    color: #2563eb;
+}
+.outline:hover {
+    background-color: #eff6ff;
+}
+
+/* Sizes */
+.small { padding: 0.5rem 1rem; font-size: 0.875rem; }
+.medium { padding: 0.75rem 1.5rem; font-size: 1rem; }
+.large { padding: 1rem 2rem; font-size: 1.125rem; }

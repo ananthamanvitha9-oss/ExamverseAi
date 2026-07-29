@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 5: CSS Grid | ExamVerse AI</title>
+  <meta name="description" content="Learn CSS Grid: responsive multi-column layouts for exam cards, course cards, and feature cards.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .page-hero {
+      padding: 4rem 0 2rem;
+      text-align: center;
+    }
+    .page-hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 0.8rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto 2rem;
+    }
+    
+    .grid-section {
+      background: rgba(15, 29, 49, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    .grid-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .grid-section p.sub {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* CSS Grid Layouts */
+    .responsive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .grid-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform var(--transition-fast), border-color var(--transition-fast);
+    }
+    .grid-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-focus);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav container">
+      <a class="brand" href="./index.html">
+        <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="140" height="36" style="border-radius:6px;">
+        <span>ExamVerse AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./flexbox.html">Flexbox</a>
+        <a href="./grid.html" style="color:var(--primary-2);">CSS Grid</a>
+        <a href="./practice.html">Practice</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Start Learning</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="page-hero">
+      <h1>Step 5: CSS Grid</h1>
+      <p>Build 2-dimensional, responsive grid layouts using <code>display: grid</code>, <code>grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))</code>, and <code>gap</code>.</p>
+    </section>
+
+    <!-- Section 1: Exam Cards Grid -->
+    <section class="grid-section">
+      <h2>📝 1. Exam Cards Grid</h2>
+      <p class="sub">Dynamic responsive grid for mock exams and test series.</p>
+      
+      <div class="responsive-grid">
+        <div class="grid-card">
+          <div>
+            <span class="badge badge-blue">JEE Advanced</span>
+            <h3 style="margin: 0.8rem 0 0.4rem;">Full Syllabus Mock Test #04</h3>
+            <p style="color:var(--muted); font-size:0.88rem;">Physics, Chemistry, Math · 180 Mins · 300 Marks</p>
+          </div>
+          <a href="#" class="btn btn-primary" style="margin-top:1.2rem; text-align:center;">Attempt Test</a>
+        </div>
+
+        <div class="grid-card">
+          <div>
+            <span class="badge badge-green">NEET UG</span>
+            <h3 style="margin: 0.8rem 0 0.4rem;">Biology & Human Physiology</h3>
+            <p style="color:var(--muted); font-size:0.88rem;">Botany & Zoology · 90 Mins · 360 Marks</p>
+          </div>
+          <a href="#" class="btn btn-primary" style="margin-top:1.2rem; text-align:center;">Attempt Test</a>
+        </div>
+
+        <div class="grid-card">
+          <div>
+            <span class="badge badge-amber">UPSC CSE</span>
+            <h3 style="margin: 0.8rem 0 0.4rem;">GS Paper 1 Current Affairs</h3>
+            <p style="color:var(--muted); font-size:0.88rem;">Polity, Economy & Env · 120 Mins · 200 Marks</p>
+          </div>
+          <a href="#" class="btn btn-primary" style="margin-top:1.2rem; text-align:center;">Attempt Test</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Course Cards Grid -->
+    <section class="grid-section">
+      <h2>📚 2. Course Cards Grid</h2>
+      <p class="sub">Adaptive multi-column layout for interactive learning modules.</p>
+      
+      <div class="responsive-grid">
+        <div class="grid-card">
+          <div>
+            <h3 style="font-size:1.15rem; margin-bottom:0.5rem;">Calculus & Mechanics Mastery</h3>
+            <p style="color:var(--muted); font-size:0.88rem; margin-bottom:1rem;">48 Video Lectures · 120 Practice Sheets · AI Tutor Access</p>
+          </div>
+          <a href="#" class="btn btn-secondary" style="text-align:center;">View Course</a>
+        </div>
+
+        <div class="grid-card">
+          <div>
+            <h3 style="font-size:1.15rem; margin-bottom:0.5rem;">Organic Chemistry Reactions</h3>
+            <p style="color:var(--muted); font-size:0.88rem; margin-bottom:1rem;">Mechanism Diagrams · Flashcards · 500+ Solved PYQs</p>
+          </div>
+          <a href="#" class="btn btn-secondary" style="text-align:center;">View Course</a>
+        </div>
+
+        <div class="grid-card">
+          <div>
+            <h3 style="font-size:1.15rem; margin-bottom:0.5rem;">Indian Constitution & Polity</h3>
+            <p style="color:var(--muted); font-size:0.88rem; margin-bottom:1rem;">Article Breakdown · Mindmaps · Mains Answer Writing</p>
+          </div>
+          <a href="#" class="btn btn-secondary" style="text-align:center;">View Course</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Feature Cards Grid -->
+    <section class="grid-section">
+      <h2>✨ 3. Feature Cards Grid</h2>
+      <p class="sub">Symmetrical feature highlight grid.</p>
+      
+      <div class="responsive-grid">
+        <div class="grid-card">
+          <div style="font-size:1.5rem; margin-bottom:0.5rem;">🎯</div>
+          <h3>Precision Diagnostics</h3>
+          <p style="color:var(--muted); font-size:0.88rem;">Identifies exact weakness down to sub-topic and question type.</p>
+        </div>
+        <div class="grid-card">
+          <div style="font-size:1.5rem; margin-bottom:0.5rem;">⚡</div>
+          <h3>Speed Booster Mode</h3>
+          <p style="color:var(--muted); font-size:0.88rem;">Timed drills designed to optimize time per question.</p>
+        </div>
+        <div class="grid-card">
+          <div style="font-size:1.5rem; margin-bottom:0.5rem;">🏆</div>
+          <h3>All-India Rank Simulator</h3>
+          <p style="color:var(--muted); font-size:0.88rem;">Real-time percentile ranking benchmarked across 100k+ students.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <div style="display:flex; justify-content:space-between; margin:3rem 0; gap:1rem;">
+      <a href="./flexbox.html" class="btn btn-secondary">← Back to Step 4 (Flexbox)</a>
+      <a href="./practice.html" class="btn btn-primary">Go to Practice Zone →</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid var(--border); padding:2rem 0; text-align:center; color:var(--muted); font-size:0.9rem;">
+    <div class="container">
+      <p>&copy; 2026 ExamVerse AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="./js/utils.js"></script>
+  <script src="./js/theme.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
+

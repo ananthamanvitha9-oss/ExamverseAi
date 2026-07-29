@@ -80,6 +80,7 @@
         <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="180" height="45" style="border-radius:6px; vertical-align:middle;">
       </a>
       <nav class="nav-links">
+        <button id="theme-toggle" class="btn btn-secondary" style="margin-right: 1rem; cursor: pointer; padding: 0.4rem 0.8rem; font-size: 0.85rem;">☀️ Light Mode</button>
         <a href="./index.html" style="color: var(--text);">Home</a>
         <a href="./about.html">About</a>
         <a href="./courses.html">Courses</a>
@@ -94,13 +95,14 @@
     <!-- Hero Section -->
     <section class="container hero">
       <p class="eyebrow">AI-Powered Exam Preparation</p>
-      <h1>Study Smarter. Succeed Faster.</h1>
+      <h1 id="hero-title">Study Smarter. Succeed Faster.</h1>
       <p class="lead">
         ExamVerse AI is India's most advanced AI-powered learning companion, built specifically for UPSC, SSC, Banking, Railways, JEE, and NEET aspirants.
       </p>
       <div class="hero-actions">
-        <a href="./register.html" class="btn btn-primary">Start Learning</a>
+        <a href="./register.html" id="start-learning-btn" class="btn btn-primary">Start Learning</a>
         <a href="./about.html" class="btn btn-secondary">Explore Features</a>
+        <button id="change-title-btn" class="btn btn-secondary" style="cursor: pointer;">Change Title (Step 7)</button>
       </div>
 
       <!-- Features Section -->
@@ -136,7 +138,7 @@
 
       <!-- Supported Exams Section -->
       <section style="margin-top: 4rem;">
-        <h2 style="margin-bottom: 1rem; text-align: center;">Supported Exams</h2>
+        <h2 style="margin-bottom: 1rem; text-align: center;">Popular Exams Supported</h2>
         <p style="text-align: center; color: var(--muted); margin-bottom: 1.5rem;">Targeted preparation tracks built for India's top competitive exams:</p>
         <div class="pill-grid" style="justify-content: center;">
           <span class="pill-highlight">UPSC</span>
@@ -150,6 +152,46 @@
           <span>Defence</span>
           <span>State PSCs</span>
           <span>UGC NET</span>
+        </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section style="margin-top: 4.5rem;">
+        <h2 style="margin-bottom: 0.5rem; text-align: center;">What Our Top Rankers Say</h2>
+        <p style="text-align: center; color: var(--muted); margin-bottom: 2rem;">Real feedback from students who transformed their preparation with ExamVerse AI</p>
+        <div class="features-grid">
+          <article class="card">
+            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--primary), var(--primary-2)); display:flex; align-items:center; justify-content:center; font-weight:800; color:#04111f;">AR</div>
+              <div>
+                <h4 style="font-size:1rem; margin:0;">Ananya Roy</h4>
+                <span class="badge badge-green" style="font-size:0.75rem;">AIR 42 · JEE Advanced</span>
+              </div>
+            </div>
+            <p style="color:var(--muted); font-size:0.92rem; line-height:1.6;">"The AI Tutor explained organic reaction mechanisms step-by-step whenever I got stuck late at night. The mock test analytics helped me fix my negative marking!"</p>
+          </article>
+
+          <article class="card">
+            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #2ea043, #7ee787); display:flex; align-items:center; justify-content:center; font-weight:800; color:#04111f;">RS</div>
+              <div>
+                <h4 style="font-size:1rem; margin:0;">Rahul Sharma</h4>
+                <span class="badge badge-blue" style="font-size:0.75rem;">AIR 115 · UPSC CSE</span>
+              </div>
+            </div>
+            <p style="color:var(--muted); font-size:0.92rem; line-height:1.6;">"The daily Current Affairs summaries and topic-wise PYQs saved me hundreds of hours of manual research. Truly a game changer for UPSC aspirants."</p>
+          </article>
+
+          <article class="card">
+            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #ffc861, #ff9f43); display:flex; align-items:center; justify-content:center; font-weight:800; color:#04111f;">PV</div>
+              <div>
+                <h4 style="font-size:1rem; margin:0;">Pooja Verma</h4>
+                <span class="badge badge-amber" style="font-size:0.75rem;">Score: 705/720 · NEET UG</span>
+              </div>
+            </div>
+            <p style="color:var(--muted); font-size:0.92rem; line-height:1.6;">"The high-yield NCERT notes and speed test drills improved my accuracy velocity significantly. Highly recommended for every competitive exam student!"</p>
+          </article>
         </div>
       </section>
     </section>
@@ -179,5 +221,10 @@
   </footer>
 
   <script src="./js/script.js"></script>
+
+  <script src="./js/utils.js"></script>
+  <script src="./js/theme.js"></script>
+  <script src="./js/app.js"></script>
 </body>
 </html>
+

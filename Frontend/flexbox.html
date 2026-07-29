@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 4: Flexbox | ExamVerse AI</title>
+  <meta name="description" content="Learn CSS Flexbox: display: flex, justify-content, align-items, gap, flex-direction with navigation bar and feature card mini projects.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .page-hero {
+      padding: 4rem 0 2rem;
+      text-align: center;
+    }
+    .page-hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 0.8rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto 2rem;
+    }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0 3rem;
+    }
+    .concept-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .concept-card h3 {
+      color: var(--primary-2);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+    }
+    .concept-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* Demo Sections */
+    .demo-section {
+      background: rgba(15, 29, 49, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    .demo-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .demo-section p.sub {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* Navbar Demo */
+    .demo-nav {
+      background: var(--surface);
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .demo-nav-links {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    /* Feature Cards Demo */
+    .demo-features {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .demo-feature-card {
+      flex: 1 1 280px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      background: rgba(79, 140, 255, 0.15);
+      color: var(--primary-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav container">
+      <a class="brand" href="./index.html">
+        <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="140" height="36" style="border-radius:6px;">
+        <span>ExamVerse AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./boxmodel.html">Box Model</a>
+        <a href="./flexbox.html" style="color:var(--primary-2);">Flexbox</a>
+        <a href="./grid.html">CSS Grid</a>
+        <a href="./login.html" class="btn btn-secondary">Login</a>
+        <a href="./register.html" class="btn btn-primary">Start Learning</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="page-hero">
+      <h1>Step 4: CSS Flexbox</h1>
+      <p>Master 1-dimensional layouts using Flexbox properties: <code>display: flex</code>, <code>justify-content</code>, <code>align-items</code>, <code>gap</code>, and <code>flex-direction</code>.</p>
+    </section>
+
+    <!-- Key Concepts -->
+    <section class="concept-grid">
+      <div class="concept-card">
+        <h3>display: flex</h3>
+        <p>Defines a flex container and transforms all direct children into flexible items.</p>
+      </div>
+      <div class="concept-card">
+        <h3>justify-content</h3>
+        <p>Aligns items along the main horizontal axis: <code>space-between</code>, <code>center</code>, <code>flex-start</code>.</p>
+      </div>
+      <div class="concept-card">
+        <h3>align-items</h3>
+        <p>Aligns flex items along the vertical cross axis: <code>center</code>, <code>flex-end</code>, <code>stretch</code>.</p>
+      </div>
+      <div class="concept-card">
+        <h3>gap</h3>
+        <p>Sets consistent spacing between flex items without applying outer margins.</p>
+      </div>
+      <div class="concept-card">
+        <h3>flex-direction</h3>
+        <p>Specifies main axis direction: <code>row</code> (default horizontal) or <code>column</code> (vertical).</p>
+      </div>
+    </section>
+
+    <!-- Mini Project 1: Navigation Bar -->
+    <section class="demo-section">
+      <h2>📌 Mini Project 1: Flexbox Navigation Bar</h2>
+      <p class="sub">Uses <code>display: flex</code>, <code>justify-content: space-between</code>, and <code>align-items: center</code>.</p>
+      
+      <div class="demo-nav">
+        <div style="font-weight:800; font-size:1.2rem; color:var(--text);">ExamVerse AI</div>
+        <div class="demo-nav-links">
+          <a href="#" style="color:var(--text); text-decoration:none;">Dashboard</a>
+          <a href="#" style="color:var(--muted); text-decoration:none;">Mock Tests</a>
+          <a href="#" style="color:var(--muted); text-decoration:none;">PYQs</a>
+          <a href="#" class="btn btn-primary" style="padding:0.4rem 1rem; font-size:0.85rem;">Profile</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mini Project 2: Feature Cards Section -->
+    <section class="demo-section">
+      <h2>⚡ Mini Project 2: Flexbox Feature Cards</h2>
+      <p class="sub">Uses <code>display: flex</code>, <code>flex-direction: column</code>, <code>gap: 1.5rem</code>, and <code>flex-wrap: wrap</code>.</p>
+      
+      <div class="demo-features">
+        <div class="demo-feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3 style="font-size:1.1rem;">AI Tutor 24/7</h3>
+          <p style="color:var(--muted); font-size:0.9rem;">Instant step-by-step solutions for complex exam questions.</p>
+        </div>
+        <div class="demo-feature-card">
+          <div class="feature-icon">📊</div>
+          <h3 style="font-size:1.1rem;">Smart Analytics</h3>
+          <p style="color:var(--muted); font-size:0.9rem;">Detailed accuracy metrics, accuracy velocity, and weak-area alerts.</p>
+        </div>
+        <div class="demo-feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 style="font-size:1.1rem;">Adaptive Speed Tests</h3>
+          <p style="color:var(--muted); font-size:0.9rem;">Real exam simulation environment with live rank prediction.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <div style="display:flex; justify-content:space-between; margin:3rem 0; gap:1rem;">
+      <a href="./boxmodel.html" class="btn btn-secondary">← Back to Step 3 (Box Model)</a>
+      <a href="./grid.html" class="btn btn-primary">Go to Step 5 (CSS Grid) →</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid var(--border); padding:2rem 0; text-align:center; color:var(--muted); font-size:0.9rem;">
+    <div class="container">
+      <p>&copy; 2026 ExamVerse AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="./js/utils.js"></script>
+  <script src="./js/theme.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
+

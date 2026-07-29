@@ -1,9 +1,27 @@
 /* ==========================================
    ExamVerse AI - CSS Custom Properties (Variables)
+   Step 10: Light & Dark Mode Tokens
    ========================================== */
 
+/* Shared Design Tokens */
 :root {
-  /* Color Tokens */
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Courier New', monospace;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* Default Dark Theme Variables */
+:root, [data-theme="dark"] {
   --bg: #07111f;
   --surface: #0f1d31;
   --surface-2: #14263f;
@@ -23,22 +41,35 @@
   --warning: #ffc861;
   --warning-bg: rgba(255, 200, 97, 0.15);
 
-  /* Typography */
-  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'Courier New', monospace;
-
   /* Elevation & Shadows */
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.25);
   --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
 
-  /* Radii */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-full: 999px;
+/* Light Theme Variables */
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --surface-card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --primary-2: #0284c7;
+  --border: #e2e8f0;
+  --border-focus: rgba(37, 99, 235, 0.5);
 
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.25s ease;
+  /* Status Colors */
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.1);
+  --error: #dc2626;
+  --error-bg: rgba(220, 38, 38, 0.1);
+  --warning: #d97706;
+  --warning-bg: rgba(217, 119, 6, 0.15);
+
+  /* Elevation & Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
 }

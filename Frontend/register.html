@@ -415,30 +415,14 @@
   <script>
     // Set current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    const form = document.getElementById('register-form');
-    const messageBox = document.getElementById('form-message');
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault(); // Stop browser from reloading
-
-      const name     = document.getElementById('name').value.trim();
-      const password = document.getElementById('password').value;
-      const confirm  = document.getElementById('confirm-password').value;
-
-      // Validation: Passwords must match
-      if (password !== confirm) {
-        messageBox.textContent = '❌ Passwords do not match. Please re-enter them.';
-        messageBox.className = 'form-message error';
-        return;
-      }
-
-      // Success feedback
-      messageBox.textContent = `✅ Account created successfully for ${name}! Please log in.`;
-      messageBox.className = 'form-message success';
-      form.reset();
-    });
   </script>
 
+
+  <script src="./js/utils.js"></script>
+  <script src="./js/theme.js"></script>
+  <script src="./js/validation.js"></script>
+  <script src="./js/register.js"></script>
+  <script src="./js/app.js"></script>
 </body>
 </html>
+
