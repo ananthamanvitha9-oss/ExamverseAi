@@ -1,0 +1,92 @@
+.courseDetailsContainer {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    height: calc(100vh - 80px); /* Assuming topbar is 80px */
+}
+
+.contentArea {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.videoWrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+}
+
+.videoWrapper video {
+    width: 100%;
+    height: 100%;
+}
+
+.lessonInfo {
+    padding: 20px;
+}
+
+.lessonTitle {
+    margin: 0 0 10px 0;
+    color: #111827;
+}
+
+.sidebar {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.sidebarTitle {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.subjectTitle {
+    font-weight: 600;
+    color: #4b5563;
+    margin: 15px 0 5px 0;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 5px;
+}
+
+.chapterTitle {
+    font-weight: 500;
+    color: #6b7280;
+    margin: 10px 0 5px 10px;
+}
+
+.lessonList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 20px;
+}
+
+.lessonItem {
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.lessonItem:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.activeLesson {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 500;
+}

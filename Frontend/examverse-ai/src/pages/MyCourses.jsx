@@ -1,23 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import CourseCard from '../components/Dashboard/CourseCard';
-import styles from './Dashboard.module.css'; // Reusing dashboard grid styles
-import { coursesData } from '../data/courses'; // Importing Dummy Data
+import styles from './Dashboard.module.css';
 
 const MyCourses = () => {
     // 1. Initialize State to hold our data
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // 2. Use Effect to simulate a backend API fetch
+    // 2. Fetch data from Laravel API
     useEffect(() => {
-        // Simulate a 500ms network delay to make it feel real
-        const timer = setTimeout(() => {
-            setCourses(coursesData);
-            setLoading(false);
-        }, 500);
+        const fetchCourses = async () => {
+            try {
+                // Connect to the real Laravel backend!
+                const response = await axios.get('http://127.0.0.1:8000/api/courses');
+                
+                // Map the Laravel database structure to our React component's expected props
+                const formattedCourses = response.data.map(course => ({
+                    id: course.id,
+                    title: course.name,
+                    // Just grabbing the first chapter of the first subject as a placeholder for current chapter
+                    chapter: course.subjects?.[0]?.chapters?.[0]?.name || 'Introduction',
+                    progress: 0, // Hardcoded for now until we build student progress tracking
+                    status: 'Continue'
+                }));
+                
+                setCourses(formattedCourses);
+            } catch (error) {
+                console.error("Error fetching courses from Laravel API:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        return () => clearTimeout(timer);
+        fetchCourses();
     }, []);
 
     return (

@@ -1,0 +1,124 @@
+.analyticsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.header h1 {
+    font-size: 2.2rem;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #6b7280;
+    font-size: 1.1rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    border-radius: 16px;
+    padding: 30px;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    color: #111827;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 10px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.formInput {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.formInput:focus {
+    border-color: #2563eb;
+}
+
+.generateBtn {
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+}
+
+.generateBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.generateBtn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.planGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.planDayCard {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.dayLabel {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #4f46e5;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.topicText {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.durationBadge {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}

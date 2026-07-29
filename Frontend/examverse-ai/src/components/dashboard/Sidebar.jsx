@@ -5,6 +5,7 @@ import styles from './Sidebar.module.css';
 const Sidebar = () => {
     const navItems = [
         { name: "Dashboard", path: "/dashboard", icon: "🏠" },
+        { name: "Analytics", path: "/dashboard/analytics", icon: "📈" },
         { name: "Courses", path: "/dashboard/courses", icon: "📚" },
         { name: "Mock Tests", path: "/dashboard/tests", icon: "📝" },
         { name: "AI Tutor", path: "/dashboard/ai-tutor", icon: "🤖" },

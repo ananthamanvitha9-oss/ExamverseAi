@@ -1,23 +1,21 @@
 import React from 'react';
-import styles from './DashboardComponents.module.css';
+import { Link } from 'react-router-dom';
+import styles from '../../pages/Dashboard.module.css';
 
-const CourseCard = ({ title, chapter, progress, status = "Continue" }) => {
+const CourseCard = ({ id, title, chapter, progress, status = "Continue" }) => {
     return (
         <div className={`${styles.card} ${styles.courseCard}`}>
             <div className={styles.courseIcon}>📚</div>
             <div className={styles.courseInfo}>
                 <h4>{title}</h4>
                 <p>{chapter}</p>
-                {progress !== undefined && (
-                    <div className={styles.miniProgressContainer}>
-                        <div className={styles.miniProgressBar} style={{ width: `${progress}%` }}></div>
-                    </div>
-                )}
+                <div className={styles.progressBar}>
+                    <div className={styles.progressFill} style={{ width: `${progress}%` }}></div>
+                </div>
             </div>
             <div className={styles.courseAction}>
-                <button className={status === "Start" ? styles.startBtn : styles.continueBtn}>
-                    {status}
-                </button>
+                <span className={styles.status}>{progress}%</span>
+                <Link to={`/dashboard/courses/${id}`} className={styles.btnSecondary}>{status}</Link>
             </div>
         </div>
     );

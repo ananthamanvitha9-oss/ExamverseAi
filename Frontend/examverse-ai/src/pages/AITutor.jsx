@@ -72,27 +72,24 @@ const AITutor = () => {
                                 <div className={`${styles.chatBubble} ${styles[msg.sender]}`}>
                                     {msg.text}
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Input Area */}
-                    <div className={styles.inputArea}>
-                        <form className={styles.inputWrapper} onSubmit={handleSend}>
-                            <input 
-                                type="text" 
-                                className={styles.chatInput} 
-                                placeholder="Ask a question..."
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
-                            />
-                            <button type="submit" className={styles.sendBtn}>
-                                ↗
-                            </button>
-                        </form>
-                    </div>
+                <div className={styles.inputArea}>
+                    <input 
+                        type="text" 
+                        className={styles.chatInput} 
+                        placeholder="Ask a question about UPSC, SSC, or general knowledge..." 
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        disabled={isLoading}
+                    />
+                    <button 
+                        className={styles.sendButton} 
+                        onClick={handleSendMessage}
+                        disabled={isLoading || !inputValue.trim()}
+                    >
+                        Send
+                    </button>
                 </div>
-
             </div>
         </DashboardLayout>
     );

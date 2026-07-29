@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('ai_study_plans', function (Blueprint $table) {
             $table->id();
+            $table->string('weak_subjects');
+            $table->date('exam_date');
+            $table->text('plan_data');
             $table->timestamps();
         });
     }

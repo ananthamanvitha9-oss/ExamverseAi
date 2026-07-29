@@ -1,27 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
-import { useAuth } from '../context/AuthContext';
 import styles from './Profile.module.css';
 
 const Profile = () => {
-    const { user, logout } = useAuth();
+    const [user, setUser] = useState({ name: '', email: '', phone: '', target_exam: '' });
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://127.0.0.1:8000/api/user', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setUser({
+                    name: response.data.name || '',
+                    email: response.data.email || '',
+                    phone: response.data.phone || '',
+                    target_exam: response.data.target_exam || ''
+                });
+            } catch (error) {
+                console.error("Error fetching profile", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProfile();
+    }, []);
+
+    const handleChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
+
+    const handleSave = async (e) => {
+        e.preventDefault();
+        setSaving(true);
+        setMessage(null);
+        try {
+            const token = localStorage.getItem('token');
+            await axios.put('http://127.0.0.1:8000/api/user', user, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setMessage("Profile updated successfully!");
+        } catch (error) {
+            console.error("Error updating profile", error);
+            setMessage("Failed to update profile.");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) return <DashboardLayout><p>Loading...</p></DashboardLayout>;
 
     return (
         <DashboardLayout>
-            <div className={styles.container}>
-                
-                {/* Profile Header Card */}
-                <div className={styles.profileHeader}>
-                    <div className={styles.avatar}>
-                        {user?.full_name?.charAt(0) || 'S'}
-                    </div>
-                    <div className={styles.userInfo}>
-                        <h2>{user?.full_name || 'Student Name'}</h2>
-                        <p>{user?.email || 'student@examverse.ai'}</p>
-                        <span className={styles.roleBadge}>{user?.role || 'Student'}</span>
-                    </div>
-                </div>
-
                 {/* Settings Grid */}
                 <div className={styles.settingsGrid}>
                     

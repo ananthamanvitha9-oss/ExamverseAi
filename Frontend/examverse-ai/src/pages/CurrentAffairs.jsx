@@ -37,30 +37,74 @@ const CurrentAffairs = () => {
                             {tab}
                         </button>
                     ))}
-                </div>
-
-                {/* News Cards Grid */}
-                {loading ? (
-                    <p>Loading news...</p>
-                ) : (
-                    <div className={styles.newsGrid}>
-                        {newsData.map((news) => (
-                            <div key={news.id} className={styles.newsCard}>
-                                <div className={styles.cardHeader}>
-                                    <span className={styles.categoryBadge}>{news.category}</span>
-                                    <button className={styles.bookmarkBtn}>🔖</button>
-                                </div>
-                                <h3 className={styles.newsTitle}>{news.title}</h3>
-                                <div className={styles.cardFooter}>
-                                    <span>📅 {news.date}</span>
-                                    <span>⏱️ {news.readTime} read</span>
-                                </div>
-                                <button className={styles.readMoreBtn}>Read Full Article ➔</button>
-                            </div>
-                        ))}
-                    </div>
-                )}
+            <div className={styles.header}>
+                <h1>Current Affairs & News</h1>
+                <p>Stay updated with daily insights, weekly recaps, and monthly magazines.</p>
             </div>
+
+            <div className={styles.tabs}>
+                {['Daily', 'Weekly', 'Monthly'].map(tab => (
+                    <button 
+                        key={tab}
+                        className={`${styles.tabBtn} ${activeTab === tab ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab(tab)}
+                    >
+                        {tab}
+                    </button>
+                ))}
+            </div>
+
+            {loading ? (
+                <p>Loading news...</p>
+            ) : (
+                <div className={styles.newsGrid}>
+                    {filteredArticles.length > 0 ? filteredArticles.map(article => (
+                        <div key={article.id} className={styles.newsCard}>
+                            <div className={styles.date}>
+                                {new Date(article.created_at).toLocaleDateString()}
+                            </div>
+                            <h3 className={styles.cardTitle}>{article.title}</h3>
+                            <p className={styles.cardExcerpt}>
+                                {article.content.substring(0, 100)}...
+                            </p>
+                            <div className={styles.cardActions}>
+                                <button className={styles.readBtn} onClick={() => openModal(article)}>
+                                    Read More &rarr;
+                                </button>
+                                {article.pdf_url && (
+                                    <a href={article.pdf_url} target="_blank" rel="noreferrer" className={styles.downloadBtn}>
+                                        Download PDF
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    )) : (
+                        <p>No {activeTab.toLowerCase()} articles found.</p>
+                    )}
+                </div>
+            )}
+
+            {/* Reading Modal */}
+            {selectedArticle && (
+                <div className={styles.modalOverlay} onClick={closeModal}>
+                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+                        <button className={styles.closeBtn} onClick={closeModal}>&times;</button>
+                        <span className={styles.modalCategory}>{selectedArticle.category}</span>
+                        <h2 className={styles.modalTitle}>{selectedArticle.title}</h2>
+                        <div className={styles.date}>Published on {new Date(selectedArticle.created_at).toLocaleDateString()}</div>
+                        <div className={styles.modalBody}>
+                            <p>{selectedArticle.content}</p>
+                        </div>
+                        {selectedArticle.pdf_url && (
+                            <div style={{ marginTop: '30px' }}>
+                                <a href={selectedArticle.pdf_url} target="_blank" rel="noreferrer" style={{ background: '#2563eb', color: 'white', padding: '10px 20px', borderRadius: '6px', textDecoration: 'none', display: 'inline-block' }}>
+                                    Download Full PDF Magazine
+                                </a>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </DashboardLayout>
     );
 };

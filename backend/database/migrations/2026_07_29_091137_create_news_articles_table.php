@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mock_tests', function (Blueprint $table) {
+        Schema::create('news_articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('exam_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->integer('duration_minutes');
+            $table->text('content');
+            $table->enum('category', ['Daily', 'Weekly', 'Monthly']);
+            $table->string('pdf_url')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mock_tests');
+        Schema::dropIfExists('news_articles');
     }
 };
