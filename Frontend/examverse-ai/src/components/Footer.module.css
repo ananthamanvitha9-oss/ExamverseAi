@@ -1,0 +1,71 @@
+.footer {
+    background-color: #111827; /* Dark theme for contrast */
+    color: #f9fafb;
+    padding-top: 4rem;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.logo span {
+    color: #3b82f6; /* Examverse AI blue accent */
+}
+
+.tagline {
+    color: #9ca3af;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+.linksSection h4, .legalSection h4 {
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.linksSection ul, .legalSection ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.linksSection a, .legalSection a {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.linksSection a:hover, .legalSection a:hover {
+    color: #3b82f6;
+}
+
+.bottomBar {
+    border-top: 1px solid #374151;
+    text-align: center;
+    padding: 1.5rem 0;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
