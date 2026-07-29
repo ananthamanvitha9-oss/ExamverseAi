@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import api from '../services/api';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import styles from './MockTests.module.css';
-import { mockTestsData } from '../data/mocktests';
 
 const MockTests = () => {
     const [tests, setTests] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setTests(mockTestsData);
-            setLoading(false);
         const fetchTests = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/mock-tests');
-                setTests(response.data);
+                // Fallback dummy data if API fails
+                const dummyTests = [
+                    { id: 1, title: 'UPSC Prelims Mock 1', questions: 100, duration: '2 Hours', status: 'New' },
+                    { id: 2, title: 'SSC CGL Tier 1 Mock', questions: 100, duration: '1 Hour', status: 'Completed', score: '145/200' },
+                ];
+                
+                try {
+                    const response = await api.get('/mock-tests');
+                    setTests(response.data.length ? response.data : dummyTests);
+                } catch (e) {
+                    setTests(dummyTests);
+                }
             } catch (error) {
                 console.error("Error fetching tests:", error);
             } finally {
@@ -24,8 +31,24 @@ const MockTests = () => {
         fetchTests();
     }, []);
 
+    const getStatusStyle = (status) => {
+        if (status === 'Completed') return styles.completed;
+        if (status === 'Resume') return styles.resume;
+        return styles.new;
+    };
+
     return (
         <DashboardLayout>
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <h1>Mock Tests</h1>
+                    <p>Practice with real exam simulation and AI analysis.</p>
+                </div>
+                
+                {loading ? (
+                    <p>Loading tests...</p>
+                ) : (
+                    <div className={styles.grid}>
                         {tests.map((test) => (
                             <div key={test.id} className={styles.testCard}>
                                 <div className={styles.cardTop}>

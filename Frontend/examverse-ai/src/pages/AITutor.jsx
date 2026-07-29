@@ -7,6 +7,7 @@ const AITutor = () => {
     const { user } = useAuth();
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const suggestions = [
         "Explain Fundamental Rights.",
@@ -14,16 +15,17 @@ const AITutor = () => {
         "Create Quiz."
     ];
 
-    const handleSend = (e) => {
-        e.preventDefault();
+    const handleSendMessage = (e) => {
+        if (e) e.preventDefault();
         if (!inputValue.trim()) return;
         
-        // Add user message to UI
         const newMsg = { text: inputValue, sender: 'user' };
         setMessages([...messages, newMsg]);
         setInputValue('');
-        
-        // Note: AI backend connection will happen in a future sprint!
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') handleSendMessage();
     };
 
     return (
@@ -38,8 +40,6 @@ const AITutor = () => {
                     </div>
                     <div className={styles.historyList}>
                         <div className={styles.historyItem}>Explain Fundamental Rights</div>
-                        <div className={styles.historyItem}>Trigonometry formulas</div>
-                        <div className={styles.historyItem}>Indus Valley Civilization</div>
                     </div>
                 </div>
 
@@ -72,23 +72,28 @@ const AITutor = () => {
                                 <div className={`${styles.chatBubble} ${styles[msg.sender]}`}>
                                     {msg.text}
                                 </div>
-                <div className={styles.inputArea}>
-                    <input 
-                        type="text" 
-                        className={styles.chatInput} 
-                        placeholder="Ask a question about UPSC, SSC, or general knowledge..." 
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        disabled={isLoading}
-                    />
-                    <button 
-                        className={styles.sendButton} 
-                        onClick={handleSendMessage}
-                        disabled={isLoading || !inputValue.trim()}
-                    >
-                        Send
-                    </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className={styles.inputArea}>
+                        <input 
+                            type="text" 
+                            className={styles.chatInput} 
+                            placeholder="Ask a question about UPSC, SSC, or general knowledge..." 
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                            disabled={isLoading}
+                        />
+                        <button 
+                            className={styles.sendButton} 
+                            onClick={handleSendMessage}
+                            disabled={isLoading || !inputValue.trim()}
+                        >
+                            Send
+                        </button>
+                    </div>
                 </div>
             </div>
         </DashboardLayout>

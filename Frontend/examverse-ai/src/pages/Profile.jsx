@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
+import { useAuth } from '../context/AuthContext';
 import styles from './Profile.module.css';
 
 const Profile = () => {
+    const { logout } = useAuth();
     const [user, setUser] = useState({ name: '', email: '', phone: '', target_exam: '' });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -13,7 +15,11 @@ const Profile = () => {
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://127.0.0.1:8000/api/user', {
+                if (!token) {
+                    setLoading(false);
+                    return;
+                }
+                const response = await api.get('/user', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setUser({
@@ -41,7 +47,7 @@ const Profile = () => {
         setMessage(null);
         try {
             const token = localStorage.getItem('token');
-            await axios.put('http://127.0.0.1:8000/api/user', user, {
+            await api.put('/user', user, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessage("Profile updated successfully!");
@@ -57,13 +63,14 @@ const Profile = () => {
 
     return (
         <DashboardLayout>
-                {/* Settings Grid */}
+            <div className={styles.profileContainer}>
+                <div className={styles.header}>
+                    <h1>Profile Settings</h1>
+                </div>
+
                 <div className={styles.settingsGrid}>
-                    
-                    {/* Academic Settings */}
                     <div className={styles.settingsCard}>
                         <h3>Academic Preferences</h3>
-                        
                         <div className={styles.settingRow}>
                             <div>
                                 <h4>Selected Exam</h4>
@@ -75,7 +82,6 @@ const Profile = () => {
                                 <option value="JEE">JEE Mains</option>
                             </select>
                         </div>
-
                         <div className={styles.settingRow}>
                             <div>
                                 <h4>Language</h4>
@@ -88,10 +94,8 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* App Settings */}
                     <div className={styles.settingsCard}>
                         <h3>App Settings</h3>
-                        
                         <div className={styles.settingRow}>
                             <div>
                                 <h4>Dark Mode</h4>
@@ -102,7 +106,6 @@ const Profile = () => {
                                 <span className={styles.slider}></span>
                             </label>
                         </div>
-
                         <div className={styles.settingRow}>
                             <div>
                                 <h4>Notifications</h4>
@@ -114,16 +117,13 @@ const Profile = () => {
                             </label>
                         </div>
                     </div>
-
                 </div>
 
-                {/* Danger Zone */}
                 <div className={styles.dangerZone}>
                     <button onClick={logout} className={styles.logoutBtn}>
                         Log Out of Examverse
                     </button>
                 </div>
-
             </div>
         </DashboardLayout>
     );
