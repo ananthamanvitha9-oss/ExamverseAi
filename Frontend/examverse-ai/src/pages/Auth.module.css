@@ -3,29 +3,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f3f4f6;
+    background: transparent;
     padding: 2rem;
+    flex: 1;
 }
 
 .authCard {
-    background: white;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
     padding: 3rem;
     border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 480px;
+    color: white;
 }
 
 .authCard h2 {
     margin: 0 0 0.5rem 0;
     font-size: 2rem;
-    color: #111827;
+    color: white;
     text-align: center;
 }
 
 .authCard p {
     text-align: center;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 2rem;
 }
 

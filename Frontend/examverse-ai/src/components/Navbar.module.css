@@ -1,11 +1,14 @@
 /* Navbar.module.css */
 
 .header {
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
-    z-index: 9999; /* Ensure it stays above all other content */
+    z-index: 9999;
     width: 100%;
 }
 
@@ -22,13 +25,13 @@
 .logo a {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #111827; /* Dark gray */
+    color: #ffffff;
     text-decoration: none;
     letter-spacing: -0.5px;
 }
 
 .logo span {
-    color: #2563eb; /* Primary AI Blue */
+    color: #93c5fd; /* Lighter blue for contrast */
 }
 
 /* Desktop Links */
@@ -42,7 +45,7 @@
 
 .navLinks a {
     text-decoration: none;
-    color: #4b5563;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
     font-size: 1rem;
     transition: color 0.2s ease-in-out;
@@ -50,8 +53,9 @@
 
 .navLinks a:hover,
 .navLinks a:focus-visible {
-    color: #2563eb;
-    outline: none; /* Focus handled by color shift for clean UI, but normally keep outline for strict accessibility */
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    outline: none;
 }
 
 .mobileAuth {

@@ -1,7 +1,11 @@
 .footer {
-    background-color: #111827; /* Dark theme for contrast */
+    background: rgba(17, 24, 39, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: #f9fafb;
     padding-top: 4rem;
+    margin-top: auto;
 }
 
 .container {
