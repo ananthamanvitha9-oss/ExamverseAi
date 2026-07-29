@@ -1,0 +1,56 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+}
+
+.mainContent {
+    flex-grow: 1;
+    margin-left: 260px; /* Matches sidebar width */
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    height: 70px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.welcomeMsg {
+    color: #374151;
+    font-size: 1rem;
+}
+
+.logoutBtn {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+    background-color: #fef2f2;
+}
+
+.pageContent {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+@media screen and (max-width: 1024px) {
+    .mainContent {
+        margin-left: 0;
+    }
+}

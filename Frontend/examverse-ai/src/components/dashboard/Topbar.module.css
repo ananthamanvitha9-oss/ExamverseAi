@@ -1,0 +1,98 @@
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    height: 72px;
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    width: 350px;
+}
+
+.searchIcon {
+    color: #6b7280;
+    margin-right: 0.5rem;
+}
+
+.searchInput {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 0.875rem;
+    color: #111827;
+}
+
+.actionsContainer {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.iconBtn {
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    color: #4b5563;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.iconBtn:hover {
+    background: #f3f4f6;
+}
+
+.badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #ef4444;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileLink {
+    text-decoration: none;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #e5e7eb;
+    transition: box-shadow 0.2s;
+}
+
+.avatar:hover {
+    box-shadow: 0 0 0 2px #3b82f6;
+}

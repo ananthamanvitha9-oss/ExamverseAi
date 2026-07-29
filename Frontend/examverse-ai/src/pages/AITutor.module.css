@@ -1,0 +1,221 @@
+.tutorContainer {
+    display: flex;
+    height: calc(100vh - 140px); /* Account for topbar and padding */
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+/* History Panel */
+.historyPanel {
+    width: 280px;
+    background: #f9fafb;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.historyHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.historyHeader h3 {
+    margin: 0;
+    color: #111827;
+    font-size: 1.125rem;
+}
+
+.newChatBtn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: white;
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    color: #3b82f6;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.newChatBtn:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.historyList {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.historyItem {
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #4b5563;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.historyItem:hover {
+    background: #e5e7eb;
+}
+
+/* Main Chat Area */
+.chatArea {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+}
+
+.chatMessages {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Empty State / Suggestions */
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.emptyState h2 {
+    color: #111827;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.emptyState p {
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.suggestions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.suggestionChip {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.suggestionChip:hover {
+    background: #dbeafe;
+    transform: translateY(-2px);
+}
+
+/* Chat Bubbles */
+.messageRow {
+    display: flex;
+    width: 100%;
+}
+
+.messageRow.user {
+    justify-content: flex-end;
+}
+
+.messageRow.ai {
+    justify-content: flex-start;
+}
+
+.chatBubble {
+    max-width: 70%;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
+.chatBubble.user {
+    background: #3b82f6;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.chatBubble.ai {
+    background: #f3f4f6;
+    color: #111827;
+    border-bottom-left-radius: 4px;
+}
+
+/* Input Area */
+.inputArea {
+    padding: 1.5rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.inputWrapper {
+    display: flex;
+    gap: 1rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0.5rem;
+    transition: border-color 0.2s;
+}
+
+.inputWrapper:focus-within {
+    border-color: #3b82f6;
+    background: white;
+}
+
+.chatInput {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    padding: 0.75rem;
+    font-size: 1rem;
+    outline: none;
+    color: #111827;
+}
+
+.sendBtn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: background 0.2s;
+}
+
+.sendBtn:hover {
+    background: #2563eb;
+}
+
+@media screen and (max-width: 768px) {
+    .historyPanel {
+        display: none; /* Hide history on mobile for now */
+    }
+}
