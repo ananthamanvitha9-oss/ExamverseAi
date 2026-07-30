@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import WelcomeCard from '../components/dashboard/WelcomeCard';
 import ProgressCard from '../components/dashboard/ProgressCard';
@@ -11,6 +12,10 @@ import styles from './Dashboard.module.css';
 const Dashboard = () => {
     return (
         <DashboardLayout>
+            <Helmet>
+                <title>Dashboard | Examverse AI</title>
+                <meta name="description" content="Track your progress and access your AI study tools." />
+            </Helmet>
             <div className={styles.dashboardGrid}>
                 {/* Top Row: Welcome & Overall Progress */}
                 <div className={styles.topRow}>

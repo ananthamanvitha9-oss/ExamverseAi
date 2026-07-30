@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import ExamSection from './components/ExamSection';
 import Footer from './components/Footer';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -24,46 +23,36 @@ import CurrentAffairsMap from './pages/CurrentAffairsMap';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
-// Temporary Home Page Component
-const Home = () => {
-  return (
-    <>
-      <Hero />
-      <Features />
-      <ExamSection />
-    </>
-  );
-};
-
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          
-          {/* Protected Routes */}
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/dashboard/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-          <Route path="/dashboard/courses" element={<ProtectedRoute><MyCourses /></ProtectedRoute>} />
-          <Route path="/dashboard/courses/:id" element={<ProtectedRoute><CourseDetails /></ProtectedRoute>} />
-          <Route path="/dashboard/news" element={<ProtectedRoute><CurrentAffairs /></ProtectedRoute>} />
-          <Route path="/dashboard/tests" element={<ProtectedRoute><MockTests /></ProtectedRoute>} />
-          <Route path="/dashboard/mock-tests/:id" element={<ProtectedRoute><MockTestInterface /></ProtectedRoute>} />
-          <Route path="/dashboard/ai-tutor" element={<ProtectedRoute><AITutor /></ProtectedRoute>} />
-          <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-          <Route path="/dashboard/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="/dashboard/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-          <Route path="/dashboard/study-room" element={<ProtectedRoute><StudyRoom /></ProtectedRoute>} />
-          <Route path="/dashboard/map" element={<ProtectedRoute><CurrentAffairsMap /></ProtectedRoute>} />
-        </Routes>
-        <Footer />
-      </Router>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <Router>
+          {/* Note: Navbar is now part of Home explicitly so it can be omitted on Dashboard */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<><Navbar /><Login /></>} />
+            <Route path="/register" element={<><Navbar /><Register /></>} />
+            <Route path="/forgot-password" element={<><Navbar /><ForgotPassword /></>} />
+            
+            {/* Protected Routes */}
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+            <Route path="/dashboard/courses" element={<ProtectedRoute><MyCourses /></ProtectedRoute>} />
+            <Route path="/dashboard/courses/:id" element={<ProtectedRoute><CourseDetails /></ProtectedRoute>} />
+            <Route path="/dashboard/news" element={<ProtectedRoute><CurrentAffairs /></ProtectedRoute>} />
+            <Route path="/dashboard/tests" element={<ProtectedRoute><MockTests /></ProtectedRoute>} />
+            <Route path="/dashboard/mock-tests/:id" element={<ProtectedRoute><MockTestInterface /></ProtectedRoute>} />
+            <Route path="/dashboard/ai-tutor" element={<ProtectedRoute><AITutor /></ProtectedRoute>} />
+            <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/dashboard/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/dashboard/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+            <Route path="/dashboard/study-room" element={<ProtectedRoute><StudyRoom /></ProtectedRoute>} />
+            <Route path="/dashboard/map" element={<ProtectedRoute><CurrentAffairsMap /></ProtectedRoute>} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </HelmetProvider>
   );
 }
 
