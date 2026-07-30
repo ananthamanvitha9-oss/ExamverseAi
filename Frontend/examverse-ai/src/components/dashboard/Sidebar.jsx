@@ -12,6 +12,8 @@ const Sidebar = () => {
         { name: "Courses", path: "/dashboard/courses", icon: "📚" },
         { name: "Mock Tests", path: "/dashboard/tests", icon: "📝" },
         { name: "AI Tutor", path: "/dashboard/ai-tutor", icon: "🤖" },
+        { name: "Global Room", path: "/dashboard/study-room", icon: "💬" },
+        { name: "Geopolitics Map", path: "/dashboard/map", icon: "🗺️" },
         { name: "Current Affairs", path: "/dashboard/news", icon: "📰" },
         { name: "Notes", path: "/dashboard/notes", icon: "📖" },
         { name: "Profile", path: "/dashboard/profile", icon: "👤" },

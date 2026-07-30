@@ -122,10 +122,27 @@
 
 .chatHeader {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
     background: white;
     border-bottom: 1px solid #e5e7eb;
+}
+
+.modelDropdown {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    font-weight: 500;
+    color: #374151;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.modelDropdown:focus {
+    border-color: #3b82f6;
 }
 
 .voiceToggle {

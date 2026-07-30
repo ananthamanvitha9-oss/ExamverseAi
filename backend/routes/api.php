@@ -27,5 +27,6 @@ Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/mock-tests', [MockTestController::class, 'index']);
 Route::get('/mock-tests/{id}', [MockTestController::class, 'show']);
 Route::post('/chat', [AiController::class, 'chat']);
+Route::post('/quiz/generate', [AiController::class, 'generateQuiz']);
 Route::get('/news', [NewsController::class, 'index']);
 Route::post('/study-plan/generate', [AnalyticsController::class, 'generatePlan']);

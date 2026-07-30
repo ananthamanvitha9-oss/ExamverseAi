@@ -10,6 +10,7 @@ const AITutor = () => {
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isVoiceMode, setIsVoiceMode] = useState(false);
+    const [selectedModel, setSelectedModel] = useState('gemini');
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -40,6 +41,7 @@ const AITutor = () => {
             const token = localStorage.getItem('token');
             const response = await api.post('/chat', {
                 message: userText,
+                model: selectedModel,
                 voice: isVoiceMode
             }, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -89,6 +91,17 @@ const AITutor = () => {
                 {/* Right Area: Main Chat UI */}
                 <div className={styles.chatArea}>
                     <div className={styles.chatHeader}>
+                        <div className={styles.modelSelector}>
+                            <select 
+                                value={selectedModel} 
+                                onChange={(e) => setSelectedModel(e.target.value)}
+                                className={styles.modelDropdown}
+                            >
+                                <option value="gemini">Gemini 1.5 (Standard)</option>
+                                <option value="groq">Llama-3 70B (Groq - Fast)</option>
+                                <option value="openrouter">Claude 3.5 (Pro Reasoning)</option>
+                            </select>
+                        </div>
                         <div className={styles.voiceToggle}>
                             <span>Voice Mode</span>
                             <label className={styles.switch}>

@@ -19,6 +19,8 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Notifications from './pages/Notifications';
 import Analytics from './pages/Analytics';
+import StudyRoom from './pages/StudyRoom';
+import CurrentAffairsMap from './pages/CurrentAffairsMap';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
@@ -56,6 +58,8 @@ function App() {
           <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/dashboard/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/dashboard/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+          <Route path="/dashboard/study-room" element={<ProtectedRoute><StudyRoom /></ProtectedRoute>} />
+          <Route path="/dashboard/map" element={<ProtectedRoute><CurrentAffairsMap /></ProtectedRoute>} />
         </Routes>
         <Footer />
       </Router>
