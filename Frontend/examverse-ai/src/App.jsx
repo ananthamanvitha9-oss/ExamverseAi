@@ -24,6 +24,7 @@ const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
 const Leaderboard = React.lazy(() => import('./pages/Leaderboard'));
 const StudyPlanner = React.lazy(() => import('./pages/StudyPlanner'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
+const OAuthCallback = React.lazy(() => import('./pages/OAuthCallback'));
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -54,6 +55,7 @@ function App() {
                 <Route path="/register" element={<PageWrapper><><Navbar /><Register /></></PageWrapper>} />
                 <Route path="/forgot-password" element={<PageWrapper><><Navbar /><ForgotPassword /></></PageWrapper>} />
                 <Route path="/pricing" element={<PageWrapper><><Navbar /><Pricing /><Footer /></></PageWrapper>} />
+                <Route path="/auth/callback" element={<PageWrapper><OAuthCallback /></PageWrapper>} />
                 
                 {/* Super Admin Route */}
                 <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

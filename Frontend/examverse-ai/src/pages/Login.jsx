@@ -51,6 +51,15 @@ const Login = () => {
                     <Button type="submit" variant="primary" className={styles.submitBtn}>Sign In</Button>
                 </form>
 
+                <div className={styles.divider}>
+                    <span>OR</span>
+                </div>
+
+                <a href="http://localhost:8000/api/auth/google/redirect" className={styles.googleBtn}>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" />
+                    Sign in with Google
+                </a>
+
                 <p className={styles.authFooter}>
                     Don't have an account? <Link to="/register">Register here</Link>
                 </p>

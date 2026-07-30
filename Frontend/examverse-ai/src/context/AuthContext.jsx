@@ -38,6 +38,12 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user);
     };
 
+    const loginWithToken = async (token) => {
+        localStorage.setItem('token', token);
+        const profileData = await authService.getProfile();
+        setUser(profileData);
+    };
+
     const logout = async () => {
         try {
             await authService.logout();
@@ -54,6 +60,7 @@ export const AuthProvider = ({ children }) => {
             user, 
             login, 
             register, 
+            loginWithToken,
             logout, 
             loading,
             isAdmin: user?.role === 'admin',

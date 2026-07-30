@@ -10,8 +10,14 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\SocialAuthController;
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// Google OAuth Routes
+Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);

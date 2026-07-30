@@ -63,6 +63,15 @@ const Register = () => {
                     <Button type="submit" variant="primary" className={styles.submitBtn}>Sign Up</Button>
                 </form>
 
+                <div className={styles.divider}>
+                    <span>OR</span>
+                </div>
+
+                <a href="http://localhost:8000/api/auth/google/redirect" className={styles.googleBtn}>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" />
+                    Sign up with Google
+                </a>
+
                 <p className={styles.authFooter}>
                     Already have an account? <Link to="/login">Login here</Link>
                 </p>
