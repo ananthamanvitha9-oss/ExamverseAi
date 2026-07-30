@@ -74,3 +74,28 @@
         transition: transform 0.3s ease;
     }
 }
+
+.upgradeSection {
+    margin-top: auto;
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.upgradeBtn {
+    width: 100%;
+    padding: 0.875rem;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(217, 119, 6, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.upgradeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(217, 119, 6, 0.4);
+}

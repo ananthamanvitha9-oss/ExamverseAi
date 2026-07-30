@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.css';
+import PaymentModal from './PaymentModal';
 
 const Sidebar = () => {
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
     const navItems = [
         { name: "Dashboard", path: "/dashboard", icon: "🏠" },
         { name: "Analytics", path: "/dashboard/analytics", icon: "📈" },
@@ -33,6 +36,20 @@ const Sidebar = () => {
                     </NavLink>
                 ))}
             </nav>
+
+            <div className={styles.upgradeSection}>
+                <button 
+                    className={styles.upgradeBtn}
+                    onClick={() => setIsPaymentModalOpen(true)}
+                >
+                    👑 Upgrade to Pro
+                </button>
+            </div>
+
+            <PaymentModal 
+                isOpen={isPaymentModalOpen} 
+                onClose={() => setIsPaymentModalOpen(false)} 
+            />
         </aside>
     );
 };

@@ -18,6 +18,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'getProfile']);
     Route::put('/user', [UserController::class, 'updateProfile']);
     Route::post('/user/avatar', [UserController::class, 'updateAvatar']);
+
+    Route::post('/payment/create-order', [\App\Http\Controllers\PaymentController::class, 'createOrder']);
+    Route::post('/payment/verify', [\App\Http\Controllers\PaymentController::class, 'verifyPayment']);
 });
 
 Route::get('/courses', [CourseController::class, 'index']);

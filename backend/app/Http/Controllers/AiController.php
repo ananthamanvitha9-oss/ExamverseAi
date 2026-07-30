@@ -36,8 +36,37 @@ class AiController extends Controller
                 $data = $response->json();
                 $reply = $data['candidates'][0]['content']['parts'][0]['text'] ?? "I'm sorry, I couldn't generate a response.";
                 
+                $audioBase64 = null;
+                
+                // If frontend requests voice, generate it with ElevenLabs
+                if ($request->voice && env('ELEVENLABS_API_KEY')) {
+                    $voiceId = 'pNInz6obpgDQGcFmaJcg'; // Adam (or any default voice ID)
+                    $elevenLabsUrl = "https://api.elevenlabs.io/v1/text-to-speech/{$voiceId}";
+                    
+                    $elevenResponse = Http::withHeaders([
+                        'xi-api-key' => env('ELEVENLABS_API_KEY'),
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'audio/mpeg'
+                    ])->post($elevenLabsUrl, [
+                        'text' => $reply,
+                        'model_id' => 'eleven_multilingual_v2',
+                        'voice_settings' => [
+                            'stability' => 0.5,
+                            'similarity_boost' => 0.5
+                        ]
+                    ]);
+                    
+                    if ($elevenResponse->successful()) {
+                        // Get raw audio bytes and base64 encode them
+                        $audioBase64 = base64_encode($elevenResponse->body());
+                    } else {
+                        \Illuminate\Support\Facades\Log::error('ElevenLabs Error: ' . $elevenResponse->body());
+                    }
+                }
+
                 return response()->json([
-                    'reply' => $reply
+                    'reply' => $reply,
+                    'audio' => $audioBase64 ? "data:audio/mpeg;base64,{$audioBase64}" : null
                 ]);
             } else {
                 return response()->json(['error' => 'Failed to reach AI service.', 'details' => $response->json()], 500);
