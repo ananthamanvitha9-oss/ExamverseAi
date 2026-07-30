@@ -28,4 +28,26 @@ class UserController extends Controller
             'user' => $user
         ]);
     }
+
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = $request->user();
+
+        try {
+            $uploadedFileUrl = cloudinary()->upload($request->file('avatar')->getRealPath())->getSecurePath();
+
+            $user->update(['avatar_url' => $uploadedFileUrl]);
+
+            return response()->json([
+                'message' => 'Profile picture updated successfully',
+                'avatar_url' => $uploadedFileUrl
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Image upload failed: ' . $e->getMessage()], 500);
+        }
+    }
 }
