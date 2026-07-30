@@ -5,6 +5,8 @@ import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
+import { Link } from 'expo-router';
+
 export default function DashboardScreen() {
     const { user } = useAuth();
     const [exams, setExams] = useState([]);
@@ -26,16 +28,18 @@ export default function DashboardScreen() {
     };
 
     const renderExamItem = ({ item }: { item: any }) => (
-        <TouchableOpacity style={styles.examCard}>
-            <View style={styles.examIconContainer}>
-                <IconSymbol name="doc.text.fill" size={24} color="#6366f1" />
-            </View>
-            <View style={styles.examInfo}>
-                <Text style={styles.examTitle}>{item.topic}</Text>
-                <Text style={styles.examDetails}>Difficulty: {item.difficulty}</Text>
-            </View>
-            <IconSymbol name="chevron.right" size={20} color="#9ca3af" />
-        </TouchableOpacity>
+        <Link href={`/exam/${item.id}`} asChild>
+            <TouchableOpacity style={styles.examCard}>
+                <View style={styles.examIconContainer}>
+                    <IconSymbol name="doc.text.fill" size={24} color="#6366f1" />
+                </View>
+                <View style={styles.examInfo}>
+                    <Text style={styles.examTitle}>{item.topic}</Text>
+                    <Text style={styles.examDetails}>Difficulty: {item.difficulty}</Text>
+                </View>
+                <IconSymbol name="chevron.right" size={20} color="#9ca3af" />
+            </TouchableOpacity>
+        </Link>
     );
 
     return (
