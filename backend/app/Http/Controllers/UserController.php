@@ -50,4 +50,17 @@ class UserController extends Controller
             return response()->json(['error' => 'Image upload failed: ' . $e->getMessage()], 500);
         }
     }
+
+    public function saveFcmToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => 'required|string',
+        ]);
+
+        $request->user()->update([
+            'fcm_token' => $request->fcm_token
+        ]);
+
+        return response()->json(['message' => 'Token saved successfully']);
+    }
 }

@@ -21,6 +21,8 @@ import Analytics from './pages/Analytics';
 import StudyRoom from './pages/StudyRoom';
 import CurrentAffairsMap from './pages/CurrentAffairsMap';
 import AdminDashboard from './pages/AdminDashboard';
+import Leaderboard from './pages/Leaderboard';
+import StudyPlanner from './pages/StudyPlanner';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
@@ -50,16 +52,19 @@ function App() {
             {/* Protected Routes */}
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/dashboard/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+            <Route path="/dashboard/study-room" element={<ProtectedRoute><StudyRoom /></ProtectedRoute>} />
+            <Route path="/dashboard/current-affairs" element={<ProtectedRoute><CurrentAffairsMap /></ProtectedRoute>} />
+            <Route path="/dashboard/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+            <Route path="/dashboard/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
+            <Route path="/dashboard/study-planner" element={<ProtectedRoute><StudyPlanner /></ProtectedRoute>} />
+            <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/dashboard/mock-tests/:id" element={<ProtectedRoute><MockTestInterface /></ProtectedRoute>} />
+            <Route path="/dashboard/ai-tutor" element={<ProtectedRoute><AITutor /></ProtectedRoute>} />
+            <Route path="/dashboard/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="/dashboard/courses" element={<ProtectedRoute><MyCourses /></ProtectedRoute>} />
             <Route path="/dashboard/courses/:id" element={<ProtectedRoute><CourseDetails /></ProtectedRoute>} />
             <Route path="/dashboard/news" element={<ProtectedRoute><CurrentAffairs /></ProtectedRoute>} />
             <Route path="/dashboard/tests" element={<ProtectedRoute><MockTests /></ProtectedRoute>} />
-            <Route path="/dashboard/mock-tests/:id" element={<ProtectedRoute><MockTestInterface /></ProtectedRoute>} />
-            <Route path="/dashboard/ai-tutor" element={<ProtectedRoute><AITutor /></ProtectedRoute>} />
-            <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/dashboard/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-            <Route path="/dashboard/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-            <Route path="/dashboard/study-room" element={<ProtectedRoute><StudyRoom /></ProtectedRoute>} />
             <Route path="/dashboard/map" element={<ProtectedRoute><CurrentAffairsMap /></ProtectedRoute>} />
           </Routes>
         </Router>
