@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import styles from './Analytics.module.css';
 
@@ -18,9 +18,12 @@ const Analytics = () => {
         setError(null);
         
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/study-plan/generate', {
+            const token = localStorage.getItem('token');
+            const response = await api.post('/study-plan/generate', {
                 weak_subjects: weakSubjects,
                 exam_date: examDate
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
             });
             setStudyPlan(response.data.plan);
         } catch (err) {
