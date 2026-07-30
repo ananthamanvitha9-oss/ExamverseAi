@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Sidebar from './Sidebar';
-import Header from './Header';
+import Topbar from './Topbar';
 import styles from './DashboardLayout.module.css';
 import { requestForToken, onMessageListener } from '../../services/firebase';
 import api from '../../services/api';
@@ -34,7 +34,7 @@ const DashboardLayout = ({ children }) => {
         <div className={styles.layout}>
             <Sidebar />
             <div className={styles.mainContent}>
-                <Header />
+                <Topbar />
                 <main className={styles.contentArea}>
                     {children}
                 </main>

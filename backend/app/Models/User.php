@@ -66,8 +66,9 @@ class User extends Authenticatable
         }
 
         $today = now()->format('Y-m-d');
+        $lastRequestDateString = $this->last_request_date ? $this->last_request_date->format('Y-m-d') : null;
         
-        if ($this->last_request_date !== $today) {
+        if ($lastRequestDateString !== $today) {
             $this->daily_ai_requests = 0;
             $this->last_request_date = $today;
         }
