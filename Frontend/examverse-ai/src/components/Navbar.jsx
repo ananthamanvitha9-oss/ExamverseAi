@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
     // State to toggle the mobile menu dropdown
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { theme, toggleTheme } = useTheme();
 
     // Toggle function for accessibility and user interaction
     const toggleMenu = () => {
@@ -50,6 +53,13 @@ const Navbar = () => {
 
                 {/* Desktop Authentication Buttons */}
                 <div className={styles.authButtons}>
+                    <button 
+                        onClick={toggleTheme} 
+                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', marginRight: '15px' }}
+                        title="Toggle Dark Mode"
+                    >
+                        {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                    </button>
                     <Link to="/login" className={styles.loginBtn}>Login</Link>
                     <Link to="/register" className={styles.registerBtn}>Register</Link>
                 </div>
