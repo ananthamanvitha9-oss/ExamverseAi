@@ -1,0 +1,192 @@
+.pricingPage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f8fafc;
+}
+
+.container {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.header h1 {
+    font-size: 3rem;
+    color: #0f172a;
+    margin-bottom: 15px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.header p {
+    font-size: 1.25rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pricingCards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    width: 380px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.proCard {
+    border: 2px solid #8b5cf6;
+    box-shadow: 0 20px 25px -5px rgba(139, 92, 246, 0.15);
+}
+
+.badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.3);
+}
+
+.cardHeader {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.cardHeader h2 {
+    font-size: 1.8rem;
+    color: #0f172a;
+    margin-bottom: 5px;
+}
+
+.cardHeader p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.price {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.currency {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    margin-right: 5px;
+    color: #475569;
+}
+
+.period {
+    font-size: 1.2rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+.featuresList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+}
+
+.featuresList li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    color: #334155;
+    font-size: 1.05rem;
+}
+
+.check {
+    color: #64748b;
+}
+
+.proCheck {
+    color: #8b5cf6;
+}
+
+.cross {
+    color: #cbd5e1;
+}
+
+.btnSecondary {
+    width: 100%;
+    padding: 16px;
+    background: #f1f5f9;
+    color: #0f172a;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btnSecondary:hover {
+    background: #e2e8f0;
+}
+
+.btnPrimary {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.btnPrimary:hover {
+    box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.4);
+}
+
+@media (max-width: 768px) {
+    .pricingCards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .card {
+        width: 100%;
+        max-width: 400px;
+    }
+}

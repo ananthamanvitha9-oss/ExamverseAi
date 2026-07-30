@@ -56,7 +56,8 @@ export const AuthProvider = ({ children }) => {
             register, 
             logout, 
             loading,
-            isAdmin: user?.role === 'admin' 
+            isAdmin: user?.role === 'admin',
+            isPro: user?.is_pro === 1 || user?.is_pro === true
         }}>
             {children}
         </AuthContext.Provider>

@@ -10,9 +10,14 @@ class AiController extends Controller
     public function chat(Request $request)
     {
         $request->validate([
-            'message' => 'required|string',
+            'message' => 'required|string|max:1000',
             'model' => 'nullable|string' // 'gemini', 'groq', 'openrouter'
         ]);
+
+        $user = auth()->user();
+        if ($user && !$user->consumeAiRequest()) {
+            return response()->json(['error' => 'Daily AI limit reached. Upgrade to Pro for unlimited access.'], 402);
+        }
 
         $selectedModel = $request->model ?? 'gemini';
         $systemInstruction = "You are Examverse AI, an expert and highly encouraging tutor for Indian competitive exams like UPSC and SSC. Keep your answers concise, structured, and strictly related to education.";
@@ -106,14 +111,23 @@ class AiController extends Controller
     public function generateQuiz(Request $request)
     {
         $request->validate([
-            'topic' => 'required|string',
+            'topic' => 'required|string|max:100'
         ]);
+
+        $user = auth()->user();
+        if ($user && !$user->consumeAiRequest()) {
+            return response()->json(['error' => 'Daily AI limit reached. Upgrade to Pro for unlimited access.'], 402);
+        }
 
         $apiKey = env('GEMINI_API_KEY');
         $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={$apiKey}";
 
-        $prompt = "Generate a multiple-choice quiz about '{$request->topic}'. 
-        Return EXACTLY a valid JSON array of 5 questions. Do not wrap it in markdown blockquotes like ```json.
+        $prompt = "Generate a 5-question multiple choice quiz about {$request->topic}. 
+        Return ONLY a JSON array of objects. Each object should have:
+        - question: the question text
+        - options: an array of 4 string options
+        - correct_answer: the exact string of the correct option
+        - explanation: a brief explanation of why the answer is correct
         Each object in the array must have exactly these keys: 'question' (string), 'options' (array of 4 strings), 'correct_answer' (string, exactly matching one of the options), 'explanation' (string).";
 
         try {

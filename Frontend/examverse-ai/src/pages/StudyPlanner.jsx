@@ -4,6 +4,7 @@ import api from '../services/api';
 import styles from './StudyPlanner.module.css';
 import { Calendar, Clock, BookOpen, Target, Sparkles, CheckCircle2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import UpgradeModal from '../components/UpgradeModal';
 
 const StudyPlanner = () => {
     const [plan, setPlan] = useState(null);
@@ -13,6 +14,7 @@ const StudyPlanner = () => {
     // Form state
     const [examDate, setExamDate] = useState('');
     const [weakSubjects, setWeakSubjects] = useState('');
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
     useEffect(() => {
         fetchPlan();
@@ -47,7 +49,11 @@ const StudyPlanner = () => {
                 plan_data: response.data.plan
             });
         } catch (error) {
-            alert("Failed to generate plan. Ensure your API keys are correct.");
+            if (error.response && error.response.status === 402) {
+                setShowUpgradeModal(true);
+            } else {
+                alert("Failed to generate plan. Ensure your API keys are correct.");
+            }
         } finally {
             setGenerating(false);
         }
@@ -60,6 +66,12 @@ const StudyPlanner = () => {
             <Helmet>
                 <title>AI Study Planner | Examverse AI</title>
             </Helmet>
+            
+            <UpgradeModal 
+                isOpen={showUpgradeModal} 
+                onClose={() => setShowUpgradeModal(false)} 
+                title="AI Plan Limit Reached"
+            />
 
             <div className={styles.container}>
                 <div className={styles.header}>

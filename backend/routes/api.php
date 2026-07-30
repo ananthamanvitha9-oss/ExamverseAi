@@ -29,6 +29,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/study-plan/generate', [\App\Http\Controllers\StudyPlanController::class, 'generatePlan']);
     Route::get('/study-plan', [\App\Http\Controllers\StudyPlanController::class, 'getPlan']);
 
+    Route::post('/chat', [AiController::class, 'chat']);
+    Route::post('/quiz/generate', [AiController::class, 'generateQuiz']);
+
     // Super Admin Routes
     Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
         Route::get('/admin/stats', [\App\Http\Controllers\AdminController::class, 'stats']);
@@ -38,7 +41,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/mock-tests', [MockTestController::class, 'index']);
 Route::get('/mock-tests/{id}', [MockTestController::class, 'show']);
-Route::post('/chat', [AiController::class, 'chat']);
-Route::post('/quiz/generate', [AiController::class, 'generateQuiz']);
 Route::get('/news', [NewsController::class, 'index']);
+Route::post('/study-plan/generate', [AnalyticsController::class, 'generatePlan']);
 Route::post('/study-plan/generate', [AnalyticsController::class, 'generatePlan']);

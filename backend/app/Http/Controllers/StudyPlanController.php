@@ -17,6 +17,11 @@ class StudyPlanController extends Controller
         ]);
 
         $user = auth()->user();
+
+        if (!$user->consumeAiRequest()) {
+            return response()->json(['error' => 'Daily AI limit reached. Upgrade to Pro for unlimited access.'], 402);
+        }
+
         $daysUntilExam = Carbon::now()->diffInDays(Carbon::parse($request->exam_date));
 
         $prompt = "I am a student preparing for an exam on {$request->exam_date} (in {$daysUntilExam} days). My weakest subjects are: {$request->weak_subjects}. 

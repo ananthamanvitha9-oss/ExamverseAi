@@ -3,6 +3,7 @@ import DashboardLayout from '../components/dashboard/DashboardLayout';
 import { useAuth } from '../context/AuthContext';
 import styles from './AITutor.module.css';
 import api from '../services/api';
+import UpgradeModal from '../components/UpgradeModal';
 
 const AITutor = () => {
     const { user } = useAuth();
@@ -11,6 +12,7 @@ const AITutor = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isVoiceMode, setIsVoiceMode] = useState(false);
     const [selectedModel, setSelectedModel] = useState('gemini');
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -63,7 +65,11 @@ const AITutor = () => {
 
         } catch (error) {
             console.error("AI Chat Error", error);
-            setMessages(prev => [...prev, { text: "Sorry, I am having trouble connecting to the server.", sender: 'ai' }]);
+            if (error.response && error.response.status === 402) {
+                setShowUpgradeModal(true);
+            } else {
+                setMessages(prev => [...prev, { text: "Sorry, I am having trouble connecting to the server.", sender: 'ai' }]);
+            }
         } finally {
             setIsLoading(false);
         }
@@ -75,6 +81,11 @@ const AITutor = () => {
 
     return (
         <DashboardLayout>
+            <UpgradeModal 
+                isOpen={showUpgradeModal} 
+                onClose={() => setShowUpgradeModal(false)} 
+                title="AI Tutor Limit Reached"
+            />
             <div className={styles.tutorContainer}>
                 
                 {/* Left Sidebar: Chat History */}

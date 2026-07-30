@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import api from '../services/api';
 import styles from './MockTests.module.css';
+import UpgradeModal from '../components/UpgradeModal';
 
 const MockTests = () => {
     const [topic, setTopic] = useState('');
@@ -11,6 +12,7 @@ const MockTests = () => {
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
     const [error, setError] = useState('');
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
     const handleGenerate = async (e) => {
         e.preventDefault();
@@ -31,7 +33,11 @@ const MockTests = () => {
             setQuiz(response.data.quiz);
         } catch (err) {
             console.error(err);
-            setError('Failed to generate quiz. Please try again.');
+            if (err.response && err.response.status === 402) {
+                setShowUpgradeModal(true);
+            } else {
+                setError('Failed to generate quiz. Please try again.');
+            }
         } finally {
             setIsGenerating(false);
         }
@@ -65,6 +71,11 @@ const MockTests = () => {
 
     return (
         <DashboardLayout>
+            <UpgradeModal 
+                isOpen={showUpgradeModal} 
+                onClose={() => setShowUpgradeModal(false)} 
+                title="Mock Test Limit Reached"
+            />
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h2>AI Mock Tests</h2>

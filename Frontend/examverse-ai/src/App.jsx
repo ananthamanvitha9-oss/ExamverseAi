@@ -23,6 +23,7 @@ import CurrentAffairsMap from './pages/CurrentAffairsMap';
 import AdminDashboard from './pages/AdminDashboard';
 import Leaderboard from './pages/Leaderboard';
 import StudyPlanner from './pages/StudyPlanner';
+import Pricing from './pages/Pricing';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
@@ -45,6 +46,7 @@ function App() {
             <Route path="/login" element={<><Navbar /><Login /></>} />
             <Route path="/register" element={<><Navbar /><Register /></>} />
             <Route path="/forgot-password" element={<><Navbar /><ForgotPassword /></>} />
+            <Route path="/pricing" element={<><Navbar /><Pricing /><Footer /></>} />
             
             {/* Super Admin Route */}
             <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

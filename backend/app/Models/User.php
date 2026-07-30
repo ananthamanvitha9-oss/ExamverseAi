@@ -48,6 +48,38 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'pro_expires_at' => 'datetime',
+            'last_request_date' => 'date',
         ];
+    }
+
+    /**
+     * Check if the user is allowed to make an AI request.
+     * Increments the usage if allowed.
+     *
+     * @return bool
+     */
+    public function consumeAiRequest(): bool
+    {
+        if ($this->is_pro) {
+            return true;
+        }
+
+        $today = now()->format('Y-m-d');
+        
+        if ($this->last_request_date !== $today) {
+            $this->daily_ai_requests = 0;
+            $this->last_request_date = $today;
+        }
+
+        if ($this->daily_ai_requests >= 3) {
+            $this->save();
+            return false;
+        }
+
+        $this->daily_ai_requests++;
+        $this->save();
+
+        return true;
     }
 }
