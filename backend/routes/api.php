@@ -19,8 +19,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user', [UserController::class, 'updateProfile']);
     Route::post('/user/avatar', [UserController::class, 'updateAvatar']);
 
-    Route::post('/payment/create-order', [\App\Http\Controllers\PaymentController::class, 'createOrder']);
-    Route::post('/payment/verify', [\App\Http\Controllers\PaymentController::class, 'verifyPayment']);
+    Route::post('/payment/create-order', [PaymentController::class, 'createOrder']);
+    Route::post('/payment/verify', [PaymentController::class, 'verifyPayment']);
+    Route::get('/payment/history', [PaymentController::class, 'getHistory']);
+
+    // Super Admin Routes
+    Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
+        Route::get('/admin/stats', [\App\Http\Controllers\AdminController::class, 'stats']);
+    });
 });
 
 Route::get('/courses', [CourseController::class, 'index']);

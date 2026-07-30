@@ -20,8 +20,17 @@ import Notifications from './pages/Notifications';
 import Analytics from './pages/Analytics';
 import StudyRoom from './pages/StudyRoom';
 import CurrentAffairsMap from './pages/CurrentAffairsMap';
+import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
+
+// Admin Route Component
+const AdminRoute = ({ children }) => {
+    const { token, user } = useAuth();
+    if (!token) return <Navigate to="/login" replace />;
+    if (user && user.role !== 'admin') return <Navigate to="/dashboard" replace />;
+    return children;
+};
 
 function App() {
   return (
@@ -35,6 +44,9 @@ function App() {
             <Route path="/register" element={<><Navbar /><Register /></>} />
             <Route path="/forgot-password" element={<><Navbar /><ForgotPassword /></>} />
             
+            {/* Super Admin Route */}
+            <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+
             {/* Protected Routes */}
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/dashboard/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
