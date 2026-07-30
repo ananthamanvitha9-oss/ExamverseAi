@@ -1,9 +1,10 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import { Check, X, Zap } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import api from '../services/api';
+import SEO from '../components/SEO';
 import styles from './Pricing.module.css';
 
 const Pricing = () => {
@@ -64,9 +65,11 @@ const Pricing = () => {
 
     return (
         <div className={styles.pricingPage}>
-            <Helmet>
-                <title>Pricing | Examverse AI</title>
-            </Helmet>
+            <SEO 
+                title="Pricing | Examverse AI" 
+                description="Affordable AI study tools. Upgrade to Examverse Pro for unlimited Mock Tests, Study Plans, and AI Tutor access."
+                url="https://examverse-ai.com/pricing"
+            />
 
             <div className={styles.container}>
                 <div className={styles.header}>
