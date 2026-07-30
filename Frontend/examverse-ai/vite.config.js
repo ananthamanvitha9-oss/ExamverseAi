@@ -11,9 +11,9 @@ export default defineConfig({
       manifest: {
         name: 'Examverse AI',
         short_name: 'Examverse',
-        description: 'AI-Powered EdTech Platform for UPSC, SSC & JEE',
-        theme_color: '#0f172a',
-        background_color: '#0f172a',
+        description: 'AI-powered study companion for competitive exams.',
+        theme_color: '#8b5cf6',
+        background_color: '#f8fafc',
         display: 'standalone',
         icons: [
           {
