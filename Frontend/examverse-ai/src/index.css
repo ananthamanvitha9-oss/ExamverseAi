@@ -1,13 +1,13 @@
 :root {
-  /* Modern Light Theme Palette */
-  --bg-primary: #f8fafc;
+  /* Modern Light Theme Palette (Matching Midnight Purple) */
+  --bg-primary: #faf5ff; 
   --bg-secondary: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --accent-primary: #6366f1; /* Indigo */
-  --accent-secondary: #8b5cf6; /* Violet */
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --accent-primary: #a855f7; /* Neon Purple */
+  --accent-secondary: #ec4899; /* Pink/Crimson */
   --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  --border-color: #e2e8f0;
+  --border-color: #f3e8ff;
   
   /* Layout & Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -18,13 +18,13 @@
 }
 
 .dark-mode {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
+  --bg-primary: #09090b; /* Deep Violet/Black */
+  --bg-secondary: #18181b;
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --border-color: #334155;
-  --card-bg: #1e293b;
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --text-secondary: #a1a1aa;
+  --border-color: #27272a;
+  --card-bg: #18181b;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
 }
 
 body {
