@@ -67,7 +67,7 @@ class AiController extends Controller
                         ]
                     ]
                 ];
-                $response = Http::post($url, $payload);
+                $response = Http::withoutVerifying()->post($url, $payload);
                 if ($response->successful()) {
                     $reply = $response->json()['candidates'][0]['content']['parts'][0]['text'] ?? $reply;
                 }
@@ -131,7 +131,7 @@ class AiController extends Controller
         Each object in the array must have exactly these keys: 'question' (string), 'options' (array of 4 strings), 'correct_answer' (string, exactly matching one of the options), 'explanation' (string).";
 
         try {
-            $response = Http::post($url, [
+            $response = Http::withoutVerifying()->post($url, [
                 'contents' => [
                     ['parts' => [['text' => $prompt]]]
                 ]
@@ -153,6 +153,7 @@ class AiController extends Controller
 
             return response()->json(['error' => 'Failed to generate quiz.'], 500);
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Quiz generation error: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
