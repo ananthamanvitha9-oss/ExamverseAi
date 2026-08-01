@@ -42,7 +42,7 @@ class SocialAuthController extends Controller
             } else {
                 // Create a new user
                 $user = User::create([
-                    'name' => $googleUser->getName(),
+                    'full_name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
