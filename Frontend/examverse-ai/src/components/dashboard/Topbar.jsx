@@ -3,19 +3,24 @@ import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import styles from './Topbar.module.css';
 
-const Topbar = () => {
+const Topbar = ({ onMenuClick }) => {
     const { user } = useAuth();
 
     return (
         <header className={styles.topbar}>
-            {/* Left: Search Bar */}
-            <div className={styles.searchContainer}>
-                <span className={styles.searchIcon}>🔍</span>
-                <input 
-                    type="text" 
-                    placeholder="Search courses, tests, notes..." 
-                    className={styles.searchInput} 
-                />
+            <div className={styles.leftSection}>
+                <button className={styles.menuBtn} onClick={onMenuClick} title="Open Menu">
+                    ☰
+                </button>
+                {/* Left: Search Bar */}
+                <div className={styles.searchContainer}>
+                    <span className={styles.searchIcon}>🔍</span>
+                    <input 
+                        type="text" 
+                        placeholder="Search courses, tests..." 
+                        className={styles.searchInput} 
+                    />
+                </div>
             </div>
 
             {/* Right: Actions */}

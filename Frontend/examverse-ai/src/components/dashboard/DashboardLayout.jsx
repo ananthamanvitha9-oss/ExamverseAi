@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import WhatsAppWidget from '../common/WhatsAppWidget';
@@ -7,7 +7,8 @@ import { requestForToken, onMessageListener } from '../../services/firebase';
 import api from '../../services/api';
 
 const DashboardLayout = ({ children }) => {
-    
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     useEffect(() => {
         const setupNotifications = async () => {
             const token = await requestForToken();
@@ -33,9 +34,9 @@ const DashboardLayout = ({ children }) => {
 
     return (
         <div className={styles.layout}>
-            <Sidebar />
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
             <div className={styles.mainContent}>
-                <Topbar />
+                <Topbar onMenuClick={() => setIsSidebarOpen(true)} />
                 <main className={styles.contentArea}>
                     {children}
                 </main>

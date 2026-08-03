@@ -59,5 +59,10 @@
 @media screen and (max-width: 1024px) {
     .mainContent {
         margin-left: 0;
+        width: 100%;
+    }
+    
+    .contentArea {
+        padding: 1rem; /* Less padding on mobile */
     }
 }

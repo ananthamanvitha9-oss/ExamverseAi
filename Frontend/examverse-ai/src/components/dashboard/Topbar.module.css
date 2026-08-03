@@ -96,3 +96,35 @@
 .avatar:hover {
     box-shadow: 0 0 0 2px #3b82f6;
 }
+
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.menuBtn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.menuBtn:hover {
+    background: rgba(168, 85, 247, 0.2);
+}
+
+@media screen and (max-width: 1024px) {
+    .menuBtn {
+        display: block;
+    }
+    
+    .searchContainer {
+        display: none; /* Hide search bar on small screens */
+    }
+}

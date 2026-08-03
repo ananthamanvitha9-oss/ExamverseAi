@@ -103,3 +103,19 @@
     font-weight: 600;
     box-shadow: inset 2px 0 0 #ec4899;
 }
+
+@media screen and (max-width: 1024px) {
+    .courseDetailsContainer {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .contentArea, .sidebar {
+        flex: none;
+        width: 100%;
+    }
+
+    .sidebar {
+        height: 500px; /* Give it a fixed height so it scrolls independently on mobile */
+    }
+}
