@@ -57,7 +57,7 @@ class AiController extends Controller
             } else {
                 // Gemini API (Default)
                 $apiKey = env('GEMINI_API_KEY');
-                $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={$apiKey}";
+                $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={$apiKey}";
                 $payload = [
                     'contents' => [
                         [
@@ -120,7 +120,7 @@ class AiController extends Controller
         }
 
         $apiKey = env('GEMINI_API_KEY');
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={$apiKey}";
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={$apiKey}";
 
         $prompt = "Generate a 5-question multiple choice quiz about {$request->topic}. 
         Return ONLY a JSON array of objects. Each object should have:
