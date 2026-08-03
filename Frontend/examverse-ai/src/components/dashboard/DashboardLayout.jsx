@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
+import WhatsAppWidget from '../common/WhatsAppWidget';
 import styles from './DashboardLayout.module.css';
 import { requestForToken, onMessageListener } from '../../services/firebase';
 import api from '../../services/api';
@@ -39,6 +40,7 @@ const DashboardLayout = ({ children }) => {
                     {children}
                 </main>
             </div>
+            <WhatsAppWidget />
         </div>
     );
 };

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import styles from './CourseDetails.module.css';
+import ReactPlayer from 'react-player';
 
 const CourseDetails = () => {
     const { id } = useParams();
@@ -45,7 +46,13 @@ const CourseDetails = () => {
                         <>
                             {activeLesson.video_url ? (
                                 <div className={styles.videoWrapper}>
-                                    <video src={activeLesson.video_url} controls autoPlay />
+                                    <ReactPlayer 
+                                        url={activeLesson.video_url} 
+                                        width="100%" 
+                                        height="100%" 
+                                        controls={true} 
+                                        playing={true}
+                                    />
                                 </div>
                             ) : (
                                 <div className={styles.videoWrapper}>

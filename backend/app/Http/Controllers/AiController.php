@@ -147,10 +147,12 @@ class AiController extends Controller
                 if (json_last_error() === JSON_ERROR_NONE) {
                     return response()->json(['quiz' => $quizData]);
                 } else {
+                    \Illuminate\Support\Facades\Log::error('Gemini JSON Parse Error: ' . $reply);
                     return response()->json(['error' => 'Failed to parse AI response into JSON.', 'raw' => $reply], 500);
                 }
             }
 
+            \Illuminate\Support\Facades\Log::error('Gemini API Error: ' . $response->body());
             return response()->json(['error' => 'Failed to generate quiz.'], 500);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Quiz generation error: ' . $e->getMessage());
