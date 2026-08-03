@@ -80,7 +80,7 @@
 
 .countryName {
     font-size: 2rem;
-    color: #1f2937;
+    color: #ffffff;
     margin-bottom: 20px;
     border-bottom: 2px solid #3b82f6;
     padding-bottom: 10px;
@@ -90,7 +90,7 @@
 .newsContent p {
     margin-bottom: 15px;
     line-height: 1.6;
-    color: #374151;
+    color: #e5e7eb;
     font-size: 1.05rem;
 }
 
@@ -100,7 +100,7 @@
     align-items: center;
     justify-content: center;
     padding: 60px 0;
-    color: #374151;
+    color: #e5e7eb;
     font-weight: 500;
 }
 

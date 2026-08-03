@@ -41,9 +41,9 @@ const Dashboard = () => {
                 <div>
                     <h3 className={styles.sectionTitle}>Continue Learning</h3>
                     <div className={styles.courseGrid}>
-                        <CourseCard title="Indian Polity" chapter="Chapter 5: Fundamental Rights" progress={58} />
-                        <CourseCard title="Modern History" chapter="Chapter 8: Revolt of 1857" progress={32} />
-                        <CourseCard title="Indian Economy" chapter="Chapter 3: RBI & Monetary Policy" progress={80} />
+                        <CourseCard id={20} title="UPSC Civil Services 2026" chapter="History: Ancient India" progress={58} />
+                        <CourseCard id={21} title="SSC CGL Tier 1 & 2" chapter="Quantitative Aptitude: Arithmetic" progress={32} />
+                        <CourseCard id={22} title="IBPS PO / Clerk Complete" chapter="Reasoning Ability: Puzzles" progress={80} />
                     </div>
                 </div>
 

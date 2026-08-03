@@ -11,12 +11,14 @@
 
 .header h1 {
     font-size: 2.5rem;
-    color: #0f172a;
+    color: var(--text-primary);
     margin-bottom: 10px;
+    font-family: var(--font-display);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .header p {
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 1.1rem;
 }
 
@@ -28,12 +30,12 @@
 
 .statBox {
     flex: 1;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background: linear-gradient(135deg, #a855f7, #ec4899);
     color: white;
     padding: 25px;
     border-radius: 16px;
     text-align: center;
-    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
 }
 
 .statBox h3 {
@@ -41,6 +43,7 @@
     font-weight: 500;
     opacity: 0.9;
     margin-bottom: 10px;
+    font-family: var(--font-display);
 }
 
 .statValue {
@@ -55,12 +58,15 @@
 .starIcon {
     color: #fbbf24;
     fill: #fbbf24;
+    filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.5));
 }
 
 .boardCard {
-    background: white;
+    background: rgba(19, 3, 36, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
     border-radius: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     overflow: hidden;
 }
 
@@ -73,16 +79,16 @@
     display: flex;
     align-items: center;
     padding: 20px 25px;
-    border-bottom: 1px solid #f1f5f9;
-    transition: background 0.2s;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    transition: background 0.3s;
 }
 
 .listItem:hover {
-    background: #f8fafc;
+    background: rgba(168, 85, 247, 0.1);
 }
 
 .topThree {
-    background: #fafaf9;
+    background: rgba(236, 72, 153, 0.05);
 }
 
 .rankCol {
@@ -92,9 +98,9 @@
     align-items: center;
 }
 
-.gold { color: #fbbf24; width: 32px; height: 32px; }
-.silver { color: #94a3b8; width: 32px; height: 32px; }
-.bronze { color: #b45309; width: 32px; height: 32px; }
+.gold { color: #fbbf24; width: 32px; height: 32px; filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.8)); }
+.silver { color: #cbd5e1; width: 32px; height: 32px; filter: drop-shadow(0 0 5px rgba(203, 213, 225, 0.8)); }
+.bronze { color: #d97706; width: 32px; height: 32px; filter: drop-shadow(0 0 5px rgba(217, 119, 6, 0.8)); }
 
 .rankNumber {
     font-size: 1.2rem;
@@ -113,14 +119,15 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: #eff6ff;
-    color: #3b82f6;
+    background: rgba(168, 85, 247, 0.2);
+    color: #d8b4fe;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
     font-size: 1.2rem;
     overflow: hidden;
+    border: 1px solid rgba(168, 85, 247, 0.4);
 }
 
 .avatar img {
@@ -132,16 +139,17 @@
 .name {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text-primary);
 }
 
 .pointsCol {
     font-weight: 700;
     font-size: 1.2rem;
-    color: #3b82f6;
-    background: #eff6ff;
+    color: #fbcfe8;
+    background: rgba(236, 72, 153, 0.2);
     padding: 8px 16px;
     border-radius: 20px;
+    border: 1px solid rgba(236, 72, 153, 0.4);
 }
 
 .loading {

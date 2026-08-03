@@ -1,11 +1,11 @@
 .sidebar {
     width: 260px;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(19, 3, 36, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(168, 85, 247, 0.3);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -17,18 +17,20 @@
 
 .logo {
     padding: 1.5rem 2rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
 }
 
 .logo h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 800;
+    font-family: var(--font-display);
     color: var(--text-primary);
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: fadeIn 1s ease-in-out;
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.4));
 }
 
 .navMenu {
@@ -44,24 +46,27 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
     color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: var(--font-display);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .navLink:hover {
-    background-color: #f1f5f9;
-    color: var(--accent-primary);
-    transform: translateX(4px);
+    background-color: rgba(168, 85, 247, 0.15);
+    color: var(--text-primary);
+    transform: translateX(6px);
+    box-shadow: -4px 0 0 var(--accent-primary);
 }
 
 .navLink.active {
     background: var(--accent-gradient);
     color: white;
     font-weight: 600;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    transform: translateX(4px);
 }
 
 .icon {
@@ -78,24 +83,26 @@
 .upgradeSection {
     margin-top: auto;
     padding: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(168, 85, 247, 0.2);
 }
 
 .upgradeBtn {
     width: 100%;
-    padding: 0.875rem;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    padding: 1rem;
+    background: linear-gradient(135deg, #f59e0b, #f43f5e);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-family: var(--font-display);
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(217, 119, 6, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: pulseGlow 3s infinite;
 }
 
 .upgradeBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(217, 119, 6, 0.4);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(244, 63, 94, 0.6);
 }

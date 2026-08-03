@@ -9,9 +9,11 @@
     flex: 3;
     display: flex;
     flex-direction: column;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background: rgba(19, 3, 36, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     overflow: hidden;
 }
 
@@ -19,6 +21,7 @@
     width: 100%;
     aspect-ratio: 16 / 9;
     background: #000;
+    box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.2);
 }
 
 .videoWrapper video {
@@ -28,18 +31,22 @@
 
 .lessonInfo {
     padding: 20px;
+    color: var(--text-primary);
 }
 
 .lessonTitle {
     margin: 0 0 10px 0;
-    color: #111827;
+    color: var(--text-primary);
+    font-family: var(--font-display);
 }
 
 .sidebar {
     flex: 1;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background: rgba(19, 3, 36, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     padding: 20px;
     overflow-y: auto;
 }
@@ -47,20 +54,23 @@
 .sidebarTitle {
     margin-top: 0;
     margin-bottom: 20px;
-    color: #111827;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .subjectTitle {
     font-weight: 600;
-    color: #4b5563;
+    color: #e2e8f0;
     margin: 15px 0 5px 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
     padding-bottom: 5px;
+    font-family: var(--font-display);
 }
 
 .chapterTitle {
     font-weight: 500;
-    color: #6b7280;
+    color: #cbd5e1;
     margin: 10px 0 5px 10px;
 }
 
@@ -71,22 +81,25 @@
 }
 
 .lessonItem {
-    padding: 8px 12px;
-    margin-bottom: 4px;
-    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 0.9rem;
-    color: #4b5563;
+    font-size: 0.95rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .lessonItem:hover {
-    background: #f3f4f6;
-    color: #111827;
+    background: rgba(168, 85, 247, 0.1);
+    color: #f8fafc;
+    transform: translateX(4px);
 }
 
 .activeLesson {
-    background: #eff6ff;
-    color: #2563eb;
-    font-weight: 500;
+    background: rgba(236, 72, 153, 0.15);
+    color: #fbcfe8;
+    font-weight: 600;
+    box-shadow: inset 2px 0 0 #ec4899;
 }

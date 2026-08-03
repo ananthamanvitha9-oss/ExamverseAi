@@ -16,7 +16,7 @@ class AnalyticsController extends Controller
         ]);
 
         $apiKey = env('GEMINI_API_KEY');
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={$apiKey}";
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={$apiKey}";
 
         $prompt = "Generate a highly customized 7-day study plan for a student preparing for Indian competitive exams (UPSC/SSC). 
         The student's weak subjects are: {$request->weak_subjects}. 
@@ -30,18 +30,16 @@ class AnalyticsController extends Controller
         ];
 
         try {
-            $response = Http::post($url, $payload);
+            $response = Http::withoutVerifying()->post($url, $payload);
             
             if ($response->successful()) {
                 $data = $response->json();
                 $rawText = $data['candidates'][0]['content']['parts'][0]['text'] ?? '[]';
                 
-                // Clean up any markdown block formatting the AI might have accidentally added
                 $cleanJson = str_replace(['```json', '```'], '', $rawText);
                 $planArray = json_decode(trim($cleanJson), true);
 
                 if (is_array($planArray)) {
-                    // Save to DB
                     $planId = DB::table('ai_study_plans')->insertGetId([
                         'weak_subjects' => $request->weak_subjects,
                         'exam_date' => $request->exam_date,
@@ -63,5 +61,37 @@ class AnalyticsController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function index(Request $request)
+    {
+        // Mock Analytics Data for the Analytics Dashboard
+        return response()->json([
+            'test_scores' => [
+                ['date' => '2026-07-01', 'score' => 65],
+                ['date' => '2026-07-10', 'score' => 72],
+                ['date' => '2026-07-20', 'score' => 81],
+                ['date' => '2026-08-01', 'score' => 88]
+            ],
+            'subject_performance' => [
+                ['subject' => 'Physics', 'score' => 90],
+                ['subject' => 'Maths', 'score' => 75],
+                ['subject' => 'Chemistry', 'score' => 82]
+            ],
+            'time_spent' => [
+                ['day' => 'Mon', 'hours' => 2],
+                ['day' => 'Tue', 'hours' => 3.5],
+                ['day' => 'Wed', 'hours' => 1.5],
+                ['day' => 'Thu', 'hours' => 4],
+                ['day' => 'Fri', 'hours' => 3],
+                ['day' => 'Sat', 'hours' => 5],
+                ['day' => 'Sun', 'hours' => 6]
+            ],
+            'summary' => [
+                'total_tests' => 12,
+                'avg_score' => 76,
+                'hours_studied' => 124
+            ]
+        ]);
     }
 }

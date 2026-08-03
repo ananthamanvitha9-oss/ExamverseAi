@@ -6,21 +6,23 @@
 
 .header h1 {
     font-size: 2.2rem;
-    color: #111827;
+    color: var(--text-primary);
     margin-bottom: 8px;
+    font-family: var(--font-display);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
 .header p {
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 1.1rem;
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(19, 3, 36, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     border-radius: 16px;
     padding: 30px;
     animation: fadeIn 0.5s ease-out forwards;
@@ -28,10 +30,11 @@
 
 .cardTitle {
     font-size: 1.5rem;
-    color: #111827;
+    color: var(--text-primary);
     margin-bottom: 20px;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
     padding-bottom: 10px;
+    font-family: var(--font-display);
 }
 
 .formGroup {
@@ -43,20 +46,24 @@
 
 .formGroup label {
     font-weight: 600;
-    color: #374151;
+    color: #e2e8f0;
 }
 
 .formInput {
     padding: 12px;
-    border: 1px solid #d1d5db;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.3);
     border-radius: 8px;
+    color: white;
     font-size: 1rem;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.3s;
 }
 
 .formInput:focus {
-    border-color: #2563eb;
+    border-color: #ec4899;
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .generateBtn {
@@ -67,20 +74,23 @@
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: 600;
+    font-family: var(--font-display);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
     width: 100%;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
 }
 
 .generateBtn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
 }
 
 .generateBtn:disabled {
-    background: #9ca3af;
+    background: #475569;
+    color: #94a3b8;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 .planGrid {
@@ -91,16 +101,23 @@
 }
 
 .planDayCard {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
     padding: 20px;
+    transition: all 0.3s;
+}
+
+.planDayCard:hover {
+    transform: translateY(-3px);
+    border-color: #ec4899;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .dayLabel {
     font-size: 0.9rem;
     font-weight: 700;
-    color: #4f46e5;
+    color: var(--accent-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 10px;
@@ -108,17 +125,18 @@
 
 .topicText {
     font-size: 1.1rem;
-    color: #1e293b;
+    color: var(--text-primary);
     margin-bottom: 15px;
     font-weight: 600;
 }
 
 .durationBadge {
     display: inline-block;
-    background: #e0e7ff;
-    color: #4338ca;
+    background: rgba(168, 85, 247, 0.2);
+    color: #d8b4fe;
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
+    border: 1px solid rgba(168, 85, 247, 0.4);
 }

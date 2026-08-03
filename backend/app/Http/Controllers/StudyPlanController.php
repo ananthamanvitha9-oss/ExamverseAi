@@ -29,9 +29,12 @@ class StudyPlanController extends Controller
         Return ONLY a JSON array, where each object has 'day' (e.g., 'Day 1'), 'date' (YYYY-MM-DD), 'focus_subject', 'topics_to_cover' (string), and 'estimated_hours' (integer). Generate a plan for exactly 7 days, assuming it's a rolling weekly schedule.";
 
         try {
+            $apiKey = env('GEMINI_API_KEY');
+            $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={$apiKey}";
+
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-            ])->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . env('GEMINI_API_KEY'), [
+            ])->post($url, [
                 'contents' => [
                     ['parts' => [['text' => $prompt]]]
                 ],

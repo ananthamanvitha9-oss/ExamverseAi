@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
+import api from '../services/api';
 import styles from './CurrentAffairs.module.css';
-
 const CurrentAffairs = () => {
     const [activeTab, setActiveTab] = useState('Daily');
     const [loading, setLoading] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
 
-    const filteredArticles = []; // Empty for now to satisfy render, data will come from backend
+    const [articles, setArticles] = useState([]);
+
+    useEffect(() => {
+        const fetchNews = async () => {
+            setLoading(true);
+            try {
+                const response = await api.get('/news');
+                setArticles(response.data);
+            } catch (error) {
+                console.error("Failed to fetch news", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchNews();
+    }, []);
+
+    const filteredArticles = articles.filter(a => a.category === activeTab);
 
     const openModal = (article) => setSelectedArticle(article);
     const closeModal = () => setSelectedArticle(null);

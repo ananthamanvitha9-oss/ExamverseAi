@@ -11,37 +11,43 @@
 
 .header h1 {
     font-size: 2.5rem;
-    color: #0f172a;
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 15px;
+    font-family: var(--font-display);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .sparkleIcon {
-    color: #8b5cf6;
+    color: var(--accent-primary);
+    filter: drop-shadow(0 0 5px rgba(168, 85, 247, 0.5));
 }
 
 .header p {
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 1.1rem;
     margin-top: 10px;
 }
 
 /* Generator Form */
 .generatorCard {
-    background: white;
+    background: rgba(19, 3, 36, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     max-width: 600px;
     margin: 0 auto;
 }
 
 .generatorCard h2 {
     margin-bottom: 30px;
-    color: #1e293b;
+    color: var(--text-primary);
     text-align: center;
+    font-family: var(--font-display);
 }
 
 .formGroup {
@@ -52,59 +58,64 @@
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: #334155;
+    color: #e2e8f0;
 }
 
 .formGroup input, .formGroup textarea {
     width: 100%;
     padding: 15px;
-    border: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.3);
     border-radius: 12px;
+    color: white;
     font-size: 1rem;
-    background: #f8fafc;
-    transition: all 0.2s;
+    transition: all 0.3s;
     font-family: inherit;
 }
 
 .formGroup input:focus, .formGroup textarea:focus {
     outline: none;
-    border-color: #3b82f6;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #ec4899;
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .generateBtn {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    background: var(--accent-gradient);
     color: white;
     border: none;
     border-radius: 12px;
     font-size: 1.1rem;
     font-weight: 600;
+    font-family: var(--font-display);
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
 }
 
 .generateBtn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
 }
 
 /* Loading State */
 .loadingState {
     text-align: center;
     padding: 80px 20px;
+    color: white;
 }
 
 .spinner {
     width: 60px;
     height: 60px;
-    border: 5px solid #f3f4f6;
-    border-top: 5px solid #8b5cf6;
+    border: 5px solid rgba(236, 72, 153, 0.2);
+    border-top: 5px solid #ec4899;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 30px;
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
 }
 
 @keyframes spin {
@@ -117,10 +128,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: rgba(19, 3, 36, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
     padding: 20px 30px;
     border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     margin-bottom: 30px;
 }
 
@@ -133,22 +146,24 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #475569;
+    color: #cbd5e1;
     font-weight: 500;
 }
 
 .resetBtn {
     padding: 10px 20px;
-    background: #f1f5f9;
-    color: #475569;
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
 .resetBtn:hover {
-    background: #e2e8f0;
+    background: rgba(236, 72, 153, 0.2);
+    border-color: #ec4899;
 }
 
 .timeline {
@@ -159,19 +174,21 @@
 
 .dayCard {
     display: flex;
-    background: white;
+    background: rgba(19, 3, 36, 0.6);
+    backdrop-filter: blur(16px);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    border-left: 6px solid #8b5cf6;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-left: 6px solid var(--accent-primary);
 }
 
 .daySidebar {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.03);
     padding: 25px;
     min-width: 140px;
     text-align: center;
-    border-right: 1px solid #e2e8f0;
+    border-right: 1px solid rgba(168, 85, 247, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -180,12 +197,13 @@
 .dayName {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--text-primary);
     margin-bottom: 5px;
+    font-family: var(--font-display);
 }
 
 .date {
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
@@ -196,12 +214,13 @@
 
 .focusSubject {
     font-size: 1.3rem;
-    color: #0f172a;
+    color: var(--text-primary);
     margin-bottom: 10px;
+    font-family: var(--font-display);
 }
 
 .topics {
-    color: #475569;
+    color: #cbd5e1;
     line-height: 1.6;
     margin-bottom: 15px;
 }
@@ -210,9 +229,10 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #3b82f6;
+    color: #d8b4fe;
     font-weight: 600;
-    background: #eff6ff;
+    background: rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(168, 85, 247, 0.3);
     display: inline-flex;
     padding: 6px 12px;
     border-radius: 20px;
@@ -229,13 +249,14 @@
 .completeBtn {
     background: none;
     border: none;
-    color: #cbd5e1;
+    color: #64748b;
     cursor: pointer;
-    transition: color 0.2s;
+    transition: color 0.3s;
 }
 
 .completeBtn:hover {
-    color: #10b981;
+    color: #34d399;
+    filter: drop-shadow(0 0 5px rgba(52, 211, 153, 0.5));
 }
 
 .loading {
@@ -244,5 +265,5 @@
     justify-content: center;
     min-height: 400px;
     font-size: 1.2rem;
-    color: #64748b;
+    color: #94a3b8;
 }

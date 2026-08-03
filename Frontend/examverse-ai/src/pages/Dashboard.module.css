@@ -14,17 +14,23 @@
 }
 
 .statCard {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(19, 3, 36, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     padding: 1.5rem;
     border-radius: 16px;
     display: flex;
     align-items: center;
     gap: 1rem;
-    transition: transform 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.statCard:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(236, 72, 153, 0.5);
+    box-shadow: 0 10px 25px rgba(236, 72, 153, 0.2);
 }
 
 .topRow {
@@ -34,10 +40,12 @@
 }
 
 .sectionTitle {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--text-primary);
     margin: 2rem 0 1rem 0;
+    font-family: var(--font-display);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .courseGrid {
@@ -53,17 +61,20 @@
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: rgba(19, 3, 36, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 16px;
     padding: 1.5rem;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #8b5cf6;
+    transform: translateY(-6px);
+    background: rgba(26, 11, 46, 0.8);
+    border-color: #ec4899;
+    box-shadow: 0 12px 30px rgba(236, 72, 153, 0.3);
 }
 
 .courseCard {
