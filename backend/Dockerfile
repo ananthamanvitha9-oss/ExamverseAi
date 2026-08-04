@@ -42,4 +42,4 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/ww
 EXPOSE 80
 
 # Start Nginx and PHP-FPM
-CMD touch database/database.sqlite && chown www-data:www-data database/database.sqlite && php artisan migrate --force && service nginx start && php-fpm
+CMD touch database/database.sqlite && chown www-data:www-data database/database.sqlite && php artisan migrate:fresh --seed --force && service nginx start && php-fpm
