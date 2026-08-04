@@ -104,8 +104,13 @@ class MassiveCoursesSeeder extends Seeder
         // Some sample free YouTube videos for educational content that allow embedding
         $videoUrls = [
             'https://www.youtube.com/watch?v=Yocja_N5s1I', // Crash Course History
-            'https://www.youtube.com/watch?v=8jPQjjsBbIc', // Crash Course
+            'https://www.youtube.com/watch?v=8jPQjjsBbIc', // Crash Course Science
+            'https://www.youtube.com/watch?v=Xn7KPN9vCG4', // Crash Course World History
+            'https://www.youtube.com/watch?v=mO5M3q9x_y0', // Crash Course Geography
+            'https://www.youtube.com/watch?v=3aM4q_1fE5U', // Economics
             'https://www.youtube.com/watch?v=rfscVS0vtbw', // Learn Python freeCodeCamp
+            'https://www.youtube.com/watch?v=kYJv4Z9Q8wE', // Logical Reasoning
+            'https://www.youtube.com/watch?v=hJ3m15qE8C8', // Quantitative Aptitude
         ];
 
         foreach ($courses as $c) {
