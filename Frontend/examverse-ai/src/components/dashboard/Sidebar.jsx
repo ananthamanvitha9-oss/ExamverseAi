@@ -13,6 +13,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: "Mock Tests", path: "/dashboard/tests", icon: "📝" },
         { name: "AI Tutor", path: "/dashboard/ai-tutor", icon: "🤖" },
         { name: "AI Study Planner", path: "/dashboard/study-planner", icon: "📅" },
+        { name: "Resources", path: "/dashboard/resources", icon: "📚" },
         { name: "Global Room", path: "/dashboard/study-room", icon: "💬" },
         { name: "Leaderboard", path: "/dashboard/leaderboard", icon: "🏆" },
         { name: "Geopolitics Map", path: "/dashboard/map", icon: "🗺️" },

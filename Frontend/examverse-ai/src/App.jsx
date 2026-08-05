@@ -71,6 +71,7 @@ function App() {
                 <Route path="/dashboard/profile" element={<ProtectedRoute><PageWrapper><Profile /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/mock-tests/:id" element={<ProtectedRoute><PageWrapper><MockTestInterface /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/ai-tutor" element={<ProtectedRoute><PageWrapper><AITutor /></PageWrapper></ProtectedRoute>} />
+                <Route path="/dashboard/resources" element={<ProtectedRoute><PageWrapper><Resources /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/settings" element={<ProtectedRoute><PageWrapper><Settings /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/courses" element={<ProtectedRoute><PageWrapper><MyCourses /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/courses/:id" element={<ProtectedRoute><PageWrapper><CourseDetails /></PageWrapper></ProtectedRoute>} />
