@@ -11,7 +11,7 @@ class LeaderboardController extends Controller
     {
         $topUsers = User::orderBy('points', 'desc')
                         ->take(10)
-                        ->get(['id', 'full_name', 'points', 'avatar_url']);
+                        ->get(['id', 'full_name', 'points', 'avatar', 'profile_photo']);
 
         // Return the ranking position of the current user
         $currentUser = auth()->user();

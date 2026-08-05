@@ -40,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/quiz/generate', [AiController::class, 'generateQuiz']);
 
     Route::get('/analytics', [AnalyticsController::class, 'index']);
+    
+    Route::post('/gamification/log-study', [\App\Http\Controllers\GamificationController::class, 'logStudy']);
 
     // Super Admin Routes
     Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {

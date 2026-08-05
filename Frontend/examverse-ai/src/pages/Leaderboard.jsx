@@ -73,8 +73,8 @@ const Leaderboard = () => {
                                 </div>
                                 <div className={styles.userCol}>
                                     <div className={styles.avatar}>
-                                        {user.avatar_url ? (
-                                            <img src={user.avatar_url} alt={user.full_name} />
+                                        {user.avatar || user.profile_photo ? (
+                                            <img src={user.avatar || user.profile_photo} alt={user.full_name} />
                                         ) : (
                                             <span>{user.full_name.charAt(0)}</span>
                                         )}
