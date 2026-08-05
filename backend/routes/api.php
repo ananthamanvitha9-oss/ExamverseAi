@@ -31,6 +31,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment/verify', [PaymentController::class, 'verifyPayment']);
     Route::get('/payment/history', [PaymentController::class, 'getHistory']);
 
+    Route::get('/mock-tests', [\App\Http\Controllers\MockTestController::class, 'index']);
+    Route::post('/mock-tests', [\App\Http\Controllers\MockTestController::class, 'store']);
+    Route::get('/mock-tests/{id}', [\App\Http\Controllers\MockTestController::class, 'show']);
+    Route::post('/mock-tests/{id}/submit', [\App\Http\Controllers\MockTestController::class, 'submit']);
+
     Route::get('/leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'index']);
 
     Route::post('/study-plan/generate', [\App\Http\Controllers\StudyPlanController::class, 'generatePlan']);

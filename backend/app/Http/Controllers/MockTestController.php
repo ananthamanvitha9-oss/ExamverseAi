@@ -56,11 +56,16 @@ class MockTestController extends Controller
             ]);
 
             foreach ($questions as $q) {
+                // Ensure options array has exactly 4 elements
+                $opts = array_pad($q['options'], 4, '');
+                
                 $mockTest->questions()->create([
                     'question_text' => $q['question'],
-                    'options' => json_encode($q['options']),
+                    'option_a' => $opts[0],
+                    'option_b' => $opts[1],
+                    'option_c' => $opts[2],
+                    'option_d' => $opts[3],
                     'correct_option' => $q['correct_answer'],
-                    'marks' => 1
                 ]);
             }
 
@@ -75,5 +80,57 @@ class MockTestController extends Controller
     {
         $mockTest = MockTest::with('questions')->findOrFail($id);
         return response()->json($mockTest);
+    }
+    
+    public function submit(Request $request, $id)
+    {
+        $request->validate([
+            'answers' => 'required|array' // e.g. ["question_id" => "Selected Option Text"]
+        ]);
+
+        $mockTest = MockTest::with('questions')->findOrFail($id);
+        $questions = $mockTest->questions;
+        
+        $totalMarks = 0;
+        $maxMarks = $questions->count();
+        $results = [];
+
+        foreach ($questions as $question) {
+            $userAnswer = $request->answers[$question->id] ?? null;
+            $isCorrect = $userAnswer === $question->correct_option;
+            
+            if ($isCorrect) {
+                $totalMarks++;
+            }
+            
+            $results[] = [
+                'question_id' => $question->id,
+                'user_answer' => $userAnswer,
+                'correct_answer' => $question->correct_option,
+                'is_correct' => $isCorrect
+            ];
+        }
+
+        // Save result
+        $user = auth()->user();
+        \Illuminate\Support\Facades\DB::table('student_results')->insert([
+            'user_id' => $user->id,
+            'mock_test_id' => $mockTest->id,
+            'score' => $totalMarks,
+            'total_questions' => $maxMarks,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        // Gamification points (5 points per correct answer)
+        $user->points += ($totalMarks * 5);
+        $user->save();
+
+        return response()->json([
+            'score' => $totalMarks,
+            'total' => $maxMarks,
+            'points_earned' => ($totalMarks * 5),
+            'results' => $results
+        ]);
     }
 }

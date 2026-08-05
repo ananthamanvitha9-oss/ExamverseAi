@@ -51,41 +51,62 @@ const MockTestInterface = () => {
         return `${m}:${s < 10 ? '0' : ''}${s}`;
     };
 
-    const handleSelectOption = (qId, optionIndex) => {
-        setAnswers({ ...answers, [qId]: optionIndex });
+    const [submitResults, setSubmitResults] = useState(null);
+
+    const handleSelectOption = (qId, optionString) => {
+        setAnswers({ ...answers, [qId]: optionString });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setIsSubmitted(true);
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`http://127.0.0.1:8000/api/mock-tests/${id}/submit`, 
+                { answers: answers },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            setSubmitResults(response.data);
+        } catch (error) {
+            console.error("Submit error", error);
+        }
     };
 
     const currentQuestion = testData.questions[currentQuestionIndex];
 
     if (isSubmitted) {
-        let score = 0;
-        testData.questions.forEach(q => {
-            if (answers[q.id] == q.correct_option) score++;
-        });
+        if (!submitResults) {
+            return (
+                <DashboardLayout>
+                    <div style={{ padding: '40px', textAlign: 'center' }}>
+                        <h2>Grading your test...</h2>
+                    </div>
+                </DashboardLayout>
+            );
+        }
 
         return (
             <DashboardLayout>
                 <div style={{ background: 'white', padding: '40px', borderRadius: '12px', textAlign: 'center' }}>
                     <h2>Test Submitted!</h2>
-                    <h1>Your Score: {score} / {testData.questions.length}</h1>
+                    <h1>Your Score: {submitResults.score} / {submitResults.total}</h1>
+                    <h3 style={{ color: '#f59e0b' }}>🏆 Points Earned: +{submitResults.points_earned}</h3>
                     <button className={styles.btnPrimary} onClick={() => navigate('/dashboard/mock-tests')}>Back to Tests</button>
                     
                     <div style={{ marginTop: '40px', textAlign: 'left' }}>
                         <h3>Solutions:</h3>
-                        {testData.questions.map((q, idx) => (
-                            <div key={q.id} style={{ padding: '15px', border: '1px solid #eee', marginBottom: '10px', borderRadius: '8px' }}>
-                                <strong>Q{idx+1}: {q.question_text}</strong>
-                                <p style={{ color: answers[q.id] == q.correct_option ? 'green' : 'red' }}>
-                                    Your Answer: {answers[q.id] !== undefined ? String.fromCharCode(65 + answers[q.id]) : 'Skipped'}
-                                </p>
-                                <p style={{ color: 'green' }}>Correct Answer: {String.fromCharCode(65 + parseInt(q.correct_option))}</p>
-                                <p style={{ fontSize: '0.9rem', color: '#666' }}>Explanation: {q.explanation}</p>
-                            </div>
-                        ))}
+                        {testData.questions.map((q, idx) => {
+                            const result = submitResults.results.find(r => r.question_id === q.id);
+                            return (
+                                <div key={q.id} style={{ padding: '15px', border: '1px solid #eee', marginBottom: '10px', borderRadius: '8px' }}>
+                                    <strong>Q{idx+1}: {q.question_text}</strong>
+                                    <p style={{ color: result?.is_correct ? 'green' : 'red' }}>
+                                        Your Answer: {result?.user_answer || 'Skipped'}
+                                    </p>
+                                    <p style={{ color: 'green' }}>Correct Answer: {q.correct_option}</p>
+                                    <p style={{ fontSize: '0.9rem', color: '#666' }}>Explanation: {q.explanation}</p>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </DashboardLayout>
@@ -115,13 +136,13 @@ const MockTestInterface = () => {
                                     style={{
                                         padding: '15px', 
                                         textAlign: 'left', 
-                                        border: answers[currentQuestion.id] === idx ? '2px solid #2563eb' : '1px solid #ccc',
-                                        background: answers[currentQuestion.id] === idx ? '#eff6ff' : 'white',
+                                        border: answers[currentQuestion.id] === opt ? '2px solid #2563eb' : '1px solid #ccc',
+                                        background: answers[currentQuestion.id] === opt ? '#eff6ff' : 'white',
                                         borderRadius: '8px',
                                         cursor: 'pointer',
                                         fontSize: '1rem'
                                     }}
-                                    onClick={() => handleSelectOption(currentQuestion.id, idx)}
+                                    onClick={() => handleSelectOption(currentQuestion.id, opt)}
                                 >
                                     {String.fromCharCode(65 + idx)}. {opt}
                                 </button>
