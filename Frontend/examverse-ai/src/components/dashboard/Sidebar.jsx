@@ -18,6 +18,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: "Leaderboard", path: "/dashboard/leaderboard", icon: "🏆" },
         { name: "Geopolitics Map", path: "/dashboard/map", icon: "🗺️" },
         { name: "Current Affairs", path: "/dashboard/news", icon: "📰" },
+        { name: "Focus Timer", path: "/dashboard/focus", icon: "⏱️" },
         { name: "Notes", path: "/dashboard/notes", icon: "📖" },
         { name: "Profile", path: "/dashboard/profile", icon: "👤" },
         { name: "Settings", path: "/dashboard/settings", icon: "⚙️" },

@@ -1,0 +1,224 @@
+.container {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.header strong {
+    color: #f59e0b;
+}
+
+.mainCard {
+    background: white;
+    width: 100%;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modeTabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    background: #f1f5f9;
+    padding: 0.5rem;
+    border-radius: 12px;
+}
+
+.tab {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.activeTab {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(59 130 246 / 0.5);
+}
+
+.activeTabBreak {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(16 185 129 / 0.5);
+}
+
+.timerCircle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 8px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.timeDisplay {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #1e293b;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -2px;
+}
+
+.breakText {
+    color: #10b981;
+}
+
+.statusText {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.controls {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.playBtn {
+    background: #3b82f6;
+    color: white;
+}
+
+.playBtn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+.pauseBtn {
+    background: #f59e0b;
+    color: white;
+}
+
+.pauseBtn:hover {
+    background: #d97706;
+}
+
+.resetBtn {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.resetBtn:hover {
+    background: #e2e8f0;
+}
+
+.rewardsBox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #fffbeb;
+    color: #92400e;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    justify-content: center;
+    border: 1px solid #fde68a;
+}
+
+.rewardIcon {
+    color: #f59e0b;
+}
+
+.ambientSection {
+    width: 100%;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2rem;
+}
+
+.ambientSection h3 {
+    font-size: 1.1rem;
+    color: #475569;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.soundControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.soundSelect {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    color: #1e293b;
+    background: white;
+    outline: none;
+    min-width: 200px;
+}
+
+.muteBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.muteBtn:hover:not(:disabled) {
+    background: #f1f5f9;
+}
+
+.muteBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
