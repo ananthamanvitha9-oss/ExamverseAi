@@ -24,7 +24,18 @@ class AiController extends Controller
         $reply = "I'm sorry, I couldn't generate a response.";
 
         try {
-            if ($selectedModel === 'groq') {
+            $pythonUrl = env('PYTHON_AI_URL');
+            
+            if ($pythonUrl) {
+                // Route to Custom Python Microservice
+                $response = Http::post("{$pythonUrl}/api/generate", [
+                    'message' => $request->message,
+                    'history' => []
+                ]);
+                if ($response->successful()) {
+                    $reply = $response->json()['response'];
+                }
+            } elseif ($selectedModel === 'groq') {
                 // Groq API (Llama-3)
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . env('GROQ_API_KEY'),
