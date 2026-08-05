@@ -38,7 +38,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'index']);
 
-    Route::post('/study-plan/generate', [\App\Http\Controllers\StudyPlanController::class, 'generatePlan']);
+    Route::post('/study-plan/generate', [\App\Http\Controllers\AnalyticsController::class, 'generatePlan']);
+    
+    // Progress & Analytics Routes
+    Route::post('/progress/complete-lesson', [\App\Http\Controllers\ProgressController::class, 'completeLesson']);
+    Route::get('/progress/dashboard', [\App\Http\Controllers\ProgressController::class, 'dashboard']);
     Route::get('/study-plan', [\App\Http\Controllers\StudyPlanController::class, 'getPlan']);
 
     Route::post('/chat', [AiController::class, 'chat']);

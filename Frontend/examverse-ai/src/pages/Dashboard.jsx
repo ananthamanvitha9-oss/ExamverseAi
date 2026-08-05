@@ -12,23 +12,31 @@ import api from '../services/api';
 
 const Dashboard = () => {
     const [streak, setStreak] = useState(0);
+    const [analytics, setAnalytics] = useState(null);
 
     useEffect(() => {
-        const logStudySession = async () => {
+        const fetchDashboardData = async () => {
             try {
                 const token = localStorage.getItem('token');
                 if (token) {
-                    const response = await api.post('/gamification/log-study', {}, {
+                    // Log study session to get streak
+                    const streakResponse = await api.post('/gamification/log-study', {}, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
-                    setStreak(response.data.current_streak || 0);
+                    setStreak(streakResponse.data.current_streak || 0);
+
+                    // Fetch analytics
+                    const analyticsResponse = await api.get('/progress/dashboard', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    setAnalytics(analyticsResponse.data);
                 }
             } catch (error) {
-                console.error("Failed to log study session", error);
+                console.error("Failed to load dashboard data", error);
             }
         };
 
-        logStudySession();
+        fetchDashboardData();
     }, []);
 
     return (
@@ -51,10 +59,10 @@ const Dashboard = () => {
                 <div>
                     <h3 className={styles.sectionTitle}>Your Analytics</h3>
                     <div className={styles.statsGrid}>
-                        <StatisticsCard title="Hours Studied" value="2.5 hrs" subtitle="Today's Study Time" icon="⏱️" color="#3b82f6" />
-                        <StatisticsCard title="Weekly Progress" value="+12%" subtitle="vs Last Week" icon="📈" color="#8b5cf6" />
+                        <StatisticsCard title="Hours Studied" value={analytics?.stats?.hours_studied || '0 hrs'} subtitle="Total Study Time" icon="⏱️" color="#3b82f6" />
+                        <StatisticsCard title="Weekly Progress" value={analytics?.stats?.weekly_progress || '0%'} subtitle="vs Last Week" icon="📈" color="#8b5cf6" />
                         <StatisticsCard title="Study Streak" value={`${streak} Days`} subtitle="Keep it going!" icon="🔥" color="#f59e0b" />
-                        <StatisticsCard title="Completed Chapters" value="8" subtitle="Across 3 Subjects" icon="📚" color="#10b981" />
+                        <StatisticsCard title="Completed Lessons" value={analytics?.stats?.completed_lessons || 0} subtitle="Lessons Finished" icon="📚" color="#10b981" />
                     </div>
                 </div>
 
@@ -62,9 +70,19 @@ const Dashboard = () => {
                 <div>
                     <h3 className={styles.sectionTitle}>Continue Learning</h3>
                     <div className={styles.courseGrid}>
-                        <CourseCard id={20} title="UPSC Civil Services 2026" chapter="History: Ancient India" progress={58} />
-                        <CourseCard id={21} title="SSC CGL Tier 1 & 2" chapter="Quantitative Aptitude: Arithmetic" progress={32} />
-                        <CourseCard id={22} title="IBPS PO / Clerk Complete" chapter="Reasoning Ability: Puzzles" progress={80} />
+                        {analytics?.active_courses?.length > 0 ? (
+                            analytics.active_courses.map(course => (
+                                <CourseCard 
+                                    key={course.id} 
+                                    id={course.id} 
+                                    title={course.title} 
+                                    chapter={course.chapter} 
+                                    progress={course.progress} 
+                                />
+                            ))
+                        ) : (
+                            <p style={{ color: '#666', gridColumn: 'span 3' }}>You haven't enrolled in any courses yet! Go to the Explore page to start learning.</p>
+                        )}
                     </div>
                 </div>
 
