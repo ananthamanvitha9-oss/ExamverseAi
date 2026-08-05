@@ -2,80 +2,93 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\MockTest;
-use App\Models\Question;
-use App\Models\Exam;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MockTestSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        // Find the UPSC Exam (assuming it was seeded by CourseSeeder)
-        $upscExam = Exam::where('name', 'UPSC Civil Services')->first();
-        if (!$upscExam) return;
-
-        $mockTest = MockTest::create([
-            'exam_id' => $upscExam->id,
-            'title' => 'UPSC Prelims Grand Mock Test 1',
-            'description' => 'A comprehensive test covering Polity, History, and Geography.',
-            'duration_minutes' => 120
-        ]);
-
-        $questions = [
+        $polityQuestions = [
             [
-                'question_text' => 'Which article of the Constitution of India safeguards one\'s right to marry the person of one\'s choice?',
-                'option_a' => 'Article 19',
-                'option_b' => 'Article 21',
-                'option_c' => 'Article 25',
-                'option_d' => 'Article 29',
-                'correct_option' => '1', // B
-                'explanation' => 'The right to marry a person of one\'s choice is integral to Article 21 of the Constitution, which guarantees the right to life and personal liberty.'
+                "id" => 1,
+                "question" => "Which of the following Fundamental Rights is available only to citizens of India and not to foreigners?",
+                "options" => [
+                    "Equality before the law (Article 14)",
+                    "Protection of life and personal liberty (Article 21)",
+                    "Freedom of speech and expression (Article 19)",
+                    "Right against exploitation (Article 23)"
+                ],
+                "correct_answer" => "Freedom of speech and expression (Article 19)",
+                "explanation" => "Articles 15, 16, 19, 29, and 30 are available ONLY to citizens. Article 14, 20, 21, 21A, 22, 23, 24, 25, 26, 27, and 28 are available to both citizens and foreigners."
             ],
             [
-                'question_text' => 'The Ninth Schedule was introduced in the Constitution of India during the prime ministership of:',
-                'option_a' => 'Jawaharlal Nehru',
-                'option_b' => 'Lal Bahadur Shastri',
-                'option_c' => 'Indira Gandhi',
-                'option_d' => 'Morarji Desai',
-                'correct_option' => '0', // A
-                'explanation' => 'The First Amendment Act, 1951, which added the Ninth Schedule, was enacted during the tenure of Prime Minister Jawaharlal Nehru.'
-            ],
-            [
-                'question_text' => 'Consider the following statements regarding the Reserve Bank of India (RBI): 1. The RBI is a statutory body. 2. The RBI Governor is appointed by the Central Government.',
-                'option_a' => '1 only',
-                'option_b' => '2 only',
-                'option_c' => 'Both 1 and 2',
-                'option_d' => 'Neither 1 nor 2',
-                'correct_option' => '2', // C
-                'explanation' => 'RBI is a statutory body established under the RBI Act, 1934. The Governor is appointed by the Government of India.'
-            ],
-            [
-                'question_text' => 'Which of the following national parks is completely in the temperate alpine zone?',
-                'option_a' => 'Manas National Park',
-                'option_b' => 'Namdapha National Park',
-                'option_c' => 'Neora Valley National Park',
-                'option_d' => 'Valley of Flowers National Park',
-                'correct_option' => '3', // D
-                'explanation' => 'The Valley of Flowers National Park in Uttarakhand is entirely in the temperate alpine zone.'
+                "id" => 2,
+                "question" => "Consider the following statements regarding the President's Rule under Article 356:\n1. It can be imposed without the Governor's report.\n2. The maximum period for which it can be extended is 1 year.\nWhich of the above is/are correct?",
+                "options" => ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+                "correct_answer" => "1 only",
+                "explanation" => "Statement 1 is correct. The President can act either on a report of the Governor or otherwise. Statement 2 is incorrect. The maximum period is 3 years, subject to Parliamentary approval every 6 months."
             ]
         ];
 
-        foreach ($questions as $q) {
-            Question::create([
-                'mock_test_id' => $mockTest->id,
-                'question_text' => $q['question_text'],
-                'option_a' => $q['option_a'],
-                'option_b' => $q['option_b'],
-                'option_c' => $q['option_c'],
-                'option_d' => $q['option_d'],
-                'correct_option' => $q['correct_option'],
-                'explanation' => $q['explanation'],
-            ]);
-        }
+        $historyQuestions = [
+            [
+                "id" => 1,
+                "question" => "Who among the following was the founder of the 'Satya Shodhak Samaj'?",
+                "options" => [
+                    "B.R. Ambedkar",
+                    "Jyotirao Phule",
+                    "Raja Ram Mohan Roy",
+                    "Swami Vivekananda"
+                ],
+                "correct_answer" => "Jyotirao Phule",
+                "explanation" => "Jyotirao Phule founded the Satyashodhak Samaj (Truth Seekers' Society) in 1873 in Pune, Maharashtra, to secure human rights and social justice for low-caste people."
+            ],
+            [
+                "id" => 2,
+                "question" => "The 'Cabinet Mission' of 1946 included which of the following members?",
+                "options" => [
+                    "Lord Pethick-Lawrence, Sir Stafford Cripps, and A.V. Alexander",
+                    "Lord Mountbatten, Clement Attlee, and Sir Stafford Cripps",
+                    "Winston Churchill, Lord Linlithgow, and A.V. Alexander",
+                    "Lord Wavell, Sir John Simon, and Lord Pethick-Lawrence"
+                ],
+                "correct_answer" => "Lord Pethick-Lawrence, Sir Stafford Cripps, and A.V. Alexander",
+                "explanation" => "The Cabinet Mission to India in 1946 consisted of Lord Pethick-Lawrence, Sir Stafford Cripps, and A.V. Alexander."
+            ]
+        ];
+
+        $mockTests = [
+            [
+                'title' => 'Polity Sectional Mock Test 1',
+                'description' => 'A rigorous sectional test focusing on Fundamental Rights, DPSP, and Union Executive.',
+                'duration_minutes' => 30,
+                'total_questions' => 2,
+                'difficulty_level' => 'medium',
+                'questions_json' => json_encode($polityQuestions),
+                'is_active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'title' => 'Modern History Grand Test',
+                'description' => 'Comprehensive evaluation of Modern Indian History spanning from the 1857 Revolt to Independence.',
+                'duration_minutes' => 45,
+                'total_questions' => 2,
+                'difficulty_level' => 'hard',
+                'questions_json' => json_encode($historyQuestions),
+                'is_active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        ];
+
+        DB::table('mock_tests')->insert($mockTests);
     }
 }

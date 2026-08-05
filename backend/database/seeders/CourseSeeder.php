@@ -2,48 +2,52 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Exam;
-use App\Models\Subject;
-use App\Models\Chapter;
-use App\Models\Lesson;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CourseSeeder extends Seeder
 {
-    public function run(): void
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
     {
-        $upsc = Exam::create([
-            'name' => 'UPSC Civil Services',
-            'description' => 'Comprehensive preparation for IAS, IPS, and IFS.',
-            'duration' => 120,
-            'eligibility' => 'Graduate',
-            'category' => 'Civil Services',
-            'status' => 'active'
-        ]);
+        $courses = [
+            [
+                'title' => 'UPSC Prelims Masterclass 2027',
+                'description' => 'A comprehensive program covering General Studies Paper 1 and 2. Includes detailed lectures on History, Polity, Geography, Economy, and Science & Tech.',
+                'instructor' => 'Dr. A. Sharma (Ex-IAS)',
+                'price' => 4999.00,
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+                'is_active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'title' => 'CSAT Aptitude Crash Course',
+                'description' => 'Master quantitative aptitude, logical reasoning, and reading comprehension to comfortably clear the CSAT qualifying cutoff.',
+                'instructor' => 'Prof. R. Kumar',
+                'price' => 1999.00,
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80',
+                'is_active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'title' => 'Mains Answer Writing Mastery',
+                'description' => 'Learn the art of structuring perfect answers for GS Papers 1-4. Includes ethics case studies and essay writing frameworks.',
+                'instructor' => 'Smriti Rao (Rank 12)',
+                'price' => 2999.00,
+                'thumbnail_url' => 'https://images.unsplash.com/photo-1455309036818-605b90f14df8?auto=format&fit=crop&w=800&q=80',
+                'is_active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        ];
 
-        $polity = Subject::create([
-            'exam_id' => $upsc->id,
-            'name' => 'Indian Polity'
-        ]);
-
-        $chapter1 = Chapter::create([
-            'subject_id' => $polity->id,
-            'name' => 'Fundamental Rights'
-        ]);
-
-        Lesson::create([
-            'chapter_id' => $chapter1->id,
-            'name' => 'Right to Equality',
-            'video_url' => 'https://www.w3schools.com/html/mov_bbb.mp4',
-            'duration' => 15
-        ]);
-
-        Lesson::create([
-            'chapter_id' => $chapter1->id,
-            'name' => 'Article 21 Explained',
-            'pdf_url' => 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-            'duration' => 5
-        ]);
+        DB::table('courses')->insert($courses);
     }
 }
