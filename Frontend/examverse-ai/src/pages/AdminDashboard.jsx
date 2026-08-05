@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Users, DollarSign, Activity, TrendingUp, LogOut } from 'lucide-react';
+import { Users, DollarSign, Activity, TrendingUp, LogOut, BookOpen, LayoutDashboard } from 'lucide-react';
 import api from '../services/api';
 import styles from './AdminDashboard.module.css';
 import { Helmet } from 'react-helmet-async';
+import AdminCourses from './AdminCourses';
 
 const AdminDashboard = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('dashboard');
 
     useEffect(() => {
         const fetchAdminStats = async () => {
+            if (activeTab !== 'dashboard') {
+                setLoading(false);
+                return;
+            }
             try {
+                setLoading(true);
                 const response = await api.get('/admin/stats');
                 setStats(response.data);
             } catch (error) {
@@ -25,14 +32,14 @@ const AdminDashboard = () => {
         };
 
         fetchAdminStats();
-    }, []);
+    }, [activeTab]);
 
     const handleLogout = () => {
         logout();
         navigate('/login');
     };
 
-    if (loading) return <div className={styles.loading}>Loading Admin Portal...</div>;
+    if (loading && activeTab === 'dashboard') return <div className={styles.loading}>Loading Admin Portal...</div>;
 
     return (
         <div className={styles.adminLayout}>
@@ -44,7 +51,20 @@ const AdminDashboard = () => {
             <aside className={styles.sidebar}>
                 <div className={styles.logo}>Examverse <span>Admin</span></div>
                 <nav className={styles.nav}>
-                    <a href="#" className={styles.active}>Dashboard</a>
+                    <a 
+                        href="#" 
+                        className={activeTab === 'dashboard' ? styles.active : ''} 
+                        onClick={(e) => { e.preventDefault(); setActiveTab('dashboard'); }}
+                    >
+                        <LayoutDashboard size={18} style={{ marginRight: '8px' }}/> Dashboard
+                    </a>
+                    <a 
+                        href="#" 
+                        className={activeTab === 'courses' ? styles.active : ''} 
+                        onClick={(e) => { e.preventDefault(); setActiveTab('courses'); }}
+                    >
+                        <BookOpen size={18} style={{ marginRight: '8px' }}/> Courses
+                    </a>
                     <a href="#">Users</a>
                     <a href="#">Payments</a>
                     <a href="#">Settings</a>
@@ -56,10 +76,12 @@ const AdminDashboard = () => {
 
             {/* Main Content */}
             <main className={styles.mainContent}>
-                <header className={styles.header}>
-                    <h1>Platform Overview</h1>
-                    <div className={styles.adminBadge}>Super Admin</div>
-                </header>
+                {activeTab === 'dashboard' && (
+                    <>
+                        <header className={styles.header}>
+                            <h1>Platform Overview</h1>
+                            <div className={styles.adminBadge}>Super Admin</div>
+                        </header>
 
                 <div className={styles.metricsGrid}>
                     <div className={styles.metricCard}>
@@ -142,6 +164,10 @@ const AdminDashboard = () => {
                         </table>
                     </div>
                 </div>
+                    </>
+                )}
+
+                {activeTab === 'courses' && <AdminCourses />}
             </main>
         </div>
     );

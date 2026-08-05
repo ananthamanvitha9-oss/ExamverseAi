@@ -44,6 +44,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Super Admin Routes
     Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
         Route::get('/admin/stats', [\App\Http\Controllers\AdminController::class, 'stats']);
+        
+        // Admin Course Management
+        Route::get('/admin/courses', [\App\Http\Controllers\AdminController::class, 'getCourses']);
+        Route::post('/admin/courses', [\App\Http\Controllers\AdminController::class, 'createCourse']);
+        Route::put('/admin/courses/{id}', [\App\Http\Controllers\AdminController::class, 'updateCourse']);
+        Route::delete('/admin/courses/{id}', [\App\Http\Controllers\AdminController::class, 'deleteCourse']);
     });
 });
 
