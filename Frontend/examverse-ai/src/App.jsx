@@ -26,6 +26,7 @@ const StudyPlanner = React.lazy(() => import('./pages/StudyPlanner'));
 const FocusTimer = React.lazy(() => import('./pages/FocusTimer'));
 const Syllabus = React.lazy(() => import('./pages/Syllabus'));
 const DailyQuiz = React.lazy(() => import('./pages/DailyQuiz'));
+const Notes = React.lazy(() => import('./pages/Notes'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
 const OAuthCallback = React.lazy(() => import('./pages/OAuthCallback'));
 const Resources = React.lazy(() => import('./pages/Resources'));
@@ -78,6 +79,7 @@ function App() {
                 <Route path="/dashboard/focus" element={<ProtectedRoute><PageWrapper><FocusTimer /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/syllabus" element={<ProtectedRoute><PageWrapper><Syllabus /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/daily-quiz" element={<ProtectedRoute><PageWrapper><DailyQuiz /></PageWrapper></ProtectedRoute>} />
+                <Route path="/dashboard/notes" element={<ProtectedRoute><PageWrapper><Notes /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/resources" element={<ProtectedRoute><PageWrapper><Resources /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/settings" element={<ProtectedRoute><PageWrapper><Settings /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/courses" element={<ProtectedRoute><PageWrapper><MyCourses /></PageWrapper></ProtectedRoute>} />
