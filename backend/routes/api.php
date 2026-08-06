@@ -9,9 +9,13 @@ use App\Http\Controllers\AiController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HierarchyController;
+use App\Http\Controllers\AssessmentController;
 
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\PaymentController;
+
+Route::get('/hierarchy/{examId}', [HierarchyController::class, 'getHierarchy']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,7 +24,30 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
 
+// User Specific Analytics & Curriculum
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user/progress', function (Request $request) {
+        return $request->user()->progress;
+    });
+
+    // Admin Routes
+    Route::prefix('admin')->group(function () {
+        Route::post('/exams', [\App\Http\Controllers\AdminCurriculumController::class, 'storeExam']);
+        Route::delete('/exams/{id}', [\App\Http\Controllers\AdminCurriculumController::class, 'deleteExam']);
+        
+        Route::post('/subjects', [\App\Http\Controllers\AdminCurriculumController::class, 'storeSubject']);
+        Route::delete('/subjects/{id}', [\App\Http\Controllers\AdminCurriculumController::class, 'deleteSubject']);
+        
+        Route::post('/units', [\App\Http\Controllers\AdminCurriculumController::class, 'storeUnit']);
+        Route::delete('/units/{id}', [\App\Http\Controllers\AdminCurriculumController::class, 'deleteUnit']);
+        
+        Route::post('/chapters', [\App\Http\Controllers\AdminCurriculumController::class, 'storeChapter']);
+        Route::delete('/chapters/{id}', [\App\Http\Controllers\AdminCurriculumController::class, 'deleteChapter']);
+        
+        Route::post('/topics', [\App\Http\Controllers\AdminCurriculumController::class, 'storeTopic']);
+        Route::delete('/topics/{id}', [\App\Http\Controllers\AdminCurriculumController::class, 'deleteTopic']);
+    });
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [UserController::class, 'getProfile']);
     Route::put('/user', [UserController::class, 'updateProfile']);
@@ -45,8 +72,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/progress/dashboard', [\App\Http\Controllers\ProgressController::class, 'dashboard']);
     Route::get('/study-plan', [\App\Http\Controllers\StudyPlanController::class, 'getPlan']);
 
-    Route::post('/chat', [AiController::class, 'chat']);
-    Route::post('/quiz/generate', [AiController::class, 'generateQuiz']);
+    // AI Endpoints
+    Route::post('/ai/chat', [AiController::class, 'chat']);
+    Route::post('/ai/quiz', [AiController::class, 'generateQuiz']);
+    Route::get('/ai/history', [AiController::class, 'getHistory']);
 
     Route::get('/analytics', [AnalyticsController::class, 'index']);
     
@@ -68,3 +97,7 @@ Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/mock-tests', [MockTestController::class, 'index']);
 Route::get('/mock-tests/{id}', [MockTestController::class, 'show']);
 Route::get('/news', [NewsController::class, 'index']);
+
+// Assessment Routes
+Route::get('/topics/{id}/practice-questions', [AssessmentController::class, 'getTopicQuestions']);
+Route::get('/exams/{examId}/pyqs', [AssessmentController::class, 'getPyqs']);

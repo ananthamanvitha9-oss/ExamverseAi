@@ -66,10 +66,22 @@ class PaymentController extends Controller
 
             $api->utility->verifyPaymentSignature($attributes);
 
-            // Payment is successful, upgrade user to PRO
             $user = Auth::user();
+            
+            // Log the payment in the DB
+            \App\Models\Payment::create([
+                'user_id' => $user ? $user->id : 1, // Fallback to 1 for testing if auth fails
+                'razorpay_order_id' => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'razorpay_signature' => $request->razorpay_signature,
+                'amount' => $request->amount ?? 0, // Should pass amount from frontend
+                'currency' => 'INR',
+                'status' => 'successful',
+                'plan_name' => 'pro'
+            ]);
+
+            // Payment is successful, upgrade user to PRO
             if ($user) {
-                // Assuming we want to set is_pro = true
                 $user->is_pro = true;
                 $user->save();
             }

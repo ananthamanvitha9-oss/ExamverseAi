@@ -6,11 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chapter extends Model
 {
-    protected $fillable = ['subject_id', 'name', 'description'];
+    protected $fillable = ['subject_id', 'unit_id', 'name', 'description', 'order'];
 
     public function subject()
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
     }
 
     public function lessons()

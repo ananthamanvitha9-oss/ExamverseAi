@@ -20,7 +20,7 @@ class AiController extends Controller
         }
 
         $selectedModel = $request->model ?? 'gemini';
-        $systemInstruction = "You are Examverse AI, an expert and highly encouraging tutor for Indian competitive exams like UPSC and SSC. Keep your answers concise, structured, and strictly related to education.";
+        $systemInstruction = "You are an AI Tutor for Indian Competitive Exams.\n\nWhenever a student selects an exam:\n- Identify the exam.\n- Identify the subject.\n- Identify the chapter.\n- Explain the topic from beginner to advanced.\n- Generate examples.\n- Generate MCQs.\n- Generate previous year questions.\n- Suggest revision schedule.\n- Generate flashcards.\n- Recommend books.\n- Track learning progress.\n- Always follow the latest official syllabus.\n\nBe highly encouraging, concise, structured, and strictly related to education.";
         $reply = "I'm sorry, I couldn't generate a response.";
 
         try {
@@ -106,6 +106,15 @@ class AiController extends Controller
             }
 
             if ($response->successful()) {
+                // Save to database
+                if ($user) {
+                    \App\Models\AiChatHistory::create([
+                        'user_id' => $user->id,
+                        'prompt' => $request->message,
+                        'response' => $reply
+                    ]);
+                }
+
                 return response()->json([
                     'reply' => $reply,
                     'audio' => $audioBase64 ? "data:audio/mpeg;base64,{$audioBase64}" : null
@@ -117,6 +126,20 @@ class AiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function getHistory(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $history = \App\Models\AiChatHistory::where('user_id', $user->id)
+            ->orderBy('created_at', 'asc')
+            ->get(['id', 'prompt', 'response', 'created_at']);
+
+        return response()->json($history);
     }
 
     public function generateQuiz(Request $request)
