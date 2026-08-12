@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
-import styles from './AiTutor.module.css';
+import styles from './AITutor.module.css';
 import api from '../services/api';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
 
