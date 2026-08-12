@@ -29,7 +29,7 @@ const Syllabus = React.lazy(() => import('./pages/Syllabus'));
 const StudyExplorer = React.lazy(() => import('./pages/StudyExplorer'));
 const PracticeQuiz = React.lazy(() => import('./pages/PracticeQuiz'));
 const DailyQuiz = React.lazy(() => import('./pages/DailyQuiz'));
-const AiTutor = React.lazy(() => import('./pages/AiTutor'));
+const AiTutor = React.lazy(() => import('./pages/AITutor'));
 
 // Admin Pages
 const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
