@@ -79,13 +79,13 @@ def create_score_for_user(user_id: int, score: schemas.ScoreCreate, db: Session 
     db.refresh(db_score)
     return db_score
 
-@app.get("/auth/google/redirect")
+@api_router.get("/auth/google/redirect")
 async def login_via_google(request: Request):
-    frontend_url = "http://localhost:5173"  # Adjust as needed
-    redirect_uri = "http://localhost:8000/auth/google/callback"
+    backend_url = os.environ.get("BACKEND_URL", "http://localhost:8000")
+    redirect_uri = f"{backend_url}/api/auth/google/callback"
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
-@app.get("/auth/google/callback")
+@api_router.get("/auth/google/callback")
 async def auth_google_callback(request: Request, db: Session = Depends(get_db)):
     try:
         token = await oauth.google.authorize_access_token(request)
@@ -112,12 +112,14 @@ async def auth_google_callback(request: Request, db: Session = Depends(get_db)):
         )
         
         # Redirect back to React frontend with token
-        frontend_url = "http://localhost:5173"
+        frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
         return RedirectResponse(url=f"{frontend_url}/auth/callback?token={access_token}")
         
     except Exception as e:
         print(f"Auth Error: {e}")
-        return RedirectResponse(url="http://localhost:5173/login?error=GoogleAuthFailed")
+        frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+        return RedirectResponse(url=f"{frontend_url}/login?error=GoogleAuthFailed")
+
 
 # --- PHASE 3: MOCK API ENDPOINTS FOR REACT FRONTEND PARITY ---
 
