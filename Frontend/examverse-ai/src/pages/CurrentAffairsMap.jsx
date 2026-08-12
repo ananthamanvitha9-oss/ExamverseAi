@@ -64,7 +64,7 @@ const CurrentAffairsMap = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await api.post('/chat', {
+            const response = await api.post('/ai/chat', {
                 message: `Give me a 3-bullet point summary of the most important current affairs and geopolitical news related to ${countryName} right now. Keep it extremely concise and relevant for UPSC students.`
             }, {
                 headers: { Authorization: `Bearer ${token}` }

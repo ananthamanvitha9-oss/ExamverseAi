@@ -1,130 +1,127 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Check, X, Zap } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import api from '../services/api';
-import SEO from '../components/SEO';
+import React, { useState } from 'react';
+import DashboardLayout from '../components/dashboard/DashboardLayout';
 import styles from './Pricing.module.css';
+import { Check, Star, Zap } from 'lucide-react';
+import api from '../services/api';
 
 const Pricing = () => {
+    const [loading, setLoading] = useState(false);
+
     const handleUpgrade = async () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            window.location.href = '/login?redirect=/pricing';
-            return;
-        }
-
+        setLoading(true);
         try {
-            // Initiate Razorpay payment
-            const res = await api.post('/payment/create-order', {
-                amount: 499, // ₹499 for Pro
-                currency: 'INR',
-                receipt: 'receipt_pro_1'
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            // 1. Create order on backend
+            const orderRes = await api.post('/payment/create-order', { amount: 999 });
+            const { order_id, amount, currency, key_id } = orderRes.data;
 
-            const { order_id, amount, currency } = res.data;
-
+            // 2. Initialize Razorpay Checkout
             const options = {
-                key: import.meta.env.VITE_RAZORPAY_KEY_ID, 
-                amount: amount.toString(),
+                key: key_id,
+                amount: amount,
                 currency: currency,
-                name: "Examverse AI",
-                description: "Examverse Pro Subscription",
-                image: "/logo.png",
+                name: 'ExamVerseAI',
+                description: 'Upgrade to PRO Subscription',
+                image: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', // Dummy logo
                 order_id: order_id,
                 handler: async function (response) {
+                    // 3. Verify payment on backend
                     try {
-                        await api.post('/payment/verify', {
+                        const verifyRes = await api.post('/payment/verify', {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_signature: response.razorpay_signature
-                        }, {
-                            headers: { Authorization: `Bearer ${token}` }
+                            razorpay_signature: response.razorpay_signature,
+                            amount: 999
                         });
-                        alert("Payment successful! You are now a PRO user.");
-                        window.location.href = '/dashboard';
-                    } catch (err) {
-                        alert("Payment verification failed. Contact support.");
+                        if (verifyRes.data.success) {
+                            alert("Payment Successful! You are now a PRO member.");
+                            window.location.href = '/dashboard';
+                        }
+                    } catch (error) {
+                        alert("Payment verification failed.");
+                        console.error(error);
                     }
                 },
+                prefill: {
+                    name: 'Student Name', // ideally fetch from user profile
+                    email: 'student@example.com',
+                    contact: '9999999999'
+                },
                 theme: {
-                    color: "#8b5cf6"
+                    color: '#3b82f6'
                 }
             };
 
             const rzp = new window.Razorpay(options);
+            rzp.on('payment.failed', function (response){
+                alert("Payment Failed: " + response.error.description);
+            });
             rzp.open();
+            
         } catch (error) {
-            console.error(error);
-            alert("Error initiating payment. Please try again later.");
+            console.error("Error initiating payment", error);
+            alert("Could not initialize payment gateway. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className={styles.pricingPage}>
-            <SEO 
-                title="Pricing | Examverse AI" 
-                description="Affordable AI study tools. Upgrade to Examverse Pro for unlimited Mock Tests, Study Plans, and AI Tutor access."
-                url="https://examverse-ai.com/pricing"
-            />
-
+        <DashboardLayout>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1>Simple, transparent pricing</h1>
-                    <p>Invest in your future. Get access to the most powerful AI studying tools on the market.</p>
+                    <h1>Upgrade to ExamVerseAI Pro 🚀</h1>
+                    <p>Unlock the full power of AI and ace your competitive exams.</p>
                 </div>
 
                 <div className={styles.pricingCards}>
-                    {/* Free Tier */}
+                    {/* Free Plan */}
                     <div className={styles.card}>
-                        <div className={styles.cardHeader}>
-                            <h2>Free</h2>
-                            <p>For casual learners</p>
-                            <div className={styles.price}>
-                                <span className={styles.currency}>₹</span>0<span className={styles.period}>/mo</span>
-                            </div>
+                        <h2>Basic</h2>
+                        <div className={styles.price}>
+                            <span className={styles.currency}>₹</span>0<span className={styles.period}>/forever</span>
                         </div>
-                        <ul className={styles.featuresList}>
-                            <li><Check className={styles.check} /> 3 AI Mock Tests / day</li>
-                            <li><Check className={styles.check} /> 3 AI Tutor Questions / day</li>
-                            <li><Check className={styles.check} /> 3 AI Study Plans / day</li>
-                            <li><Check className={styles.check} /> Global Study Room Access</li>
-                            <li><X className={styles.cross} /> Priority Support</li>
-                            <li><X className={styles.cross} /> Custom Mock Test Pdfs</li>
+                        <p className={styles.desc}>For students just getting started.</p>
+                        
+                        <ul className={styles.features}>
+                            <li><Check size={18} color="#10b981" /> Access to Syllabus Viewer</li>
+                            <li><Check size={18} color="#10b981" /> Daily Current Affairs</li>
+                            <li><Check size={18} color="#10b981" /> 1 Mock Test per month</li>
+                            <li className={styles.disabled}><Check size={18} color="#94a3b8" /> <s>Unlimited AI Tutor Chat</s></li>
+                            <li className={styles.disabled}><Check size={18} color="#94a3b8" /> <s>Personalized AI Study Plans</s></li>
                         </ul>
-                        <button className={styles.btnSecondary} onClick={() => window.location.href='/register'}>
-                            Get Started
-                        </button>
+                        
+                        <button className={styles.btnSecondary} disabled>Current Plan</button>
                     </div>
 
-                    {/* Pro Tier */}
+                    {/* Pro Plan */}
                     <div className={`${styles.card} ${styles.proCard}`}>
-                        <div className={styles.badge}><Zap size={16}/> MOST POPULAR</div>
-                        <div className={styles.cardHeader}>
-                            <h2>Examverse Pro</h2>
-                            <p>For serious aspirants</p>
-                            <div className={styles.price}>
-                                <span className={styles.currency}>₹</span>499<span className={styles.period}>/mo</span>
-                            </div>
+                        <div className={styles.badge}>RECOMMENDED <Star size={14} /></div>
+                        <h2>Pro Tier</h2>
+                        <div className={styles.price}>
+                            <span className={styles.currency}>₹</span>999<span className={styles.period}>/year</span>
                         </div>
-                        <ul className={styles.featuresList}>
-                            <li><Check className={styles.proCheck} /> Unlimited AI Mock Tests</li>
-                            <li><Check className={styles.proCheck} /> Unlimited AI Tutor Access</li>
-                            <li><Check className={styles.proCheck} /> Unlimited AI Study Plans</li>
-                            <li><Check className={styles.proCheck} /> Global Study Room Access</li>
-                            <li><Check className={styles.proCheck} /> Priority 24/7 Support</li>
-                            <li><Check className={styles.proCheck} /> Download Mock Tests as PDF</li>
+                        <p className={styles.desc}>Everything you need to crack the exam.</p>
+                        
+                        <ul className={styles.features}>
+                            <li><Check size={18} color="#3b82f6" /> Access to Syllabus Viewer</li>
+                            <li><Check size={18} color="#3b82f6" /> Daily Current Affairs</li>
+                            <li><Check size={18} color="#3b82f6" /> <strong>Unlimited</strong> Mock Tests</li>
+                            <li><Check size={18} color="#3b82f6" /> <strong>Unlimited</strong> AI Tutor Chat</li>
+                            <li><Check size={18} color="#3b82f6" /> <strong>Personalized</strong> AI Study Plans</li>
+                            <li><Check size={18} color="#3b82f6" /> Detailed Performance Analytics</li>
                         </ul>
-                        <button className={styles.btnPrimary} onClick={handleUpgrade}>
-                            Upgrade to Pro
+                        
+                        <button 
+                            className={styles.btnPrimary} 
+                            onClick={handleUpgrade}
+                            disabled={loading}
+                        >
+                            {loading ? 'Initializing Secure Payment...' : <><Zap size={18} /> Upgrade Now</>}
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </DashboardLayout>
     );
 };
 

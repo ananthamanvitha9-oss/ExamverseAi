@@ -1,0 +1,233 @@
+.container {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: #64748b;
+    font-size: 1.2rem;
+}
+
+.spinner {
+    color: #3b82f6;
+    animation: spin 3s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #1e293b;
+    margin: 0;
+}
+
+.statsRow {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.progress {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.scoreBadge {
+    background: #10b981;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.questionCard {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+.questionText {
+    font-size: 1.4rem;
+    color: #1e293b;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+.optionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #f8fafc;
+}
+
+.option:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+}
+
+.option.selected {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.option.correct {
+    border-color: #10b981;
+    background: #ecfdf5;
+}
+
+.option.incorrect {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.optionCircle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #cbd5e1;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.selected .optionCircle {
+    border-color: #3b82f6;
+    background: #3b82f6;
+    box-shadow: inset 0 0 0 4px #eff6ff;
+}
+
+.correct .optionCircle {
+    border-color: #10b981;
+    background: #10b981;
+}
+
+.incorrect .optionCircle {
+    border-color: #ef4444;
+    background: #ef4444;
+}
+
+.optionText {
+    font-size: 1.1rem;
+    color: #334155;
+    flex-grow: 1;
+}
+
+.resultIcon {
+    margin-left: auto;
+}
+
+.submitBtn, .nextBtn {
+    width: 100%;
+    padding: 1.25rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.submitBtn {
+    background: #3b82f6;
+    color: white;
+}
+
+.submitBtn:hover:not(:disabled) {
+    background: #2563eb;
+}
+
+.submitBtn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.nextBtn {
+    background: #1e293b;
+    color: white;
+    margin-top: 1.5rem;
+}
+
+.nextBtn:hover {
+    background: #0f172a;
+}
+
+.explanationBox {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    border-left: 4px solid #3b82f6;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.explanationBox h3 {
+    margin: 0 0 0.5rem 0;
+    color: #1e293b;
+    font-size: 1.1rem;
+}
+
+.explanationBox p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.quizComplete {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #ecfdf5;
+    color: #065f46;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: 2px dashed #10b981;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media screen and (max-width: 768px) {
+    .container { padding: 1rem; }
+    .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .questionCard { padding: 1.5rem; }
+    .questionText { font-size: 1.2rem; }
+}

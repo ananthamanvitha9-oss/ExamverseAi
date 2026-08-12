@@ -1,196 +1,156 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
-import { useAuth } from '../context/AuthContext';
-import styles from './AITutor.module.css';
+import styles from './AiTutor.module.css';
 import api from '../services/api';
-import UpgradeModal from '../components/UpgradeModal';
+import { Send, Bot, User, Loader2 } from 'lucide-react';
 
-const AITutor = () => {
-    const { user } = useAuth();
+const AiTutor = () => {
     const [messages, setMessages] = useState([]);
-    const [inputValue, setInputValue] = useState('');
+    const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isVoiceMode, setIsVoiceMode] = useState(false);
-    const [selectedModel, setSelectedModel] = useState('gemini');
-    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
     useEffect(() => {
+        const fetchHistory = async () => {
+            try {
+                // Fetching history from the backend
+                const response = await api.get('/ai/history');
+                const historyData = response.data;
+                
+                // Format history into our chat array structure
+                const formattedMessages = [];
+                historyData.forEach(item => {
+                    formattedMessages.push({ id: `q-${item.id}`, type: 'user', text: item.prompt });
+                    formattedMessages.push({ id: `a-${item.id}`, type: 'bot', text: item.response });
+                });
+                
+                if (formattedMessages.length === 0) {
+                    formattedMessages.push({
+                        id: 'welcome',
+                        type: 'bot',
+                        text: 'Hello! I am your ExamVerseAI Tutor. How can I help you prepare for your exams today?'
+                    });
+                }
+                
+                setMessages(formattedMessages);
+            } catch (error) {
+                console.error("Failed to fetch chat history:", error);
+                setMessages([{
+                    id: 'error-msg',
+                    type: 'bot',
+                    text: 'Hello! I am your ExamVerseAI Tutor. How can I help you prepare for your exams today?'
+                }]);
+            }
+        };
+
+        fetchHistory();
+    }, []);
+
+    useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isLoading]);
 
-    const suggestions = [
-        "Explain Fundamental Rights.",
-        "Explain GDP.",
-        "Create Quiz."
-    ];
+    const handleSend = async (e) => {
+        e.preventDefault();
+        if (!input.trim()) return;
 
-    const handleSendMessage = async (e) => {
-        if (e) e.preventDefault();
-        if (!inputValue.trim()) return;
+        const userMessage = input;
+        setInput('');
         
-        const userText = inputValue;
-        const newMsg = { text: userText, sender: 'user' };
-        setMessages(prev => [...prev, newMsg]);
-        setInputValue('');
+        // Add user message to UI immediately
+        setMessages(prev => [...prev, { id: Date.now().toString(), type: 'user', text: userMessage }]);
         setIsLoading(true);
 
         try {
             const token = localStorage.getItem('token');
-            const response = await api.post('/chat', {
-                message: userText,
-                model: selectedModel,
-                voice: isVoiceMode
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-
-            const aiReply = response.data.reply;
-            const audioData = response.data.audio;
-
-            setMessages(prev => [...prev, { 
-                text: aiReply, 
-                sender: 'ai',
-                audio: audioData 
-            }]);
-
-            if (audioData) {
-                const audio = new Audio(audioData);
-                audio.play();
+            if (!token) {
+                setTimeout(() => {
+                    setMessages(prev => [...prev, { id: Date.now().toString(), type: 'bot', text: 'You must be logged in to use the AI Tutor. Please login and try again.' }]);
+                    setIsLoading(false);
+                }, 1000);
+                return;
             }
-
+            const response = await api.post('/ai/chat', { message: userMessage });
+            setMessages(prev => [...prev, { id: Date.now().toString(), type: 'bot', text: response.data.reply }]);
         } catch (error) {
-            console.error("AI Chat Error", error);
-            if (error.response && error.response.status === 402) {
-                setShowUpgradeModal(true);
-            } else {
-                setMessages(prev => [...prev, { text: "Sorry, I am having trouble connecting to the server.", sender: 'ai' }]);
-            }
+            console.error("Chat Error:", error);
+            setMessages(prev => [...prev, { id: Date.now().toString(), type: 'bot', text: 'Sorry, I encountered an error connecting to the brain.' }]);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') handleSendMessage();
-    };
-
     return (
         <DashboardLayout>
-            <UpgradeModal 
-                isOpen={showUpgradeModal} 
-                onClose={() => setShowUpgradeModal(false)} 
-                title="AI Tutor Limit Reached"
-            />
-            <div className={styles.tutorContainer}>
-                
-                {/* Left Sidebar: Chat History */}
-                <div className={styles.historyPanel}>
-                    <div className={styles.historyHeader}>
-                        <h3>Chat History</h3>
-                        <button className={styles.newChatBtn}>+ New Chat</button>
-                    </div>
-                    <div className={styles.historyList}>
-                        <div className={styles.historyItem}>Explain Fundamental Rights</div>
-                    </div>
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <h1>🤖 AI Tutor</h1>
+                    <p>Your personal expert for Indian Competitive Exams</p>
                 </div>
 
-                {/* Right Area: Main Chat UI */}
-                <div className={styles.chatArea}>
-                    <div className={styles.chatHeader}>
-                        <div className={styles.modelSelector}>
-                            <select 
-                                value={selectedModel} 
-                                onChange={(e) => setSelectedModel(e.target.value)}
-                                className={styles.modelDropdown}
-                            >
-                                <option value="gemini">Gemini 1.5 (Standard)</option>
-                                <option value="groq">Llama-3 70B (Groq - Fast)</option>
-                                <option value="openrouter">Claude 3.5 (Pro Reasoning)</option>
-                            </select>
-                        </div>
-                        <div className={styles.voiceToggle}>
-                            <span>Voice Mode</span>
-                            <label className={styles.switch}>
-                                <input 
-                                    type="checkbox" 
-                                    checked={isVoiceMode} 
-                                    onChange={(e) => setIsVoiceMode(e.target.checked)} 
-                                />
-                                <span className={styles.slider}></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className={styles.chatMessages}>
-                        
-                        {/* Empty State / Suggestions */}
-                        {messages.length === 0 && (
-                            <div className={styles.emptyState}>
-                                <h2>Hello, {user?.full_name?.split(' ')[0] || 'Student'} 👋</h2>
-                                <p>I am your AI Tutor. Ask me anything!</p>
-                                <div className={styles.suggestions}>
-                                    {suggestions.map((text, idx) => (
-                                        <button 
-                                            key={idx} 
-                                            className={styles.suggestionChip}
-                                            onClick={() => setInputValue(text)}
-                                        >
-                                            {text}
-                                        </button>
+                <div className={styles.chatWindow}>
+                    <div className={styles.messagesContainer}>
+                        {messages.map((msg, index) => (
+                            <div key={msg.id || index} className={`${styles.messageWrapper} ${msg.type === 'user' ? styles.userWrapper : styles.botWrapper}`}>
+                                {msg.type === 'bot' && (
+                                    <div className={styles.avatarBot}>
+                                        <Bot size={20} />
+                                    </div>
+                                )}
+                                
+                                <div className={`${styles.messageBubble} ${msg.type === 'user' ? styles.userBubble : styles.botBubble}`}>
+                                    {/* Handle line breaks correctly */}
+                                    {msg.text.split('\\n').map((line, i) => (
+                                        <React.Fragment key={i}>
+                                            {line}
+                                            {i < msg.text.split('\\n').length - 1 && <br />}
+                                        </React.Fragment>
                                     ))}
                                 </div>
-                            </div>
-                        )}
 
-                        {/* Render actual chat bubbles */}
-                        {messages.map((msg, idx) => (
-                            <div key={idx} className={`${styles.messageRow} ${msg.sender === 'user' ? styles.userRow : styles.aiRow}`}>
-                                <div className={`${styles.messageBubble} ${msg.sender === 'user' ? styles.userMessage : styles.aiMessage}`}>
-                                    {msg.text}
-                                </div>
+                                {msg.type === 'user' && (
+                                    <div className={styles.avatarUser}>
+                                        <User size={20} />
+                                    </div>
+                                )}
                             </div>
                         ))}
+
                         {isLoading && (
-                            <div className={`${styles.messageRow} ${styles.aiRow}`}>
-                                <div className={`${styles.messageBubble} ${styles.aiMessage}`}>
-                                    <div className={styles.loadingBubble}>
-                                        <span className={styles.dot}></span>
-                                        <span className={styles.dot}></span>
-                                        <span className={styles.dot}></span>
-                                    </div>
+                            <div className={`${styles.messageWrapper} ${styles.botWrapper}`}>
+                                <div className={styles.avatarBot}>
+                                    <Bot size={20} />
+                                </div>
+                                <div className={`${styles.messageBubble} ${styles.botBubble} ${styles.loadingBubble}`}>
+                                    <Loader2 className={styles.spinner} size={20} />
+                                    <span>Thinking...</span>
                                 </div>
                             </div>
                         )}
                         <div ref={messagesEndRef} />
                     </div>
 
-                    <div className={styles.inputArea}>
+                    <form onSubmit={handleSend} className={styles.inputArea}>
                         <input 
                             type="text" 
-                            className={styles.chatInput} 
-                            placeholder="Ask a question about UPSC, SSC, or general knowledge..." 
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyPress={handleKeyPress}
+                            className={styles.inputField} 
+                            placeholder="Ask me to explain a concept or generate a quiz..." 
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
                             disabled={isLoading}
                         />
-                        <button 
-                            className={styles.sendButton} 
-                            onClick={handleSendMessage}
-                            disabled={isLoading || !inputValue.trim()}
-                        >
-                            {isLoading ? '...' : 'Send'}
+                        <button type="submit" className={styles.sendBtn} disabled={isLoading || !input.trim()}>
+                            <Send size={20} />
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </DashboardLayout>
     );
 };
 
-export default AITutor;
+export default AiTutor;

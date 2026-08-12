@@ -23,12 +23,16 @@ const StudyPlanner = () => {
     const fetchPlan = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await api.get('/study-plan', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setPlan(response.data);
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+            const response = await api.get('/study-plan');
+            // Ensure empty response correctly sets plan to null
+            setPlan(response.data ? response.data : null);
         } catch (error) {
             console.error("Failed to fetch plan", error);
+            setPlan(null);
         } finally {
             setLoading(false);
         }
@@ -39,9 +43,10 @@ const StudyPlanner = () => {
         setGenerating(true);
         try {
             const token = localStorage.getItem('token');
+            if (!token) throw new Error('No auth token');
+            
             const response = await api.post('/study-plan/generate', 
-                { exam_date: examDate, weak_subjects: weakSubjects },
-                { headers: { Authorization: `Bearer ${token}` } }
+                { exam_date: examDate, weak_subjects: weakSubjects }
             );
             setPlan({
                 exam_date: examDate,
@@ -52,14 +57,14 @@ const StudyPlanner = () => {
             if (error.response && error.response.status === 402) {
                 setShowUpgradeModal(true);
             } else {
-                alert("Failed to generate plan. Ensure your API keys are correct.");
+                alert("Failed to generate plan. Ensure your API keys are correct and you are logged in.");
             }
         } finally {
             setGenerating(false);
         }
     };
 
-    if (loading) return <DashboardLayout><div className={styles.loading}>Loading Planner...</div></DashboardLayout>;
+    if (loading) return <DashboardLayout><div className={styles.loading}><div className={styles.spinner}></div></div></DashboardLayout>;
 
     return (
         <DashboardLayout>

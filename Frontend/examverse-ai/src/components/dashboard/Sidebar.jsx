@@ -14,6 +14,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: "AI Tutor", path: "/dashboard/ai-tutor", icon: "🤖" },
         { name: "AI Study Planner", path: "/dashboard/study-planner", icon: "📅" },
         { name: "Syllabus", path: "/dashboard/syllabus", icon: "📋" },
+        { name: "Study Explorer", path: "/dashboard/study-explorer", icon: "🌳" },
+        { name: "Practice Quiz", path: "/dashboard/practice-quiz", icon: "📝" },
         { name: "Resources", path: "/dashboard/resources", icon: "📚" },
         { name: "Global Room", path: "/dashboard/study-room", icon: "💬" },
         { name: "Leaderboard", path: "/dashboard/leaderboard", icon: "🏆" },
@@ -24,6 +26,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: "Notes", path: "/dashboard/notes", icon: "📖" },
         { name: "Profile", path: "/dashboard/profile", icon: "👤" },
         { name: "Settings", path: "/dashboard/settings", icon: "⚙️" },
+        { name: "Upgrade to Pro", path: "/dashboard/pricing", icon: "💎" },
     ];
 
     return (

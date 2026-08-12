@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+sqlalchemy
+pandas
+numpy
+scikit-learn
+google-generativeai
+python-multipart
+python-dotenv
+pydantic
+authlib
+httpx
+pyjwt
+python-jose
+passlib[bcrypt]
+bcrypt
+itsdangerous

@@ -16,17 +16,24 @@ const MockTestInterface = React.lazy(() => import('./pages/MockTestInterface'));
 const AITutor = React.lazy(() => import('./pages/AITutor'));
 const Profile = React.lazy(() => import('./pages/Profile'));
 const Settings = React.lazy(() => import('./pages/Settings'));
-const Notifications = React.lazy(() => import('./pages/Notifications'));
+const Notes = React.lazy(() => import('./pages/Notes'));
 const Analytics = React.lazy(() => import('./pages/Analytics'));
+const Notifications = React.lazy(() => import('./pages/Notifications'));
 const StudyRoom = React.lazy(() => import('./pages/StudyRoom'));
 const CurrentAffairsMap = React.lazy(() => import('./pages/CurrentAffairsMap'));
-const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
+const AdminDashboardPage = React.lazy(() => import('./pages/AdminDashboard'));
 const Leaderboard = React.lazy(() => import('./pages/Leaderboard'));
 const StudyPlanner = React.lazy(() => import('./pages/StudyPlanner'));
 const FocusTimer = React.lazy(() => import('./pages/FocusTimer'));
 const Syllabus = React.lazy(() => import('./pages/Syllabus'));
+const StudyExplorer = React.lazy(() => import('./pages/StudyExplorer'));
+const PracticeQuiz = React.lazy(() => import('./pages/PracticeQuiz'));
 const DailyQuiz = React.lazy(() => import('./pages/DailyQuiz'));
-const Notes = React.lazy(() => import('./pages/Notes'));
+const AiTutor = React.lazy(() => import('./pages/AiTutor'));
+
+// Admin Pages
+const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminCurriculum = React.lazy(() => import('./pages/admin/AdminCurriculum'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
 const OAuthCallback = React.lazy(() => import('./pages/OAuthCallback'));
 const Resources = React.lazy(() => import('./pages/Resources'));
@@ -78,10 +85,17 @@ function App() {
                 <Route path="/dashboard/ai-tutor" element={<ProtectedRoute><PageWrapper><AITutor /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/focus" element={<ProtectedRoute><PageWrapper><FocusTimer /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/syllabus" element={<ProtectedRoute><PageWrapper><Syllabus /></PageWrapper></ProtectedRoute>} />
+                <Route path="/dashboard/study-explorer" element={<ProtectedRoute><PageWrapper><StudyExplorer /></PageWrapper></ProtectedRoute>} />
+                <Route path="/dashboard/practice-quiz" element={<ProtectedRoute><PageWrapper><PracticeQuiz /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/daily-quiz" element={<ProtectedRoute><PageWrapper><DailyQuiz /></PageWrapper></ProtectedRoute>} />
+
+                {/* Admin Routes */}
+                <Route path="/admin" element={<ProtectedRoute><PageWrapper><AdminDashboard /></PageWrapper></ProtectedRoute>} />
+                <Route path="/admin/curriculum" element={<ProtectedRoute><PageWrapper><AdminCurriculum /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/notes" element={<ProtectedRoute><PageWrapper><Notes /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/resources" element={<ProtectedRoute><PageWrapper><Resources /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/settings" element={<ProtectedRoute><PageWrapper><Settings /></PageWrapper></ProtectedRoute>} />
+                <Route path="/dashboard/pricing" element={<ProtectedRoute><PageWrapper><Pricing /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/courses" element={<ProtectedRoute><PageWrapper><MyCourses /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/courses/:id" element={<ProtectedRoute><PageWrapper><CourseDetails /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/news" element={<ProtectedRoute><PageWrapper><CurrentAffairs /></PageWrapper></ProtectedRoute>} />

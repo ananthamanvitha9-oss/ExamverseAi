@@ -1,246 +1,115 @@
 .container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
+    padding: 2rem;
 }
 
-.profileHeader {
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+.header {
+    text-align: center;
     margin-bottom: 2rem;
 }
 
-.avatarCircle {
-    width: 96px;
-    height: 96px;
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 3rem;
-    font-weight: 800;
-    overflow: hidden;
-    flex-shrink: 0;
+.header h1 {
+    font-size: 2.25rem;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
 }
 
-.avatarImg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.header p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.profileCard {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
 }
 
 .avatarSection {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    background: var(--accent-gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.avatarSection h2 {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.avatarSection p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.formGroup {
     margin-bottom: 1.5rem;
 }
 
-.uploadControls h4 {
-    margin: 0 0 0.5rem 0;
+.formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
-.uploadBtn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #3b82f6;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: background 0.2s;
-}
-
-.uploadBtn:hover {
-    background-color: #2563eb;
-}
-
-.inputBox {
-    padding: 0.5rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 1rem;
+.inputField {
     width: 100%;
-    max-width: 300px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .saveBtn {
-    margin-top: 1rem;
-    padding: 0.75rem 2rem;
-    background-color: #10b981;
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-primary);
     color: white;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-}
-
-.alert {
-    background-color: #d1fae5;
-    color: #065f46;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.userInfo h2 {
-    margin: 0 0 0.25rem 0;
-    color: #111827;
-    font-size: 1.5rem;
-}
-
-.userInfo p {
-    margin: 0 0 1rem 0;
-    color: #6b7280;
-}
-
-.roleBadge {
-    background: #dcfce7;
-    color: #166534;
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-}
-
-.settingsGrid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.settingsCard {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-    border-radius: 16px;
-    padding: 1.5rem 2rem;
-}
-
-.settingsCard h3 {
-    margin: 0 0 1.5rem 0;
-    color: #111827;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 1rem;
-}
-
-.settingRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid #f3f4f6;
-}
-
-.settingRow:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.settingRow h4 {
-    margin: 0 0 0.25rem 0;
-    color: #374151;
-}
-
-.settingRow p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: #6b7280;
-}
-
-.selectBox {
-    padding: 0.5rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background: white;
     font-size: 1rem;
-    color: #111827;
-    cursor: pointer;
-    outline: none;
-}
-
-.selectBox:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-}
-
-/* Custom Toggle Switch CSS */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 24px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #cbd5e1;
-    transition: .4s;
-    border-radius: 24px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #3b82f6;
-}
-
-input:checked + .slider:before {
-    transform: translateX(24px);
-}
-
-/* Danger Zone */
-.dangerZone {
-    margin-top: 2rem;
-    text-align: center;
-}
-
-.logoutBtn {
-    background: transparent;
-    color: #ef4444;
-    border: 1px solid #fca5a5;
-    padding: 0.75rem 2rem;
-    border-radius: 8px;
     font-weight: 600;
-    font-size: 1rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
 }
 
-.logoutBtn:hover {
-    background: #fef2f2;
-    border-color: #ef4444;
+.saveBtn:hover:not(:disabled) {
+    background: var(--accent-secondary);
+    transform: translateY(-1px);
+}
+
+.saveBtn:disabled {
+    background: var(--border-color);
+    color: var(--text-secondary);
+    cursor: not-allowed;
 }

@@ -1,142 +1,128 @@
-.analyticsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+.container {
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 2rem;
 }
 
 .header h1 {
-    font-size: 2.2rem;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-    font-family: var(--font-display);
-    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    font-size: 2rem;
+    color: #1e293b;
+    margin: 0 0 0.5rem 0;
 }
 
 .header p {
-    color: var(--text-secondary);
+    color: #64748b;
+    margin: 0;
     font-size: 1.1rem;
 }
 
-.card {
-    background: rgba(19, 3, 36, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(168, 85, 247, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+/* Summary Grid */
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summaryCard {
+    background: white;
+    padding: 1.5rem;
     border-radius: 16px;
-    padding: 30px;
-    animation: fadeIn 0.5s ease-out forwards;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
-.cardTitle {
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
-    padding-bottom: 10px;
-    font-family: var(--font-display);
+.iconWrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.formGroup {
+.cardInfo {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
 }
 
-.formGroup label {
-    font-weight: 600;
-    color: #e2e8f0;
-}
-
-.formInput {
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-    border-radius: 8px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.3s;
-}
-
-.formInput:focus {
-    border-color: #ec4899;
-    box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.generateBtn {
-    background: var(--accent-gradient);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    font-family: var(--font-display);
-    cursor: pointer;
-    transition: all 0.3s;
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
-}
-
-.generateBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
-}
-
-.generateBtn:disabled {
-    background: #475569;
-    color: #94a3b8;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-.planGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.planDayCard {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(168, 85, 247, 0.2);
-    border-radius: 12px;
-    padding: 20px;
-    transition: all 0.3s;
-}
-
-.planDayCard:hover {
-    transform: translateY(-3px);
-    border-color: #ec4899;
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.dayLabel {
+.cardLabel {
+    color: #64748b;
     font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0 0 0.25rem 0;
+}
+
+.cardValue {
+    color: #0f172a;
+    font-size: 1.75rem;
     font-weight: 700;
-    color: var(--accent-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 10px;
+    margin: 0;
 }
 
-.topicText {
+/* Charts Grid */
+.chartsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.chartCard {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.chartCard h3 {
+    margin: 0 0 1.5rem 0;
+    color: #1e293b;
     font-size: 1.1rem;
-    color: var(--text-primary);
-    margin-bottom: 15px;
-    font-weight: 600;
 }
 
-.durationBadge {
-    display: inline-block;
-    background: rgba(168, 85, 247, 0.2);
-    color: #d8b4fe;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border: 1px solid rgba(168, 85, 247, 0.4);
+.chartWrapper {
+    height: 300px;
+    width: 100%;
+}
+
+.loadingContainer {
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 1024px) {
+    .chartsGrid {
+        grid-template-columns: 1fr;
+    }
 }

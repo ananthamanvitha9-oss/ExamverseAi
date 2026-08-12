@@ -27,7 +27,7 @@ const MockTests = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await api.post('/quiz/generate', { topic }, {
+            const response = await api.post('/ai/quiz', { topic }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setQuiz(response.data.quiz);

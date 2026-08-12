@@ -4,6 +4,14 @@
     gap: 2rem;
     max-width: 1400px;
     margin: 0 auto;
+    padding: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 2rem 0 1rem 0;
 }
 
 .statsGrid {
@@ -14,23 +22,32 @@
 }
 
 .statCard {
-    background: rgba(19, 3, 36, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(168, 85, 247, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
     padding: 1.5rem;
     border-radius: 16px;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    gap: 1.5rem;
+    transition: all 0.2s ease;
 }
 
 .statCard:hover {
-    transform: translateY(-5px) scale(1.02);
-    border-color: rgba(236, 72, 153, 0.5);
-    box-shadow: 0 10px 25px rgba(236, 72, 153, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.iconWrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
 }
 
 .topRow {
@@ -39,42 +56,24 @@
     gap: 1.5rem;
 }
 
-.sectionTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 2rem 0 1rem 0;
-    font-family: var(--font-display);
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
 .courseGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
-@media screen and (max-width: 1024px) {
-    .topRow {
-        grid-template-columns: 1fr;
-    }
-}
-
 .card {
-    background: rgba(19, 3, 36, 0.6);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(168, 85, 247, 0.2);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    background: rgba(26, 11, 46, 0.8);
-    border-color: #ec4899;
-    box-shadow: 0 12px 30px rgba(236, 72, 153, 0.3);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .courseCard {
@@ -91,19 +90,19 @@
 .courseInfo h4 {
     margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
-    color: #f3f4f6;
+    color: var(--text-primary);
 }
 
 .courseInfo p {
     margin: 0;
-    color: #9ca3af;
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
 .progressBar {
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--border-color);
     border-radius: 3px;
     margin-top: 1rem;
     overflow: hidden;
@@ -111,7 +110,7 @@
 
 .progressFill {
     height: 100%;
-    background: linear-gradient(90deg, #8b5cf6, #ec4899);
+    background: var(--accent-primary);
     border-radius: 3px;
 }
 
@@ -121,18 +120,18 @@
     align-items: center;
     margin-top: auto;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 .status {
-    color: #9ca3af;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
 }
 
 .btnSecondary {
-    background: rgba(139, 92, 246, 0.2);
-    color: #c4b5fd;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--accent-primary);
     padding: 0.5rem 1rem;
     border-radius: 6px;
     text-decoration: none;
@@ -142,12 +141,36 @@
 }
 
 .btnSecondary:hover {
-    background: rgba(139, 92, 246, 0.3);
+    background: var(--accent-primary);
     color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+    .topRow {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media screen and (max-width: 768px) {
     .courseGrid, .statsGrid {
         grid-template-columns: 1fr;
+    }
+    
+    .dashboardGrid {
+        padding: 1rem;
+    }
+    
+    .statCard {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.25rem;
+        margin: 1.5rem 0 0.75rem 0;
     }
 }

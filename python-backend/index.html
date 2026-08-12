@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExamVerse AI - Python UI</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .card { margin-bottom: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        input, button { padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; width: 100%; box-sizing: border-box; }
+        button { background-color: #3498db; color: white; cursor: pointer; border: none; font-weight: bold; }
+        button:hover { background-color: #2980b9; }
+        pre { background: #eee; padding: 10px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ExamVerse AI (Python Backend)</h1>
+
+    <div class="card">
+        <h3>1. Test ML Score Prediction (Scikit-Learn)</h3>
+        <label>Study Hours:</label>
+        <input type="number" id="studyHours" placeholder="e.g. 25">
+        <label>Previous Score:</label>
+        <input type="number" id="prevScore" placeholder="e.g. 60">
+        <button onclick="predictScore()">Predict Next Score</button>
+        <p><strong>Result:</strong> <span id="predictResult">---</span></p>
+    </div>
+
+    <div class="card">
+        <h3>2. Ask AI Tutor (Google Gemini)</h3>
+        <input type="text" id="aiPrompt" placeholder="Ask a question about your syllabus...">
+        <button onclick="askAi()">Ask Tutor</button>
+        <pre id="aiResult">AI response will appear here...</pre>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://127.0.0.1:8000";
+
+    async function predictScore() {
+        const hours = parseFloat(document.getElementById('studyHours').value) || 0;
+        const prev = parseFloat(document.getElementById('prevScore').value) || 0;
+        
+        try {
+            const res = await fetch(`${API_URL}/predict-score/`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ study_hours: hours, previous_score: prev })
+            });
+            const data = await res.json();
+            document.getElementById('predictResult').innerText = `Predicted Score: ${data.predicted_mock_score}`;
+        } catch (e) {
+            document.getElementById('predictResult').innerText = "Error connecting to backend.";
+        }
+    }
+
+    async function askAi() {
+        const prompt = document.getElementById('aiPrompt').value;
+        const resultBox = document.getElementById('aiResult');
+        resultBox.innerText = "Thinking...";
+
+        try {
+            const res = await fetch(`${API_URL}/ai/ask/`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt: prompt })
+            });
+            const data = await res.json();
+            resultBox.innerText = data.response;
+        } catch (e) {
+            resultBox.innerText = "Error connecting to backend.";
+        }
+    }
+</script>
+
+</body>
+</html>

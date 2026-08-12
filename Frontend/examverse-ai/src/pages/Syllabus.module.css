@@ -161,3 +161,44 @@
 .activeTabMains ~ .accordionContainer .bullet {
     background-color: #8b5cf6;
 }
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .mainCard {
+        padding: 1rem;
+    }
+
+    .modeTabs {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .tab {
+        padding: 0.75rem 1rem;
+        width: 100%;
+    }
+
+    .accordionHeader {
+        padding: 1rem;
+    }
+
+    .accordionTitle {
+        font-size: 1rem;
+    }
+
+    .topicList {
+        padding: 1rem;
+    }
+
+    .topicList li {
+        font-size: 0.95rem;
+    }
+}

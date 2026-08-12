@@ -262,3 +262,39 @@
 .retryBtn:hover {
     background: #e2e8f0;
 }
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .quizCard {
+        padding: 1.5rem;
+    }
+
+    .questionText {
+        font-size: 1.25rem;
+    }
+
+    .optionBtn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    .explanationBox {
+        padding: 1rem;
+    }
+    
+    .resultsCard {
+        padding: 2rem 1.5rem;
+    }
+
+    .resultsCard h2 {
+        font-size: 2rem;
+    }
+}
