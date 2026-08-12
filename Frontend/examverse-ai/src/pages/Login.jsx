@@ -30,7 +30,7 @@ const Login = () => {
         <div className={styles.authContainer}>
             <div className={styles.authCard}>
                 <h2>Welcome Back</h2>
-                <p>Login to continue your preparation.</p>
+                <p>Enter your details to log in to your account</p>
                 
                 {error && <div className={styles.errorAlert}>{error}</div>}
 
@@ -48,7 +48,7 @@ const Login = () => {
                         <Link to="/forgot-password">Forgot Password?</Link>
                     </div>
 
-                    <Button type="submit" variant="primary" className={styles.submitBtn}>Sign In</Button>
+                    <Button type="submit" variant="primary" className={styles.submitBtn}>Log In</Button>
                 </form>
 
                 <div className={styles.divider}>
