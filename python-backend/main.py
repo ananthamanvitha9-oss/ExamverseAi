@@ -81,8 +81,9 @@ def create_score_for_user(user_id: int, score: schemas.ScoreCreate, db: Session 
 
 @api_router.get("/auth/google/redirect")
 async def login_via_google(request: Request):
-    backend_url = os.environ.get("BACKEND_URL", "https://examverseai-mannu.onrender.com")
-    redirect_uri = f"{backend_url}/api/auth/google/callback"
+    # FORCE HARDCODE to prevent environment variable typos
+    backend_url = "https://examverseai-mannu.onrender.com"
+    redirect_uri = "https://examverseai-mannu.onrender.com/api/auth/google/callback"
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 @api_router.get("/auth/google/callback")
