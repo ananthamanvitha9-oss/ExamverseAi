@@ -112,13 +112,13 @@ async def auth_google_callback(request: Request, db: Session = Depends(get_db)):
         )
         
         # Redirect back to React frontend with token
-        frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+        frontend_url = os.environ.get("FRONTEND_URL", "https://examverse-ai-fli3.vercel.app")
         return RedirectResponse(url=f"{frontend_url}/auth/callback?token={access_token}")
         
     except Exception as e:
         print(f"Auth Error: {e}")
-        frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
-        return RedirectResponse(url=f"{frontend_url}/login?error=GoogleAuthFailed")
+        frontend_url = os.environ.get("FRONTEND_URL", "https://examverse-ai-fli3.vercel.app")
+        return RedirectResponse(url=f"{frontend_url}/login?error=oauth_failed")
 
 
 # --- PHASE 3: MOCK API ENDPOINTS FOR REACT FRONTEND PARITY ---
