@@ -1,4 +1,8 @@
 from pydantic import BaseModel
+
+class FlashcardRequest(BaseModel):
+    topic: str
+
 from typing import List, Optional
 
 class ScoreBase(BaseModel):

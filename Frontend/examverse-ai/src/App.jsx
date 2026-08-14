@@ -14,6 +14,7 @@ const CurrentAffairs = React.lazy(() => import('./pages/CurrentAffairs'));
 const MockTests = React.lazy(() => import('./pages/MockTests'));
 const MockTestInterface = React.lazy(() => import('./pages/MockTestInterface'));
 const AITutor = React.lazy(() => import('./pages/AITutor'));
+const Flashcards = React.lazy(() => import('./pages/Flashcards'));
 const Profile = React.lazy(() => import('./pages/Profile'));
 const Settings = React.lazy(() => import('./pages/Settings'));
 const Notes = React.lazy(() => import('./pages/Notes'));
@@ -83,6 +84,7 @@ function App() {
                 <Route path="/dashboard/profile" element={<ProtectedRoute><PageWrapper><Profile /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/mock-tests/:id" element={<ProtectedRoute><PageWrapper><MockTestInterface /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/ai-tutor" element={<ProtectedRoute><PageWrapper><AITutor /></PageWrapper></ProtectedRoute>} />
+                <Route path="/dashboard/flashcards" element={<ProtectedRoute><PageWrapper><Flashcards /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/focus" element={<ProtectedRoute><PageWrapper><FocusTimer /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/syllabus" element={<ProtectedRoute><PageWrapper><Syllabus /></PageWrapper></ProtectedRoute>} />
                 <Route path="/dashboard/study-explorer" element={<ProtectedRoute><PageWrapper><StudyExplorer /></PageWrapper></ProtectedRoute>} />

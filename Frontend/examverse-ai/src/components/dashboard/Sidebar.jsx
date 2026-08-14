@@ -21,6 +21,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: "Leaderboard", path: "/dashboard/leaderboard", icon: "🏆" },
         { name: "Geopolitics Map", path: "/dashboard/map", icon: "🗺️" },
         { name: "Current Affairs", path: "/dashboard/news", icon: "📰" },
+        { name: "Flashcards", path: "/dashboard/flashcards", icon: "🗂️" },
         { name: "Daily Quiz", path: "/dashboard/daily-quiz", icon: "🎯" },
         { name: "Focus Timer", path: "/dashboard/focus", icon: "⏱️" },
         { name: "Notes", path: "/dashboard/notes", icon: "📖" },

@@ -8,7 +8,7 @@ import models
 import schemas
 from database import engine, get_db
 from ml_service import predict_score
-from ai_service import generate_ai_response
+from ai_service import generate_ai_response, generate_flashcards
 from auth_service import oauth, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, get_current_user, get_password_hash, verify_password
 from datetime import timedelta
 import os
@@ -207,6 +207,16 @@ def leaderboard(db: Session = Depends(get_db)):
     # Real leaderboard could aggregate scores, returning dummy for now
     users = db.query(models.User).limit(10).all()
     return [{"rank": i+1, "name": u.full_name, "points": (100 - i*10)} for i, u in enumerate(users)]
+
+@api_router.post("/flashcards/generate")
+def generate_flashcards_api(request: schemas.FlashcardRequest):
+    try:
+        raw_json_str = generate_flashcards(request.topic)
+        flashcards = json.loads(raw_json_str)
+        return flashcards
+    except Exception as e:
+        print(f"Flashcard Gen Error: {e}")
+        return [{"front": "Error generating flashcards", "back": "Please try again later."}]
 
 app.include_router(api_router)
 
