@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, Request, APIRouter
+from fastapi import FastAPI, Depends, HTTPException, Request, APIRouter, UploadFile, File
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -8,7 +8,7 @@ import models
 import schemas
 from database import engine, get_db
 from ml_service import predict_score
-from ai_service import generate_ai_response, generate_flashcards
+from ai_service import generate_ai_response, generate_flashcards, extract_text_from_pdf
 from auth_service import oauth, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, get_current_user, get_password_hash, verify_password
 from datetime import timedelta
 import os
@@ -209,14 +209,78 @@ def leaderboard(db: Session = Depends(get_db)):
     return [{"rank": i+1, "name": u.full_name, "points": (100 - i*10)} for i, u in enumerate(users)]
 
 @api_router.post("/flashcards/generate")
-def generate_flashcards_api(request: schemas.FlashcardRequest):
+def create_flashcards(req: schemas.FlashcardRequest):
+    """
+    Generates flashcards based on a topic string.
+    """
+    flashcards_json_str = generate_flashcards(req.topic)
     try:
-        raw_json_str = generate_flashcards(request.topic)
-        flashcards = json.loads(raw_json_str)
+        flashcards = json.loads(flashcards_json_str)
         return flashcards
-    except Exception as e:
-        print(f"Flashcard Gen Error: {e}")
-        return [{"front": "Error generating flashcards", "back": "Please try again later."}]
+    except json.JSONDecodeError:
+        return {"error": "Failed to parse AI response into JSON format.", "raw_response": flashcards_json_str}
 
+@api_router.post("/flashcards/upload-pdf")
+async def upload_pdf_flashcards(file: UploadFile = File(...)):
+    """
+    Generates flashcards directly from an uploaded PDF file.
+    """
+    if not file.filename.endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Only PDF files are supported.")
+    
+    file_bytes = await file.read()
+    text = extract_text_from_pdf(file_bytes)
+    
+    if text.startswith("Error"):
+        raise HTTPException(status_code=500, detail=text)
+        
+    # Limit text to avoid exceeding token limits (Gemini 1.5 flash has huge context, but this is safe)
+    text = text[:15000] 
+    
+    flashcards_json_str = generate_flashcards(f"Here are the study notes from a PDF: {text}")
+    try:
+        return json.loads(flashcards_json_str)
+    except json.JSONDecodeError:
+        return {"error": "Failed to parse AI response.", "raw": flashcards_json_str}
+
+@api_router.get("/analytics")
+def get_analytics():
+    """
+    Returns analytics data for the dashboard charts.
+    """
+    # Returning high-quality mock data structure matching the frontend Recharts requirements
+    return {
+        "summary": {
+            "total_tests": 15,
+            "avg_score": 82,
+            "hours_studied": 38.5,
+            "current_trend": "+5.2%"
+        },
+        "test_scores": [
+            {"date": "Mon", "score": 65},
+            {"date": "Tue", "score": 70},
+            {"date": "Wed", "score": 75},
+            {"date": "Thu", "score": 78},
+            {"date": "Fri", "score": 85},
+            {"date": "Sat", "score": 88},
+            {"date": "Sun", "score": 92}
+        ],
+        "subject_performance": [
+            {"subject": "Math", "score": 88},
+            {"subject": "Physics", "score": 80},
+            {"subject": "Chemistry", "score": 72},
+            {"subject": "Biology", "score": 95}
+        ],
+        "time_spent": [
+            {"day": "Mon", "hours": 2},
+            {"day": "Tue", "hours": 2.5},
+            {"day": "Wed", "hours": 3},
+            {"day": "Thu", "hours": 2},
+            {"day": "Fri", "hours": 4},
+            {"day": "Sat", "hours": 6},
+            {"day": "Sun", "hours": 5.5}
+        ]
+    }
+
+# Finally, include the router
 app.include_router(api_router)
-

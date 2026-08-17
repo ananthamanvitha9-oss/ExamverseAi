@@ -16,3 +16,4 @@ passlib[bcrypt]
 bcrypt
 itsdangerous
 psycopg2-binary
+PyPDF2
