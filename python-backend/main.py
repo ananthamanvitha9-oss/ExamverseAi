@@ -203,10 +203,23 @@ def log_study(current_user: models.User = Depends(get_current_user)):
     return {"status": "success", "points_earned": 10}
 
 @api_router.get("/leaderboard")
-def leaderboard(db: Session = Depends(get_db)):
-    # Real leaderboard could aggregate scores, returning dummy for now
+def leaderboard(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     users = db.query(models.User).limit(10).all()
-    return [{"rank": i+1, "name": u.full_name, "points": (100 - i*10)} for i, u in enumerate(users)]
+    leaderboard_data = []
+    for i, u in enumerate(users):
+        leaderboard_data.append({
+            "id": u.id,
+            "full_name": u.full_name or "Anonymous",
+            "points": max(100 - i*10, 0),
+            "avatar": None
+        })
+    return {
+        "leaderboard": leaderboard_data,
+        "current_user": {
+            "rank": 1,
+            "points": 100
+        }
+    }
 
 @api_router.post("/flashcards/generate")
 def create_flashcards(req: schemas.FlashcardRequest):
