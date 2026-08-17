@@ -12,41 +12,41 @@ const Settings = () => {
                 <p>Manage your security and app preferences.</p>
             </div>
             
-            <div className={styles.card}>
+            <div className={styles.settingsCard}>
                 <h2>Preferences</h2>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginTop: '20px' }}>
-                    <label style={{ fontWeight: '600' }}>Dark Mode</label>
+                    <label style={{ fontWeight: '600', color: 'var(--text-primary)' }}>Dark Mode</label>
                     <button 
                         onClick={() => setDarkMode(!darkMode)}
                         style={{
                             padding: '8px 16px',
-                            background: darkMode ? '#111827' : '#e5e7eb',
-                            color: darkMode ? 'white' : 'black',
-                            border: 'none',
+                            background: darkMode ? 'var(--accent-primary)' : 'var(--bg-secondary)',
+                            color: darkMode ? 'white' : 'var(--text-primary)',
+                            border: '1px solid var(--border-color)',
                             borderRadius: '20px',
                             cursor: 'pointer'
                         }}
                     >
                         {darkMode ? 'Enabled' : 'Disabled'}
                     </button>
-                    <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                         (Theme switching will be fully implemented in a future update)
                     </span>
                 </div>
                 
-                <hr style={{ margin: '30px 0', border: 'none', borderTop: '1px solid #e5e7eb' }} />
+                <hr style={{ margin: '30px 0', border: 'none', borderTop: '1px solid var(--border-color)' }} />
                 
                 <h2>Security</h2>
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '20px' }} onSubmit={(e) => { e.preventDefault(); alert('Password change simulated.'); }}>
-                    <div className={styles.formGroup}>
-                        <label>Current Password</label>
-                        <input type="password" required className={styles.input} />
+                    <div className={styles.settingRow}>
+                        <h4>Current Password</h4>
+                        <input type="password" required className={styles.inputBox} />
                     </div>
-                    <div className={styles.formGroup}>
-                        <label>New Password</label>
-                        <input type="password" required className={styles.input} />
+                    <div className={styles.settingRow}>
+                        <h4>New Password</h4>
+                        <input type="password" required className={styles.inputBox} />
                     </div>
-                    <button type="submit" className={styles.saveBtn} style={{ width: 'fit-content' }}>
+                    <button type="submit" className={styles.saveBtn} style={{ width: 'fit-content', padding: '0.75rem 1.5rem' }}>
                         Update Password
                     </button>
                 </form>
