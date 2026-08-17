@@ -187,3 +187,25 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+@media screen and (max-width: 768px) {
+    .flashcardsContainer {
+        padding: 1rem;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .inputSection {
+        padding: 1.5rem;
+    }
+    
+    .scene {
+        height: 300px;
+    }
+    
+    .cardContent {
+        font-size: 1.2rem;
+    }
+}

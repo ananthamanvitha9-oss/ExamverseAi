@@ -9,6 +9,11 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
 /* Welcome Card Specifics */
 .welcomeCard {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
