@@ -102,3 +102,65 @@ class UserUpdate(BaseModel):
 class StudyPlanRequest(BaseModel):
     exam_date: str
     weak_subjects: str
+
+# --- SYLLABUS ENGINE SCHEMAS ---
+
+class SubTopicSchema(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    is_active: bool
+    order: int
+    class Config:
+        from_attributes = True
+
+class TopicSchema(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    is_active: bool
+    order: int
+    subtopics: List[SubTopicSchema] = []
+    class Config:
+        from_attributes = True
+
+class SubjectSchema(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    is_active: bool
+    order: int
+    topics: List[TopicSchema] = []
+    class Config:
+        from_attributes = True
+
+class PaperSchema(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    is_active: bool
+    order: int
+    subjects: List[SubjectSchema] = []
+    class Config:
+        from_attributes = True
+
+class StageSchema(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    is_active: bool
+    order: int
+    papers: List[PaperSchema] = []
+    class Config:
+        from_attributes = True
+
+class ExamSchema(BaseModel):
+    id: int
+    name: str
+    slug: str
+    description: Optional[str]
+    is_active: bool
+    order: int
+    stages: List[StageSchema] = []
+    class Config:
+        from_attributes = True

@@ -58,3 +58,75 @@ class StudyPlan(Base):
     exam_date = Column(String)
     weak_subjects = Column(String)
     plan_data_json = Column(Text)
+
+# --- SYLLABUS ENGINE MODELS ---
+
+class Exam(Base):
+    __tablename__ = "exams"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    slug = Column(String, unique=True, index=True)
+    description = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True)
+    order = Column(Integer, default=0)
+    
+    stages = relationship("Stage", back_populates="exam", order_by="Stage.order")
+
+class Stage(Base):
+    __tablename__ = "stages"
+    id = Column(Integer, primary_key=True, index=True)
+    exam_id = Column(Integer, ForeignKey("exams.id"))
+    name = Column(String) # e.g., Prelims, Mains
+    description = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True)
+    order = Column(Integer, default=0)
+    
+    exam = relationship("Exam", back_populates="stages")
+    papers = relationship("Paper", back_populates="stage", order_by="Paper.order")
+
+class Paper(Base):
+    __tablename__ = "papers"
+    id = Column(Integer, primary_key=True, index=True)
+    stage_id = Column(Integer, ForeignKey("stages.id"))
+    name = Column(String) # e.g., GS Paper I
+    description = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True)
+    order = Column(Integer, default=0)
+    
+    stage = relationship("Stage", back_populates="papers")
+    subjects = relationship("Subject", back_populates="paper", order_by="Subject.order")
+
+class Subject(Base):
+    __tablename__ = "subjects"
+    id = Column(Integer, primary_key=True, index=True)
+    paper_id = Column(Integer, ForeignKey("papers.id"))
+    name = Column(String) # e.g., History
+    description = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True)
+    order = Column(Integer, default=0)
+    
+    paper = relationship("Paper", back_populates="subjects")
+    topics = relationship("Topic", back_populates="subject", order_by="Topic.order")
+
+class Topic(Base):
+    __tablename__ = "topics"
+    id = Column(Integer, primary_key=True, index=True)
+    subject_id = Column(Integer, ForeignKey("subjects.id"))
+    name = Column(String) # e.g., Modern Indian History
+    description = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True)
+    order = Column(Integer, default=0)
+    
+    subject = relationship("Subject", back_populates="topics")
+    subtopics = relationship("SubTopic", back_populates="topic", order_by="SubTopic.order")
+
+class SubTopic(Base):
+    __tablename__ = "subtopics"
+    id = Column(Integer, primary_key=True, index=True)
+    topic_id = Column(Integer, ForeignKey("topics.id"))
+    name = Column(String) # e.g., Freedom Movement
+    description = Column(Text, nullable=True)
+    is_active = Column(Boolean, default=True)
+    order = Column(Integer, default=0)
+    
+    topic = relationship("Topic", back_populates="subtopics")

@@ -497,3 +497,19 @@ def get_course_details(course_id: int):
         if c["id"] == course_id:
             return c
     raise HTTPException(status_code=404, detail="Course not found")
+
+# --- PHASE 2: SYLLABUS ENGINE ROUTES ---
+from typing import List
+
+@app.get("/api/exams", response_model=List[schemas.ExamSchema])
+def get_all_exams(db: Session = Depends(get_db)):
+    """Returns a list of all active exams."""
+    return db.query(models.Exam).filter(models.Exam.is_active == True).order_by(models.Exam.order).all()
+
+@app.get("/api/hierarchy/{exam_id}", response_model=schemas.ExamSchema)
+def get_exam_hierarchy(exam_id: int, db: Session = Depends(get_db)):
+    """Returns the complete nested syllabus tree for a specific exam."""
+    exam = db.query(models.Exam).filter(models.Exam.id == exam_id).first()
+    if not exam:
+        raise HTTPException(status_code=404, detail="Exam curriculum not found")
+    return exam

@@ -29,11 +29,11 @@ const TreeNode = ({ node, level = 0 }) => {
     // Determine children based on level
     let children = [];
     let badgeText = '';
-    if (node.subjects) { children = node.subjects; badgeText = 'Exam'; }
-    else if (node.units) { children = node.units; badgeText = 'Subject'; }
-    else if (node.chapters) { children = node.chapters; badgeText = 'Unit'; }
-    else if (node.topics) { children = node.topics; badgeText = 'Chapter'; }
-    else if (node.sub_topics) { children = node.sub_topics; badgeText = 'Topic'; }
+    if (node.stages) { children = node.stages; badgeText = 'Exam'; }
+    else if (node.papers) { children = node.papers; badgeText = 'Stage'; }
+    else if (node.subjects) { children = node.subjects; badgeText = 'Paper'; }
+    else if (node.topics) { children = node.topics; badgeText = 'Subject'; }
+    else if (node.subtopics) { children = node.subtopics; badgeText = 'Topic'; }
     else if (node.learning_materials) { children = node.learning_materials; badgeText = 'Sub Topic'; }
 
     return (
@@ -61,24 +61,47 @@ const TreeNode = ({ node, level = 0 }) => {
 };
 
 const StudyExplorer = () => {
+    const [exams, setExams] = useState([]);
+    const [selectedExamId, setSelectedExamId] = useState(null);
     const [hierarchy, setHierarchy] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [hierarchyLoading, setHierarchyLoading] = useState(false);
 
     useEffect(() => {
-        const fetchHierarchy = async () => {
+        const fetchExams = async () => {
             try {
-                // Fetch Exam ID 1 (Assuming UPSC is seeded as 1)
-                const response = await api.get('/hierarchy/1');
-                setHierarchy(response.data);
+                const response = await api.get('/exams');
+                setExams(response.data);
+                if (response.data.length > 0) {
+                    setSelectedExamId(response.data[0].id);
+                }
             } catch (error) {
-                console.error("Failed to fetch hierarchy", error);
+                console.error("Failed to fetch exams", error);
             } finally {
                 setLoading(false);
             }
         };
+        fetchExams();
+    }, []);
+
+    useEffect(() => {
+        if (!selectedExamId) return;
+
+        const fetchHierarchy = async () => {
+            setHierarchyLoading(true);
+            try {
+                const response = await api.get(`/hierarchy/${selectedExamId}`);
+                setHierarchy(response.data);
+            } catch (error) {
+                console.error("Failed to fetch hierarchy", error);
+                setHierarchy(null);
+            } finally {
+                setHierarchyLoading(false);
+            }
+        };
 
         fetchHierarchy();
-    }, []);
+    }, [selectedExamId]);
 
     return (
         <DashboardLayout>
@@ -94,14 +117,34 @@ const StudyExplorer = () => {
                             <BrainCircuit className={styles.spinner} size={40} style={{color: '#8b5cf6', animation: 'spin 2s linear infinite'}} />
                             <p style={{marginTop: '1rem', color: 'var(--text-secondary)'}}>Loading curriculum matrix...</p>
                         </div>
-                    ) : hierarchy ? (
-                        <TreeNode node={hierarchy} />
                     ) : (
-                        <div style={{textAlign: 'center', padding: '3rem 1rem'}}>
-                            <Folder size={48} style={{color: 'rgba(255,255,255,0.2)', marginBottom: '1rem'}} />
-                            <h3 style={{color: 'var(--text-primary)', marginBottom: '0.5rem'}}>No Curriculum Found</h3>
-                            <p style={{color: 'var(--text-secondary)'}}>The syllabus matrix hasn't been initialized yet. Check back once the admin populates the database.</p>
-                        </div>
+                        <>
+                            <div style={{marginBottom: '1.5rem'}}>
+                                <label style={{marginRight: '1rem', fontWeight: 'bold'}}>Select Exam:</label>
+                                <select 
+                                    style={{padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1'}}
+                                    value={selectedExamId || ''} 
+                                    onChange={(e) => setSelectedExamId(e.target.value)}
+                                >
+                                    {exams.map(exam => (
+                                        <option key={exam.id} value={exam.id}>{exam.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {hierarchyLoading ? (
+                                <div style={{textAlign: 'center', padding: '2rem'}}>
+                                    <BrainCircuit className={styles.spinner} size={40} style={{color: '#8b5cf6', animation: 'spin 2s linear infinite'}} />
+                                    <p style={{marginTop: '1rem', color: 'var(--text-secondary)'}}>Loading curriculum matrix...</p>
+                                </div>
+                            ) : hierarchy ? (
+                                <TreeNode node={hierarchy} />
+                            ) : (
+                                <div style={{textAlign: 'center', padding: '3rem 1rem'}}>
+                                    <p>No Curriculum Found for this Exam.</p>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </div>
