@@ -639,3 +639,78 @@ def ai_chat_assistant(req: schemas.ChatRequest, current_user: models.User = Depe
     except Exception as e:
         print(f"Chat API Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# --- PHASE 6: ADMIN DASHBOARD ROUTES ---
+
+@api_router.get("/admin/stats")
+def get_admin_stats(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    # Basic permission check could go here if we had roles
+    total_users = db.query(models.User).count()
+    
+    total_revenue_result = db.query(models.Payment).filter(models.Payment.status == "paid").all()
+    total_revenue = sum(p.amount for p in total_revenue_result) if total_revenue_result else 0
+    
+    total_transactions = db.query(models.Payment).filter(models.Payment.status == "paid").count()
+    
+    recent_users_q = db.query(models.User).order_by(models.User.id.desc()).limit(5).all()
+    recent_users = [{"id": u.id, "full_name": u.full_name, "email": u.email, "created_at": "2023-01-01T00:00:00Z"} for u in recent_users_q] # Using dummy created_at since it's missing in User model
+    
+    recent_payments_q = db.query(models.Payment).filter(models.Payment.status == "paid").order_by(models.Payment.id.desc()).limit(5).all()
+    recent_payments = []
+    for p in recent_payments_q:
+        user = db.query(models.User).filter(models.User.id == p.user_id).first()
+        recent_payments.append({
+            "id": p.id,
+            "amount": p.amount,
+            "created_at": p.created_at,
+            "user": {"full_name": user.full_name if user else "Unknown"}
+        })
+        
+    return {
+        "stats": {
+            "total_users": total_users,
+            "total_revenue": total_revenue,
+            "total_transactions": total_transactions
+        },
+        "recent_users": recent_users,
+        "recent_payments": recent_payments
+    }
+
+from pydantic import BaseModel
+class AdminCourseRequest(BaseModel):
+    name: str
+    description: str
+    category: str
+    duration: int
+
+@api_router.post("/admin/courses")
+def create_admin_course(course: AdminCourseRequest, current_user: models.User = Depends(get_current_user)):
+    new_id = max((c["id"] for c in MOCK_COURSES), default=0) + 1
+    new_course = {
+        "id": new_id,
+        "name": course.name,
+        "description": course.description,
+        "category": course.category,
+        "duration": course.duration,
+        "status": "active",
+        "subjects": []
+    }
+    MOCK_COURSES.append(new_course)
+    return new_course
+
+@api_router.put("/admin/courses/{course_id}")
+def update_admin_course(course_id: int, course: AdminCourseRequest, current_user: models.User = Depends(get_current_user)):
+    for c in MOCK_COURSES:
+        if c["id"] == course_id:
+            c["name"] = course.name
+            c["description"] = course.description
+            c["category"] = course.category
+            c["duration"] = course.duration
+            return c
+    raise HTTPException(status_code=404, detail="Course not found")
+
+@api_router.delete("/admin/courses/{course_id}")
+def delete_admin_course(course_id: int, current_user: models.User = Depends(get_current_user)):
+    global MOCK_COURSES
+    MOCK_COURSES = [c for c in MOCK_COURSES if c["id"] != course_id]
+    return {"message": "Course deleted"}
