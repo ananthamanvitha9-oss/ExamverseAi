@@ -150,19 +150,45 @@ def register(user_data: schemas.UserRegister, db: Session = Depends(get_db)):
 
 @api_router.get("/user")
 def get_user(current_user: models.User = Depends(get_current_user)):
-    return {"id": current_user.id, "name": current_user.full_name, "email": current_user.email}
+    return {
+        "id": current_user.id, 
+        "name": current_user.full_name, 
+        "email": current_user.email,
+        "phone": current_user.phone,
+        "target_exam": current_user.target_exam,
+        "avatar_url": current_user.avatar_url
+    }
+
+@api_router.put("/user")
+def update_user(user_update: schemas.UserUpdate, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if user_update.name:
+        current_user.full_name = user_update.name
+    if user_update.phone is not None:
+        current_user.phone = user_update.phone
+    if user_update.target_exam is not None:
+        current_user.target_exam = user_update.target_exam
+    db.commit()
+    return {"status": "success"}
+
+@api_router.post("/user/avatar")
+def update_avatar(avatar: UploadFile = File(...), current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    # Use DiceBear avatars as a reliable mock for now
+    avatar_url = f"https://api.dicebear.com/7.x/initials/svg?seed={current_user.email}"
+    current_user.avatar_url = avatar_url
+    db.commit()
+    return {"avatar_url": avatar_url}
 
 @api_router.post("/ai/chat")
 def ai_chat(request: schemas.AiRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     # Generate AI response
-    bot_response = generate_ai_response(request.prompt)
+    bot_response = generate_ai_response(request.message)
     
     # Save to history
-    chat_entry = models.AiChatHistory(user_id=current_user.id, prompt=request.prompt, response=bot_response)
+    chat_entry = models.AiChatHistory(user_id=current_user.id, prompt=request.message, response=bot_response)
     db.add(chat_entry)
     db.commit()
     
-    return {"response": bot_response}
+    return {"reply": bot_response}
 
 @api_router.post("/ai/quiz")
 def ai_quiz(request: schemas.AiQuizRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -296,4 +322,73 @@ def get_analytics():
     }
 
 # Finally, include the router
-app.include_router(api_router)
+@api_router.get("/news")
+def get_news():
+    # Return a realistic mock of current affairs to avoid slow AI generation on page load
+    from datetime import datetime, timedelta
+    today = datetime.now()
+    return [
+        {
+            "id": 1,
+            "category": "Daily",
+            "title": "ISRO Successfully Launches New Communication Satellite",
+            "content": "The Indian Space Research Organisation (ISRO) has successfully placed its latest communication satellite into orbit. This mission marks a significant milestone in India's space program, enhancing telecommunication and broadcasting services across the subcontinent. The satellite is equipped with advanced transponders.",
+            "created_at": today.isoformat()
+        },
+        {
+            "id": 2,
+            "category": "Daily",
+            "title": "RBI Announces New Monetary Policy Updates",
+            "content": "The Reserve Bank of India has maintained the repo rate at 6.5% for the fifth consecutive time, focusing on withdrawing accommodation to align inflation with the target. The central bank raised its GDP growth forecast for the current fiscal year, citing strong domestic demand and robust investment activity.",
+            "created_at": (today - timedelta(days=1)).isoformat()
+        },
+        {
+            "id": 3,
+            "category": "Weekly",
+            "title": "G20 Summit 2023: Key Takeaways and Global Impact",
+            "content": "The G20 Summit concluded with the historic adoption of the New Delhi Leaders' Declaration. Key highlights include the inclusion of the African Union as a permanent member, consensus on the Ukraine conflict language, and major announcements like the India-Middle East-Europe Economic Corridor (IMEC).",
+            "created_at": (today - timedelta(days=3)).isoformat()
+        },
+        {
+            "id": 4,
+            "category": "Monthly",
+            "title": "Economic Survey Review: India's Growth Trajectory",
+            "content": "The latest economic survey highlights India's resilience amidst global headwinds. The service sector continues to be the primary driver of growth, while manufacturing shows signs of robust recovery. The survey projects a steady 7% growth rate for the upcoming financial year, emphasizing infrastructure and digital public goods.",
+            "created_at": (today - timedelta(days=15)).isoformat()
+        }
+    ]
+
+@api_router.get("/study-plan")
+def get_study_plan(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    plan = db.query(models.StudyPlan).filter(models.StudyPlan.user_id == current_user.id).order_by(models.StudyPlan.id.desc()).first()
+    if plan:
+        return {
+            "exam_date": plan.exam_date,
+            "weak_subjects": plan.weak_subjects,
+            "plan_data": json.loads(plan.plan_data_json)
+        }
+    return None
+
+@api_router.post("/study-plan/generate")
+def generate_study_plan(req: schemas.StudyPlanRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    prompt = f"Generate a 7-day study plan for a student taking an exam on {req.exam_date}. They are weak in {req.weak_subjects}. Return ONLY a valid JSON array of 7 objects. Each object MUST have: 'day' (e.g., 'Day 1'), 'date' (e.g., '2023-11-01'), 'focus_subject', 'topics_to_cover', and 'estimated_hours' (a number)."
+    try:
+        raw_json_str = generate_ai_response(prompt)
+        raw_json_str = raw_json_str.replace("```json", "").replace("```", "").strip()
+        plan_data = json.loads(raw_json_str)
+        
+        # Save to DB
+        plan = models.StudyPlan(
+            user_id=current_user.id,
+            exam_date=req.exam_date,
+            weak_subjects=req.weak_subjects,
+            plan_data_json=json.dumps(plan_data)
+        )
+        db.add(plan)
+        db.commit()
+        
+        return {"plan": plan_data}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+app.include_router(api_router, prefix="/api/v1")

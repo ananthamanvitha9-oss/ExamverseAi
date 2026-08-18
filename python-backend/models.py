@@ -10,6 +10,9 @@ class User(Base):
     full_name = Column(String)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
+    phone = Column(String, nullable=True)
+    target_exam = Column(String, nullable=True)
+    avatar_url = Column(String, nullable=True)
 
     scores = relationship("Score", back_populates="owner")
 
@@ -42,3 +45,11 @@ class AiChatHistory(Base):
     prompt = Column(Text)
     response = Column(Text)
 
+class StudyPlan(Base):
+    __tablename__ = "study_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    exam_date = Column(String)
+    weak_subjects = Column(String)
+    plan_data_json = Column(Text)

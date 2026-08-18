@@ -52,7 +52,7 @@ class PredictionRequest(BaseModel):
     previous_score: float
 
 class AiRequest(BaseModel):
-    prompt: str
+    message: str
 
 class MockTestBase(BaseModel):
     title: str
@@ -77,3 +77,12 @@ class AiChatHistory(AiChatHistoryBase):
 
     class Config:
         from_attributes = True
+
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    target_exam: Optional[str] = None
+
+class StudyPlanRequest(BaseModel):
+    exam_date: str
+    weak_subjects: str
