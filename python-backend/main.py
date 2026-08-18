@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, Request, APIRouter, UploadFile, File
+from typing import List, Dict, Any
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -48,13 +49,6 @@ def get_score_prediction(req: schemas.PredictionRequest):
         "predicted_mock_score": predicted
     }
 
-@app.post("/ai/ask/")
-def ask_ai_tutor(req: schemas.AiRequest):
-    """
-    Uses Google Gemini API to answer student questions.
-    """
-    response_text = generate_ai_response(req.prompt)
-    return {"response": response_text}
 
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -562,7 +556,6 @@ def get_course_details(course_id: int):
     raise HTTPException(status_code=404, detail="Course not found")
 
 # --- PHASE 2: SYLLABUS ENGINE ROUTES ---
-from typing import List
 
 @app.get("/api/exams", response_model=List[schemas.ExamSchema])
 def get_all_exams(db: Session = Depends(get_db)):
