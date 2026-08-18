@@ -42,7 +42,7 @@ def generate_ai_response(prompt: str) -> str:
         raise ValueError("GEMINI_API_KEY not configured in backend.")
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-3.6-flash')
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
@@ -62,7 +62,7 @@ def generate_ai_tutor_response(message: str, subject: str, exam: str, language: 
     Provide a clear, helpful, and accurate response.
     """
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-3.6-flash')
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
@@ -101,7 +101,7 @@ def generate_ai_mock_test(exam: str, subject: str, topic: str, difficulty: str, 
     Do NOT output any markdown (like ```json), just the raw JSON object.
     """
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-3.6-flash')
         response = model.generate_content(prompt)
         text = clean_json_response(response.text)
         return text
@@ -132,7 +132,7 @@ def generate_daily_quiz() -> str:
     Do NOT output any markdown, just the raw JSON array.
     """
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-3.6-flash')
         response = model.generate_content(prompt)
         text = clean_json_response(response.text)
         return text
@@ -156,7 +156,7 @@ def generate_flashcards(topic: str) -> str:
     Topic/Notes: {topic}
     """
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-3.6-flash')
         response = model.generate_content(prompt)
         text = response.text.strip()
         if text.startswith("```json"):
