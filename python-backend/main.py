@@ -576,3 +576,66 @@ def get_exam_hierarchy(exam_id: int, db: Session = Depends(get_db)):
     if not exam:
         raise HTTPException(status_code=404, detail="Exam curriculum not found")
     return exam
+
+# --- PHASE 5: NOTES & RESOURCES ROUTES ---
+
+@api_router.get("/notes", response_model=List[schemas.NoteSchema])
+def get_notes(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    notes = db.query(models.Note).filter(models.Note.user_id == current_user.id).all()
+    return [{"id": n.id, "title": n.title, "content": n.content, "updatedAt": n.updated_at} for n in notes]
+
+@api_router.post("/notes")
+def save_note(note: schemas.NoteSchema, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    db_note = db.query(models.Note).filter(models.Note.id == note.id, models.Note.user_id == current_user.id).first()
+    if db_note:
+        db_note.title = note.title
+        db_note.content = note.content
+        db_note.updated_at = note.updatedAt
+    else:
+        db_note = models.Note(
+            id=note.id,
+            user_id=current_user.id,
+            title=note.title,
+            content=note.content,
+            updated_at=note.updatedAt
+        )
+        db.add(db_note)
+    db.commit()
+    return {"message": "Note saved successfully"}
+
+@api_router.delete("/notes/{note_id}")
+def delete_note(note_id: str, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    db_note = db.query(models.Note).filter(models.Note.id == note_id, models.Note.user_id == current_user.id).first()
+    if not db_note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    db.delete(db_note)
+    db.commit()
+    return {"message": "Note deleted"}
+
+@api_router.get("/resources")
+def get_resources(db: Session = Depends(get_db)):
+    resources = db.query(models.StudyResource).all()
+    if not resources:
+        # Fallback if db is not seeded
+        return []
+    
+    result = []
+    for r in resources:
+        result.append({
+            "category": r.category,
+            "icon": r.icon,
+            "description": r.description,
+            "topics": json.loads(r.topics_json) if r.topics_json else [],
+            "channels": json.loads(r.channels_json) if r.channels_json else []
+        })
+    return result
+
+@api_router.post("/chat")
+@api_router.post("/ai/chat")
+def ai_chat_assistant(req: schemas.ChatRequest, current_user: models.User = Depends(get_current_user)):
+    try:
+        reply = generate_chat_response(req.message)
+        return {"reply": reply}
+    except Exception as e:
+        print(f"Chat API Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

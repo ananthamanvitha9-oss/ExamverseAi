@@ -1,80 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import styles from './Resources.module.css';
-
-const resourcesData = [
-    {
-        category: "Complete UPSC Strategy",
-        icon: "🎯",
-        channels: [
-            { name: "Vision IAS", desc: "Exam strategy, current affairs, Mains answer writing, mock discussions." },
-            { name: "Drishti IAS (English)", desc: "Concept classes, current affairs, editorials, answer writing." },
-            { name: "Next IAS", desc: "Subject-wise lectures and strategy sessions." },
-            { name: "ForumIAS", desc: "Mains guidance, interview guidance, PYQ analysis." }
-        ]
-    },
-    {
-        category: "Indian Polity",
-        icon: "🏛️",
-        topics: ["Constitution", "Fundamental Rights & Duties", "Parliament", "President & Prime Minister", "Judiciary", "Local Government"],
-        channels: [{ name: "StudyIQ IAS" }, { name: "Drishti IAS (English)" }, { name: "Vision IAS" }]
-    },
-    {
-        category: "History",
-        icon: "📜",
-        topics: ["Ancient India", "Medieval India", "Modern India", "Freedom Struggle", "Art & Culture"],
-        channels: [{ name: "StudyIQ IAS" }, { name: "Vision IAS" }, { name: "Drishti IAS" }]
-    },
-    {
-        category: "Geography",
-        icon: "🌍",
-        topics: ["Physical Geography", "Indian Geography", "World Geography", "Environment basics"],
-        channels: [{ name: "PMF IAS" }, { name: "StudyIQ IAS" }, { name: "Vision IAS" }]
-    },
-    {
-        category: "Economy",
-        icon: "📈",
-        topics: ["GDP", "Inflation", "Budget", "Banking", "RBI", "Fiscal & Monetary Policy"],
-        channels: [{ name: "Mrunal Patel" }, { name: "StudyIQ IAS" }, { name: "Vision IAS" }]
-    },
-    {
-        category: "Environment & Ecology",
-        icon: "🌱",
-        topics: [],
-        channels: [{ name: "PMF IAS" }, { name: "StudyIQ IAS" }, { name: "Vision IAS" }]
-    },
-    {
-        category: "Science & Technology",
-        icon: "🔬",
-        topics: ["Space", "Biotechnology", "AI", "Robotics", "Defence Technology"],
-        channels: [{ name: "StudyIQ IAS" }, { name: "Drishti IAS" }, { name: "Vision IAS" }]
-    },
-    {
-        category: "Ethics (GS Paper IV)",
-        icon: "⚖️",
-        topics: [],
-        channels: [{ name: "Vision IAS" }, { name: "ForumIAS" }, { name: "Drishti IAS" }]
-    },
-    {
-        category: "Current Affairs (Daily)",
-        icon: "📰",
-        desc: "Spend 45–60 minutes daily",
-        channels: [
-            { name: "Vision IAS Daily Current Affairs" },
-            { name: "StudyIQ IAS Daily News" },
-            { name: "Drishti IAS Current Affairs" },
-            { name: "The Hindu Editorial Analysis" }
-        ]
-    },
-    {
-        category: "CSAT (Qualifying Paper)",
-        icon: "🧮",
-        topics: ["Aptitude", "Reasoning", "Comprehension", "Basic Mathematics"],
-        channels: [{ name: "Unacademy UPSC" }, { name: "StudyIQ IAS" }, { name: "BYJU'S Exam Prep UPSC" }]
-    }
-];
+import api from '../services/api';
 
 const Resources = () => {
+    const [resourcesData, setResourcesData] = useState([]);
+    
+    useEffect(() => {
+        const fetchResources = async () => {
+            try {
+                const response = await api.get('/resources');
+                setResourcesData(response.data);
+            } catch (err) {
+                console.error("Failed to load resources", err);
+            }
+        };
+        fetchResources();
+    }, []);
     
     const getYouTubeSearchUrl = (query) => {
         return `https://www.youtube.com/results?search_query=${encodeURIComponent(query + ' UPSC')}`;

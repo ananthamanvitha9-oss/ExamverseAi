@@ -169,3 +169,25 @@ def generate_flashcards(topic: str) -> str:
     except Exception as e:
         import json
         return json.dumps([{"front": "Error generating flashcards", "back": str(e)}])
+
+def generate_chat_response(message: str) -> str:
+    """
+    Generic chat generation for Notes AI assistant and Map AI assistant.
+    """
+    if not GEMINI_API_KEY:
+        raise ValueError("GEMINI_API_KEY not configured in backend.")
+        
+    prompt = f"""
+    You are an expert AI assistant helping a student.
+    
+    Student's prompt: {message}
+    
+    Provide a clear, helpful, and concise response. Do not use markdown blocks unless providing code.
+    """
+    try:
+        model = genai.GenerativeModel('gemini-3.6-flash')
+        response = model.generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        print(f"AI Chat Error: {e}")
+        raise Exception(f"Chat failed: {str(e)}")

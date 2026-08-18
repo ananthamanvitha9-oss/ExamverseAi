@@ -153,3 +153,21 @@ class Payment(Base):
     status = Column(String, default="created") # created, paid, failed
     created_at = Column(String, default=lambda: datetime.now().isoformat())
 
+# --- PHASE 5: NOTES & RESOURCES MODELS ---
+
+class Note(Base):
+    __tablename__ = "notes"
+    id = Column(String, primary_key=True, index=True) # UUID string to match frontend Date.now().toString() logic easily
+    user_id = Column(Integer, ForeignKey("users.id"))
+    title = Column(String)
+    content = Column(Text)
+    updated_at = Column(String, default=lambda: datetime.now().isoformat())
+
+class StudyResource(Base):
+    __tablename__ = "study_resources"
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String)
+    icon = Column(String)
+    description = Column(Text, nullable=True)
+    topics_json = Column(Text, nullable=True) # List of topics as JSON string
+    channels_json = Column(Text, nullable=True) # List of channels as JSON string

@@ -190,3 +190,14 @@ class PaymentVerifyRequest(BaseModel):
     razorpay_payment_id: str
     razorpay_signature: str
     amount: float
+
+# --- PHASE 5: NOTES & RESOURCES SCHEMAS ---
+
+class NoteSchema(BaseModel):
+    id: str
+    title: str
+    content: str
+    updatedAt: str
+
+class ChatRequest(BaseModel):
+    message: str

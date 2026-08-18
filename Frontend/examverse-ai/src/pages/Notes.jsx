@@ -20,38 +20,46 @@ const Notes = () => {
 
     const textAreaRef = useRef(null);
 
-    // Load notes from local storage on mount
+    // Load notes from API on mount
     useEffect(() => {
-        const savedNotes = localStorage.getItem('examverse_notes');
-        if (savedNotes) {
-            const parsed = JSON.parse(savedNotes);
-            setNotes(parsed);
-            if (parsed.length > 0) {
-                loadNote(parsed[0]);
+        const fetchNotes = async () => {
+            try {
+                const response = await api.get('/notes');
+                const data = response.data;
+                setNotes(data);
+                if (data.length > 0) {
+                    loadNote(data[0]);
+                } else {
+                    handleCreateNote();
+                }
+            } catch (err) {
+                console.error("Failed to load notes", err);
             }
-        } else {
-            // Default first note
-            handleCreateNote();
-        }
+        };
+        fetchNotes();
     }, []);
-
-    // Save to local storage whenever notes array changes
-    useEffect(() => {
-        if (notes.length > 0) {
-            localStorage.setItem('examverse_notes', JSON.stringify(notes));
-        }
-    }, [notes]);
 
     // Auto-save active note content
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
+        const timeoutId = setTimeout(async () => {
             if (activeNoteId) {
+                const updatedNote = { 
+                    id: activeNoteId, 
+                    title, 
+                    content, 
+                    updatedAt: new Date().toISOString() 
+                };
+                
                 setNotes(prevNotes => 
-                    prevNotes.map(n => 
-                        n.id === activeNoteId ? { ...n, title, content, updatedAt: new Date().toISOString() } : n
-                    )
+                    prevNotes.map(n => n.id === activeNoteId ? updatedNote : n)
                 );
-                setLastSaved('Saved just now');
+                
+                try {
+                    await api.post('/notes', updatedNote);
+                    setLastSaved('Saved just now');
+                } catch (err) {
+                    setLastSaved('Failed to save');
+                }
             }
         }, 1000);
         return () => clearTimeout(timeoutId);
@@ -75,16 +83,21 @@ const Notes = () => {
         setLastSaved('All changes saved');
     };
 
-    const handleDeleteNote = (e, id) => {
+    const handleDeleteNote = async (e, id) => {
         e.stopPropagation();
-        const updatedNotes = notes.filter(n => n.id !== id);
-        setNotes(updatedNotes);
         
-        if (updatedNotes.length === 0) {
-            localStorage.removeItem('examverse_notes');
-            handleCreateNote();
-        } else if (activeNoteId === id) {
-            loadNote(updatedNotes[0]);
+        try {
+            await api.delete(`/notes/${id}`);
+            const updatedNotes = notes.filter(n => n.id !== id);
+            setNotes(updatedNotes);
+            
+            if (updatedNotes.length === 0) {
+                handleCreateNote();
+            } else if (activeNoteId === id) {
+                loadNote(updatedNotes[0]);
+            }
+        } catch (err) {
+            console.error("Failed to delete note", err);
         }
     };
 
