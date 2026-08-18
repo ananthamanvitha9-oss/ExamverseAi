@@ -392,3 +392,53 @@ def generate_study_plan(req: schemas.StudyPlanRequest, current_user: models.User
         raise HTTPException(status_code=500, detail=str(e))
 
 app.include_router(api_router, prefix="/api/v1")
+
+# MOCK COURSES DATA
+MOCK_COURSES = [
+    {
+        "id": 1,
+        "name": "UPSC Civil Services Complete Foundation",
+        "description": "Comprehensive coverage of Prelims and Mains with daily answer writing practice and weekly current affairs.",
+        "category": "UPSC",
+        "duration": 365,
+        "status": "active",
+        "subjects": [
+            {"id": 101, "name": "Indian Polity", "chapters": [{"id": 1001, "name": "Historical Background"}]},
+            {"id": 102, "name": "Modern History", "chapters": [{"id": 1002, "name": "Advent of Europeans"}]}
+        ]
+    },
+    {
+        "id": 2,
+        "name": "SSC CGL Tier 1 & 2 Crash Course",
+        "description": "Intensive 90-day program focusing on Quantitative Aptitude, Reasoning, English, and General Awareness.",
+        "category": "SSC",
+        "duration": 90,
+        "status": "active",
+        "subjects": [
+            {"id": 201, "name": "Quantitative Aptitude", "chapters": [{"id": 2001, "name": "Number System"}]}
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Banking PO Masterclass",
+        "description": "Master Data Interpretation, Puzzles, and English Comprehension for IBPS and SBI PO exams.",
+        "category": "Banking",
+        "duration": 120,
+        "status": "active",
+        "subjects": [
+            {"id": 301, "name": "Reasoning Ability", "chapters": [{"id": 3001, "name": "Seating Arrangement"}]}
+        ]
+    }
+]
+
+@app.get("/api/v1/courses")
+@app.get("/api/v1/admin/courses")
+def get_courses():
+    return MOCK_COURSES
+
+@app.get("/api/v1/courses/{course_id}")
+def get_course_details(course_id: int):
+    for c in MOCK_COURSES:
+        if c["id"] == course_id:
+            return c
+    raise HTTPException(status_code=404, detail="Course not found")

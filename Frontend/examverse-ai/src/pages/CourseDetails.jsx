@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import api from '../services/api';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
+import { BookOpen, Clock, Award, PlayCircle, Lock } from 'lucide-react';
 import styles from './CourseDetails.module.css';
-import ReactPlayer from 'react-player';
 
 const CourseDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [course, setCourse] = useState(null);
     const [activeLesson, setActiveLesson] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('overview');
 
     useEffect(() => {
-        // Fetch all courses and find the one that matches this ID
-        // Note: For a real app, we should add a `GET /api/courses/{id}` route to Laravel
         const fetchCourse = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/courses');
-                const selectedCourse = response.data.find(c => c.id === parseInt(id));
-                setCourse(selectedCourse);
+                // Connect to the real Python backend
+                const response = await api.get(`/courses/${id}`);
+                setCourse(response.data);
                 
-                // Set the first lesson as active by default
-                if (selectedCourse?.subjects?.[0]?.chapters?.[0]?.lessons?.[0]) {
-                    setActiveLesson(selectedCourse.subjects[0].chapters[0].lessons[0]);
+                // Set the first lesson as active by default if it exists
+                if (response.data?.subjects?.[0]?.chapters?.[0]?.name) {
+                    setActiveLesson({
+                        id: 1, 
+                        title: response.data.subjects[0].chapters[0].name, 
+                        videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+                    });
                 }
             } catch (error) {
                 console.error("Error fetching course details:", error);

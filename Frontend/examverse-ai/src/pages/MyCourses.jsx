@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import CourseCard from '../components/dashboard/CourseCard';
 import styles from './Dashboard.module.css';
@@ -9,12 +9,12 @@ const MyCourses = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // 2. Fetch data from Laravel API
+    // 2. Fetch data from Python API
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                // Connect to the real Laravel backend!
-                const response = await axios.get('http://127.0.0.1:8000/api/courses');
+                // Connect to the real Python backend!
+                const response = await api.get('/courses');
                 
                 // Map the Laravel database structure to our React component's expected props
                 const formattedCourses = response.data.map(course => ({
