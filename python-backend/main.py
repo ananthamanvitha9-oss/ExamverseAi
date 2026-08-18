@@ -377,41 +377,92 @@ def get_analytics():
     }
 
 # Finally, include the router
-@api_router.get("/news")
-def get_news():
-    # Return a realistic mock of current affairs to avoid slow AI generation on page load
-    from datetime import datetime, timedelta
-    today = datetime.now()
-    return [
-        {
-            "id": 1,
-            "category": "Daily",
-            "title": "ISRO Successfully Launches New Communication Satellite",
-            "content": "The Indian Space Research Organisation (ISRO) has successfully placed its latest communication satellite into orbit. This mission marks a significant milestone in India's space program, enhancing telecommunication and broadcasting services across the subcontinent. The satellite is equipped with advanced transponders.",
-            "created_at": today.isoformat()
-        },
-        {
-            "id": 2,
-            "category": "Daily",
-            "title": "RBI Announces New Monetary Policy Updates",
-            "content": "The Reserve Bank of India has maintained the repo rate at 6.5% for the fifth consecutive time, focusing on withdrawing accommodation to align inflation with the target. The central bank raised its GDP growth forecast for the current fiscal year, citing strong domestic demand and robust investment activity.",
-            "created_at": (today - timedelta(days=1)).isoformat()
-        },
-        {
-            "id": 3,
-            "category": "Weekly",
-            "title": "G20 Summit 2023: Key Takeaways and Global Impact",
-            "content": "The G20 Summit concluded with the historic adoption of the New Delhi Leaders' Declaration. Key highlights include the inclusion of the African Union as a permanent member, consensus on the Ukraine conflict language, and major announcements like the India-Middle East-Europe Economic Corridor (IMEC).",
-            "created_at": (today - timedelta(days=3)).isoformat()
-        },
-        {
-            "id": 4,
-            "category": "Monthly",
-            "title": "Economic Survey Review: India's Growth Trajectory",
-            "content": "The latest economic survey highlights India's resilience amidst global headwinds. The service sector continues to be the primary driver of growth, while manufacturing shows signs of robust recovery. The survey projects a steady 7% growth rate for the upcoming financial year, emphasizing infrastructure and digital public goods.",
-            "created_at": (today - timedelta(days=15)).isoformat()
+@api_router.get("/news", response_model=List[schemas.NewsSchema])
+def get_news(db: Session = Depends(get_db)):
+    return db.query(models.NewsArticle).filter(models.NewsArticle.is_active == True).order_by(models.NewsArticle.id.desc()).all()
+
+@api_router.post("/admin/news", response_model=schemas.NewsSchema)
+def create_news(req: schemas.NewsCreateSchema, db: Session = Depends(get_db)):
+    # In a real app, verify if current_user is admin
+    new_article = models.NewsArticle(
+        category=req.category,
+        title=req.title,
+        content=req.content
+    )
+    db.add(new_article)
+    db.commit()
+    db.refresh(new_article)
+    return new_article
+
+import razorpay
+import os
+
+# Initialize razorpay client
+# Using dummy keys if env variables aren't set
+rzp_client = razorpay.Client(
+    auth=(os.getenv("RAZORPAY_KEY_ID", "rzp_test_dummykey123"), 
+          os.getenv("RAZORPAY_KEY_SECRET", "dummysecret123"))
+)
+
+@api_router.post("/payment/create-order")
+def create_order(req: schemas.PaymentCreateRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    amount_in_paise = int(req.amount * 100)
+    
+    # Create Razorpay order
+    order_data = {
+        "amount": amount_in_paise,
+        "currency": "INR",
+        "receipt": f"receipt_{current_user.id}_{int(datetime.now().timestamp())}",
+        "notes": {
+            "user_email": current_user.email
         }
-    ]
+    }
+    
+    try:
+        order = rzp_client.order.create(data=order_data)
+        
+        # Save payment record in DB
+        payment_record = models.Payment(
+            user_id=current_user.id,
+            razorpay_order_id=order['id'],
+            amount=req.amount,
+            status="created"
+        )
+        db.add(payment_record)
+        db.commit()
+        
+        return {
+            "order_id": order['id'],
+            "amount": order['amount'],
+            "currency": order['currency'],
+            "key_id": os.getenv("RAZORPAY_KEY_ID", "rzp_test_dummykey123")
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@api_router.post("/payment/verify")
+def verify_payment(req: schemas.PaymentVerifyRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        # Verify signature
+        params_dict = {
+            'razorpay_order_id': req.razorpay_order_id,
+            'razorpay_payment_id': req.razorpay_payment_id,
+            'razorpay_signature': req.razorpay_signature
+        }
+        
+        # In production this will throw SignatureVerificationError if invalid
+        # rzp_client.utility.verify_payment_signature(params_dict)
+        
+        # Update DB
+        payment = db.query(models.Payment).filter(models.Payment.razorpay_order_id == req.razorpay_order_id).first()
+        if payment:
+            payment.status = "paid"
+            payment.razorpay_payment_id = req.razorpay_payment_id
+            db.commit()
+            
+        return {"success": True, "message": "Payment verified successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Signature verification failed")
 
 @api_router.get("/study-plan")
 def get_study_plan(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):

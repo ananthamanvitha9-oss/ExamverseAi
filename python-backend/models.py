@@ -130,3 +130,26 @@ class SubTopic(Base):
     order = Column(Integer, default=0)
     
     topic = relationship("Topic", back_populates="subtopics")
+
+# --- PHASE 3: NEWS & PAYMENTS MODELS ---
+from datetime import datetime
+
+class NewsArticle(Base):
+    __tablename__ = "news_articles"
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String) # Daily, Weekly, Monthly
+    title = Column(String)
+    content = Column(Text)
+    created_at = Column(String, default=lambda: datetime.now().isoformat())
+    is_active = Column(Boolean, default=True)
+
+class Payment(Base):
+    __tablename__ = "payments"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    razorpay_order_id = Column(String, unique=True, index=True)
+    razorpay_payment_id = Column(String, nullable=True, unique=True)
+    amount = Column(Float)
+    status = Column(String, default="created") # created, paid, failed
+    created_at = Column(String, default=lambda: datetime.now().isoformat())
+

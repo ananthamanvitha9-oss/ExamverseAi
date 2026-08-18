@@ -6,7 +6,8 @@ numpy
 scikit-learn
 google-generativeai
 python-multipart
-python-dotenv
+python-dotenv==1.0.1
+razorpay
 pydantic
 authlib
 httpx

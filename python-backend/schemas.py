@@ -164,3 +164,29 @@ class ExamSchema(BaseModel):
     stages: List[StageSchema] = []
     class Config:
         from_attributes = True
+
+# --- PHASE 3: NEWS & PAYMENTS SCHEMAS ---
+
+class NewsSchema(BaseModel):
+    id: int
+    category: str
+    title: str
+    content: str
+    created_at: str
+    is_active: bool
+    class Config:
+        from_attributes = True
+
+class NewsCreateSchema(BaseModel):
+    category: str
+    title: str
+    content: str
+
+class PaymentCreateRequest(BaseModel):
+    amount: float
+
+class PaymentVerifyRequest(BaseModel):
+    razorpay_order_id: str
+    razorpay_payment_id: str
+    razorpay_signature: str
+    amount: float
