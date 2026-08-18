@@ -24,6 +24,16 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
+import re
+
+def clean_json_response(text: str) -> str:
+    """Extracts valid JSON from markdown block."""
+    text = text.strip()
+    match = re.search(r'(\{.*\}|\[.*\])', text, re.DOTALL)
+    if match:
+        return match.group(1)
+    return text
+
 def generate_ai_response(prompt: str) -> str:
     """
     Calls the Gemini API to generate text based on the prompt.
@@ -51,10 +61,13 @@ def generate_ai_tutor_response(message: str, subject: str, exam: str, language: 
     
     Provide a clear, helpful, and accurate response.
     """
-    
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    response = model.generate_content(prompt)
-    return response.text
+    try:
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        print(f"AI Tutor Error: {e}")
+        raise Exception(f"AI Tutor failed: {str(e)}")
 
 def generate_ai_mock_test(exam: str, subject: str, topic: str, difficulty: str, question_count: int, language: str) -> str:
     if not GEMINI_API_KEY:
@@ -76,7 +89,7 @@ def generate_ai_mock_test(exam: str, subject: str, topic: str, difficulty: str, 
                 "id": 1,
                 "question": "The actual question text",
                 "options": ["Option A", "Option B", "Option C", "Option D"],
-                "correctAnswer": "Option A",
+                "correct_answer": "Option A",
                 "explanation": "Explanation of why Option A is correct",
                 "difficulty": "{difficulty}"
             }}
@@ -84,23 +97,48 @@ def generate_ai_mock_test(exam: str, subject: str, topic: str, difficulty: str, 
     }}
     
     Ensure exactly 4 options per question.
-    Ensure 'correctAnswer' is exactly equal to one of the options.
+    Ensure 'correct_answer' is exactly equal to one of the options.
     Do NOT output any markdown (like ```json), just the raw JSON object.
     """
-    
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    response = model.generate_content(prompt)
-    text = response.text.strip()
-    
-    # Strip markdown if Gemini ignores instructions
-    if text.startswith("```json"):
-        text = text[7:]
-    if text.startswith("```"):
-        text = text[3:]
-    if text.endswith("```"):
-        text = text[:-3]
+    try:
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        text = clean_json_response(response.text)
+        return text
+    except Exception as e:
+        print(f"AI Mock Test Error: {e}")
+        raise Exception(f"Failed to generate mock test: {str(e)}")
+
+def generate_daily_quiz() -> str:
+    if not GEMINI_API_KEY:
+        raise ValueError("GEMINI_API_KEY not configured in backend.")
         
-    return text.strip()
+    prompt = """
+    Generate a daily current affairs quiz with 5 questions based on today's geopolitics and national news.
+    
+    You MUST return ONLY a valid JSON array matching the following structure:
+    [
+        {
+            "id": 1,
+            "question": "The actual question text",
+            "options": ["Option A", "Option B", "Option C", "Option D"],
+            "correct_answer": "Option A",
+            "explanation": "Explanation of why Option A is correct"
+        }
+    ]
+    
+    Ensure exactly 4 options per question.
+    Ensure 'correct_answer' is exactly equal to one of the options.
+    Do NOT output any markdown, just the raw JSON array.
+    """
+    try:
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        text = clean_json_response(response.text)
+        return text
+    except Exception as e:
+        print(f"AI Daily Quiz Error: {e}")
+        raise Exception(f"Failed to generate daily quiz: {str(e)}")
 
 def generate_flashcards(topic: str) -> str:
     """

@@ -8,7 +8,7 @@ import models
 import schemas
 from database import engine, get_db
 from ml_service import predict_score
-from ai_service import generate_ai_response, generate_ai_tutor_response, generate_ai_mock_test, generate_flashcards, extract_text_from_pdf
+from ai_service import generate_ai_response, generate_ai_tutor_response, generate_ai_mock_test, generate_flashcards, extract_text_from_pdf, generate_daily_quiz
 from auth_service import oauth, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, get_current_user, get_password_hash, verify_password
 from datetime import timedelta
 import os
@@ -225,9 +225,8 @@ def ai_tutor(request: schemas.AiTutorRequest, current_user: models.User = Depend
             "answer": bot_response,
             "conversationId": str(uuid.uuid4())
         }
-    except ValueError as ve:
-        raise HTTPException(status_code=503, detail=str(ve))
     except Exception as e:
+        print(f"Error in ai_tutor: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @api_router.post("/ai/mock-test")
@@ -258,11 +257,24 @@ def ai_mock_test(request: schemas.MockTestGenerateRequest, current_user: models.
             "success": True,
             "test": test_data
         }
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as jde:
+        print(f"JSONDecodeError in ai_mock_test: {jde}\nRaw string was:\n{raw_json_str}")
         raise HTTPException(status_code=500, detail="AI returned malformed JSON. Please try again.")
-    except ValueError as ve:
-        raise HTTPException(status_code=503, detail=str(ve))
     except Exception as e:
+        print(f"Error in ai_mock_test: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/daily-quiz")
+def get_daily_quiz(current_user: models.User = Depends(get_current_user)):
+    try:
+        raw_json_str = generate_daily_quiz()
+        quiz_data = json.loads(raw_json_str)
+        return {"quiz": quiz_data}
+    except json.JSONDecodeError as jde:
+        print(f"JSONDecodeError in get_daily_quiz: {jde}\nRaw string was:\n{raw_json_str}")
+        raise HTTPException(status_code=500, detail="AI returned malformed JSON. Please try again.")
+    except Exception as e:
+        print(f"Error in get_daily_quiz: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @api_router.get("/progress/dashboard")

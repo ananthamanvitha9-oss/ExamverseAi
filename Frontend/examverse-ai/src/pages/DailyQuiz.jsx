@@ -30,9 +30,7 @@ const DailyQuiz = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await api.post('/ai/quiz', {
-                topic: "Today's most important Current Affairs and Geopolitics for UPSC"
-            }, {
+            const response = await api.get('/daily-quiz', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             
