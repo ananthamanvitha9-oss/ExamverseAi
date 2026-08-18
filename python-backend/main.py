@@ -8,12 +8,12 @@ import models
 import schemas
 from database import engine, get_db
 from ml_service import predict_score
-from ai_service import generate_ai_response, generate_flashcards, extract_text_from_pdf
+from ai_service import generate_ai_response, generate_ai_tutor_response, generate_ai_mock_test, generate_flashcards, extract_text_from_pdf
 from auth_service import oauth, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, get_current_user, get_password_hash, verify_password
 from datetime import timedelta
 import os
 import json
-
+import uuid
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
 
@@ -151,24 +151,55 @@ def register(user_data: schemas.UserRegister, db: Session = Depends(get_db)):
 @api_router.get("/user")
 def get_user(current_user: models.User = Depends(get_current_user)):
     return {
-        "id": current_user.id, 
-        "name": current_user.full_name, 
+        "id": current_user.id,
+        "name": current_user.full_name,
         "email": current_user.email,
         "phone": current_user.phone,
         "target_exam": current_user.target_exam,
-        "avatar_url": current_user.avatar_url
+        "avatar_url": current_user.avatar_url,
+        "preferred_language": current_user.preferred_language,
+        "study_goals": current_user.study_goals,
+        "education_level": current_user.education_level,
+        "preferred_subjects": current_user.preferred_subjects,
+        "daily_study_hours": current_user.daily_study_hours
     }
 
 @api_router.put("/user")
-def update_user(user_update: schemas.UserUpdate, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+def update_profile(user_update: schemas.UserUpdate, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     if user_update.name:
         current_user.full_name = user_update.name
-    if user_update.phone is not None:
+    if user_update.phone:
         current_user.phone = user_update.phone
-    if user_update.target_exam is not None:
+    if user_update.target_exam:
         current_user.target_exam = user_update.target_exam
+    if user_update.preferred_language:
+        current_user.preferred_language = user_update.preferred_language
+    if user_update.study_goals:
+        current_user.study_goals = user_update.study_goals
+    if user_update.education_level:
+        current_user.education_level = user_update.education_level
+    if user_update.preferred_subjects:
+        current_user.preferred_subjects = user_update.preferred_subjects
+    if user_update.daily_study_hours is not None:
+        current_user.daily_study_hours = user_update.daily_study_hours
+        
     db.commit()
-    return {"status": "success"}
+    db.refresh(current_user)
+    return {
+        "message": "Profile updated successfully",
+        "user": {
+            "name": current_user.full_name,
+            "email": current_user.email,
+            "phone": current_user.phone,
+            "target_exam": current_user.target_exam,
+            "avatar_url": current_user.avatar_url,
+            "preferred_language": current_user.preferred_language,
+            "study_goals": current_user.study_goals,
+            "education_level": current_user.education_level,
+            "preferred_subjects": current_user.preferred_subjects,
+            "daily_study_hours": current_user.daily_study_hours
+        }
+    }
 
 @api_router.post("/user/avatar")
 def update_avatar(avatar: UploadFile = File(...), current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -178,37 +209,61 @@ def update_avatar(avatar: UploadFile = File(...), current_user: models.User = De
     db.commit()
     return {"avatar_url": avatar_url}
 
-@api_router.post("/ai/chat")
-def ai_chat(request: schemas.AiRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
-    # Generate AI response
-    bot_response = generate_ai_response(request.message)
-    
-    # Save to history
-    chat_entry = models.AiChatHistory(user_id=current_user.id, prompt=request.message, response=bot_response)
-    db.add(chat_entry)
-    db.commit()
-    
-    return {"reply": bot_response}
-
-@api_router.post("/ai/quiz")
-def ai_quiz(request: schemas.AiQuizRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
-    # Prompt Gemini for a JSON array of 5 questions
-    quiz_prompt = f"Generate exactly 5 multiple choice questions about {request.topic}. Return ONLY a valid JSON array where each object has 'id', 'question', 'options' (array of 4 strings), and 'correct' (string matching one of the options)."
+@api_router.post("/ai/tutor")
+def ai_tutor(request: schemas.AiTutorRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        raw_json_str = generate_ai_response(quiz_prompt)
-        # Clean up markdown formatting if Gemini adds it
-        raw_json_str = raw_json_str.replace("```json", "").replace("```", "").strip()
-        quiz_data = json.loads(raw_json_str)
+        # Generate AI response
+        bot_response = generate_ai_tutor_response(request.message, request.subject, request.exam, request.language)
+        
+        # Save to history
+        chat_entry = models.AiChatHistory(user_id=current_user.id, prompt=request.message, response=bot_response)
+        db.add(chat_entry)
+        db.commit()
+        
+        return {
+            "success": True,
+            "answer": bot_response,
+            "conversationId": str(uuid.uuid4())
+        }
+    except ValueError as ve:
+        raise HTTPException(status_code=503, detail=str(ve))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.post("/ai/mock-test")
+def ai_mock_test(request: schemas.MockTestGenerateRequest, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        raw_json_str = generate_ai_mock_test(
+            exam=request.exam, 
+            subject=request.subject, 
+            topic=request.topic, 
+            difficulty=request.difficulty, 
+            question_count=request.questionCount, 
+            language=request.language
+        )
+        
+        test_data = json.loads(raw_json_str)
         
         # Save mock test
-        new_test = models.MockTest(title=f"Quiz on {request.topic}", subject=request.topic, total_questions=5, questions_json=raw_json_str)
+        new_test = models.MockTest(
+            title=test_data.get("title", f"Mock Test on {request.topic}"),
+            subject=request.subject,
+            total_questions=request.questionCount,
+            questions_json=json.dumps(test_data.get("questions", []))
+        )
         db.add(new_test)
         db.commit()
-        return quiz_data
+        
+        return {
+            "success": True,
+            "test": test_data
+        }
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="AI returned malformed JSON. Please try again.")
+    except ValueError as ve:
+        raise HTTPException(status_code=503, detail=str(ve))
     except Exception as e:
-        print(f"Quiz Gen Error: {e}")
-        # Fallback dummy data if AI fails
-        return [{"id": 1, "question": "What is the capital of India?", "options": ["Delhi", "Mumbai", "Chennai", "Kolkata"], "correct": "Delhi"}]
+        raise HTTPException(status_code=500, detail=str(e))
 
 @api_router.get("/progress/dashboard")
 def dashboard(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):

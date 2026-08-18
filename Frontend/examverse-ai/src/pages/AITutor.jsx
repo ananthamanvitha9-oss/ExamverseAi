@@ -74,11 +74,17 @@ const AiTutor = () => {
                 }, 1000);
                 return;
             }
-            const response = await api.post('/ai/chat', { message: userMessage });
-            setMessages(prev => [...prev, { id: Date.now().toString(), type: 'bot', text: response.data.reply }]);
+            const response = await api.post('/ai/tutor', { 
+                message: userMessage,
+                subject: "General",
+                exam: "General",
+                language: "English"
+            });
+            setMessages(prev => [...prev, { id: Date.now().toString(), type: 'bot', text: response.data.answer }]);
         } catch (error) {
             console.error("Chat Error:", error);
-            setMessages(prev => [...prev, { id: Date.now().toString(), type: 'bot', text: 'Sorry, I encountered an error connecting to the brain.' }]);
+            const errorMsg = error.response?.data?.detail || 'Sorry, I encountered an error connecting to the brain.';
+            setMessages(prev => [...prev, { id: Date.now().toString(), type: 'bot', text: errorMsg }]);
         } finally {
             setIsLoading(false);
         }

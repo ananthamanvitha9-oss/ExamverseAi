@@ -13,6 +13,11 @@ class User(Base):
     phone = Column(String, nullable=True)
     target_exam = Column(String, nullable=True)
     avatar_url = Column(String, nullable=True)
+    preferred_language = Column(String, nullable=True)
+    study_goals = Column(Text, nullable=True)
+    education_level = Column(String, nullable=True)
+    preferred_subjects = Column(String, nullable=True)
+    daily_study_hours = Column(Float, nullable=True)
 
     scores = relationship("Score", back_populates="owner")
 

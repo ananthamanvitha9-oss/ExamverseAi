@@ -6,7 +6,17 @@ import styles from './Profile.module.css';
 
 const Profile = () => {
     const { logout } = useAuth();
-    const [user, setUser] = useState({ name: '', email: '', phone: '', target_exam: '' });
+    const [user, setUser] = useState({ 
+        name: '', 
+        email: '', 
+        phone: '', 
+        target_exam: '',
+        preferred_language: '',
+        study_goals: '',
+        education_level: '',
+        preferred_subjects: '',
+        daily_study_hours: ''
+    });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState(null);
@@ -29,7 +39,12 @@ const Profile = () => {
                     name: response.data.name || '',
                     email: response.data.email || '',
                     phone: response.data.phone || '',
-                    target_exam: response.data.target_exam || ''
+                    target_exam: response.data.target_exam || 'UPSC',
+                    preferred_language: response.data.preferred_language || 'English',
+                    study_goals: response.data.study_goals || '',
+                    education_level: response.data.education_level || '',
+                    preferred_subjects: response.data.preferred_subjects || '',
+                    daily_study_hours: response.data.daily_study_hours || ''
                 });
                 setAvatarUrl(response.data.avatar_url || null);
             } catch (error) {
@@ -131,6 +146,18 @@ const Profile = () => {
                                 <input type="email" value={user.email} disabled className={styles.inputBox} />
                             </div>
                         </div>
+                        <div className={styles.settingRow}>
+                            <div>
+                                <h4>Phone Number</h4>
+                                <input type="text" name="phone" value={user.phone} onChange={handleChange} className={styles.inputBox} />
+                            </div>
+                        </div>
+                        <div className={styles.settingRow}>
+                            <div>
+                                <h4>Education Level</h4>
+                                <input type="text" name="education_level" value={user.education_level} onChange={handleChange} className={styles.inputBox} placeholder="e.g. Graduate" />
+                            </div>
+                        </div>
                         <button onClick={handleSave} disabled={saving} className={styles.saveBtn}>
                             {saving ? 'Saving...' : 'Save Profile'}
                         </button>
@@ -143,10 +170,11 @@ const Profile = () => {
                                 <h4>Selected Exam</h4>
                                 <p>Change your primary target exam</p>
                             </div>
-                            <select className={styles.selectBox} defaultValue="UPSC">
+                            <select name="target_exam" className={styles.selectBox} value={user.target_exam} onChange={handleChange}>
                                 <option value="UPSC">UPSC Civil Services</option>
                                 <option value="SSC">SSC CGL</option>
                                 <option value="JEE">JEE Mains</option>
+                                <option value="Banking">Banking PO</option>
                             </select>
                         </div>
                         <div className={styles.settingRow}>
@@ -154,10 +182,29 @@ const Profile = () => {
                                 <h4>Language</h4>
                                 <p>Preferred language for study material</p>
                             </div>
-                            <select className={styles.selectBox} defaultValue="English">
+                            <select name="preferred_language" className={styles.selectBox} value={user.preferred_language} onChange={handleChange}>
                                 <option value="English">English</option>
                                 <option value="Hindi">Hindi</option>
+                                <option value="Telugu">Telugu</option>
                             </select>
+                        </div>
+                        <div className={styles.settingRow}>
+                            <div>
+                                <h4>Daily Study Hours</h4>
+                                <input type="number" name="daily_study_hours" value={user.daily_study_hours} onChange={handleChange} className={styles.inputBox} style={{width: '100px'}} />
+                            </div>
+                        </div>
+                        <div className={styles.settingRow}>
+                            <div>
+                                <h4>Preferred Subjects</h4>
+                                <input type="text" name="preferred_subjects" value={user.preferred_subjects} onChange={handleChange} className={styles.inputBox} placeholder="e.g. History, Polity" />
+                            </div>
+                        </div>
+                        <div className={styles.settingRow}>
+                            <div style={{width: '100%'}}>
+                                <h4>Study Goals</h4>
+                                <textarea name="study_goals" value={user.study_goals} onChange={handleChange} className={styles.inputBox} style={{height: '80px', width: '100%', resize: 'none'}} placeholder="e.g. Clear UPSC Prelims this year" />
+                            </div>
                         </div>
                     </div>
                 </div>

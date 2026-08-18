@@ -27,16 +27,24 @@ const MockTests = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await api.post('/ai/quiz', { topic }, {
+            const response = await api.post('/ai/mock-test', { 
+                exam: "General",
+                subject: "General",
+                topic: topic,
+                difficulty: "medium",
+                questionCount: 5,
+                language: "English"
+            }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setQuiz(response.data.quiz);
+            setQuiz(response.data.test.questions);
         } catch (err) {
             console.error(err);
             if (err.response && err.response.status === 402) {
                 setShowUpgradeModal(true);
             } else {
-                setError('Failed to generate quiz. Please try again.');
+                const errorMsg = err.response?.data?.detail || 'Failed to generate quiz. Please try again.';
+                setError(errorMsg);
             }
         } finally {
             setIsGenerating(false);

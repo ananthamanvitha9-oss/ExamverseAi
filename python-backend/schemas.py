@@ -51,8 +51,19 @@ class PredictionRequest(BaseModel):
     study_hours: float
     previous_score: float
 
-class AiRequest(BaseModel):
+class AiTutorRequest(BaseModel):
     message: str
+    subject: str = "General"
+    exam: str = "General"
+    language: str = "English"
+
+class MockTestGenerateRequest(BaseModel):
+    exam: str
+    subject: str
+    topic: str
+    difficulty: str = "medium"
+    questionCount: int = 10
+    language: str = "English"
 
 class MockTestBase(BaseModel):
     title: str
@@ -82,6 +93,11 @@ class UserUpdate(BaseModel):
     name: Optional[str] = None
     phone: Optional[str] = None
     target_exam: Optional[str] = None
+    preferred_language: Optional[str] = None
+    study_goals: Optional[str] = None
+    education_level: Optional[str] = None
+    preferred_subjects: Optional[str] = None
+    daily_study_hours: Optional[float] = None
 
 class StudyPlanRequest(BaseModel):
     exam_date: str
