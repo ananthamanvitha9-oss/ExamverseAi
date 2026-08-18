@@ -391,7 +391,7 @@ def generate_study_plan(req: schemas.StudyPlanRequest, current_user: models.User
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-app.include_router(api_router, prefix="/api/v1")
+app.include_router(api_router)
 
 # MOCK COURSES DATA
 MOCK_COURSES = [
@@ -431,12 +431,12 @@ MOCK_COURSES = [
     }
 ]
 
-@app.get("/api/v1/courses")
-@app.get("/api/v1/admin/courses")
+@app.get("/api/courses")
+@app.get("/api/admin/courses")
 def get_courses():
     return MOCK_COURSES
 
-@app.get("/api/v1/courses/{course_id}")
+@app.get("/api/courses/{course_id}")
 def get_course_details(course_id: int):
     for c in MOCK_COURSES:
         if c["id"] == course_id:
