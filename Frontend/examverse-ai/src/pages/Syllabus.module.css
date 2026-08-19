@@ -14,31 +14,35 @@
 
 .header h1 {
     font-size: 2.5rem;
-    color: #1e293b;
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
 }
 
 .header p {
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 1.1rem;
 }
 
 .mainCard {
-    background: white;
+    background: var(--surface);
     width: 100%;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     padding: 2rem;
-    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
 }
 
 .modeTabs {
     display: flex;
     gap: 1rem;
     margin-bottom: 2rem;
-    background: #f1f5f9;
+    background: var(--bg-primary);
     padding: 0.5rem;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     justify-content: center;
+    border: 1px solid var(--border-light);
 }
 
 .tab {
@@ -52,22 +56,22 @@
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #64748b;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.3s ease;
     flex: 1;
 }
 
 .activeTab {
-    background: #3b82f6;
+    background: var(--primary);
     color: white;
-    box-shadow: 0 4px 6px -1px rgb(59 130 246 / 0.5);
+    box-shadow: var(--shadow-sm);
 }
 
 .activeTabMains {
-    background: #8b5cf6;
+    background: var(--secondary);
     color: white;
-    box-shadow: 0 4px 6px -1px rgb(139 92 246 / 0.5);
+    box-shadow: var(--shadow-sm);
 }
 
 .accordionContainer {
@@ -77,15 +81,15 @@
 }
 
 .accordionItem {
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    background: white;
+    background: var(--surface);
     transition: all 0.3s ease;
 }
 
 .accordionItem:hover {
-    border-color: #cbd5e1;
+    border-color: var(--primary);
 }
 
 .accordionHeader {
@@ -94,7 +98,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background: #f8fafc;
+    background: var(--bg-primary);
     border: none;
     cursor: pointer;
     text-align: left;
@@ -102,17 +106,17 @@
 }
 
 .accordionHeader:hover {
-    background: #f1f5f9;
+    background: var(--bg-hover);
 }
 
 .accordionTitle {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--text-primary);
 }
 
 .icon {
-    color: #64748b;
+    color: var(--text-secondary);
     min-width: 20px;
 }
 
@@ -123,15 +127,15 @@
 }
 
 .accordionContent.open {
-    max-height: 2000px; /* arbitrary large number */
+    max-height: 2000px;
 }
 
 .topicList {
     list-style: none;
     padding: 1.5rem;
     margin: 0;
-    background: white;
-    border-top: 1px solid #f1f5f9;
+    background: var(--surface);
+    border-top: 1px solid var(--border-light);
 }
 
 .topicList li {
@@ -140,7 +144,7 @@
     gap: 1rem;
     margin-bottom: 1rem;
     font-size: 1rem;
-    color: #334155;
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
@@ -151,7 +155,7 @@
 .bullet {
     width: 8px;
     height: 8px;
-    background-color: #3b82f6;
+    background-color: var(--primary);
     border-radius: 50%;
     margin-top: 0.5rem;
     flex-shrink: 0;
@@ -159,46 +163,18 @@
 
 /* Add custom color for Mains bullets to match purple tab */
 .activeTabMains ~ .accordionContainer .bullet {
-    background-color: #8b5cf6;
+    background-color: var(--secondary);
 }
 
 /* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
-    .container {
-        padding: 1rem;
-    }
-
-    .header h1 {
-        font-size: 2rem;
-    }
-
-    .mainCard {
-        padding: 1rem;
-    }
-
-    .modeTabs {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .tab {
-        padding: 0.75rem 1rem;
-        width: 100%;
-    }
-
-    .accordionHeader {
-        padding: 1rem;
-    }
-
-    .accordionTitle {
-        font-size: 1rem;
-    }
-
-    .topicList {
-        padding: 1rem;
-    }
-
-    .topicList li {
-        font-size: 0.95rem;
-    }
+    .container { padding: 1rem; }
+    .header h1 { font-size: 2rem; }
+    .mainCard { padding: 1rem; }
+    .modeTabs { flex-direction: column; gap: 0.5rem; }
+    .tab { padding: 0.75rem 1rem; width: 100%; }
+    .accordionHeader { padding: 1rem; }
+    .accordionTitle { font-size: 1rem; }
+    .topicList { padding: 1rem; }
+    .topicList li { font-size: 0.95rem; }
 }

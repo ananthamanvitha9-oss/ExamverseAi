@@ -93,7 +93,7 @@ const AdminDashboard = () => {
                     </div>
                     
                     <div className={styles.metricCard}>
-                        <div className={styles.metricIcon} style={{ background: '#ecfdf5', color: '#10b981' }}>
+                        <div className={styles.metricIcon} style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)' }}>
                             <DollarSign />
                         </div>
                         <div className={styles.metricInfo}>
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className={styles.metricCard}>
-                        <div className={styles.metricIcon} style={{ background: '#f5f3ff', color: '#8b5cf6' }}>
+                        <div className={styles.metricIcon} style={{ background: 'rgba(139, 92, 246, 0.1)', color: 'var(--secondary)' }}>
                             <Activity />
                         </div>
                         <div className={styles.metricInfo}>

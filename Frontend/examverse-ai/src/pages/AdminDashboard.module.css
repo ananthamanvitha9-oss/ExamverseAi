@@ -1,7 +1,7 @@
 .adminLayout {
     display: flex;
     min-height: 100vh;
-    background: #f8fafc;
+    background: var(--bg-primary);
 }
 
 .loading {
@@ -10,17 +10,18 @@
     justify-content: center;
     height: 100vh;
     font-size: 1.2rem;
-    color: #64748b;
+    color: var(--text-secondary);
 }
 
 /* Sidebar */
 .sidebar {
     width: 260px;
-    background: #0f172a;
-    color: white;
+    background: var(--surface);
+    color: var(--text-primary);
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid var(--border-light);
 }
 
 .logo {
@@ -30,7 +31,7 @@
 }
 
 .logo span {
-    color: #3b82f6;
+    color: var(--primary);
 }
 
 .nav {
@@ -41,17 +42,17 @@
 }
 
 .nav a {
-    color: #94a3b8;
+    color: var(--text-secondary);
     text-decoration: none;
     padding: 12px 15px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     font-weight: 500;
     transition: all 0.2s;
 }
 
 .nav a:hover, .nav a.active {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .logoutBtn {
@@ -59,10 +60,10 @@
     align-items: center;
     gap: 10px;
     background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    color: var(--error);
     border: none;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     font-weight: 600;
     transition: background 0.2s;
@@ -88,11 +89,13 @@
 
 .header h1 {
     font-size: 2rem;
-    color: #0f172a;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
 }
 
 .adminBadge {
-    background: #3b82f6;
+    background: var(--primary);
     color: white;
     padding: 6px 12px;
     border-radius: 20px;
@@ -109,20 +112,21 @@
 }
 
 .metricCard {
-    background: white;
+    background: var(--surface);
     padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
     gap: 20px;
+    border: 1px solid var(--border-light);
 }
 
 .metricIcon {
     width: 60px;
     height: 60px;
-    background: #eff6ff;
-    color: #3b82f6;
+    background: var(--primary-light);
+    color: var(--primary);
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -131,14 +135,14 @@
 
 .metricInfo h3 {
     font-size: 0.9rem;
-    color: #64748b;
+    color: var(--text-secondary);
     margin-bottom: 5px;
 }
 
 .value {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--text-primary);
 }
 
 .tablesContainer {
@@ -148,15 +152,16 @@
 }
 
 .tableCard {
-    background: white;
+    background: var(--surface);
     padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
 }
 
 .tableCard h2 {
     font-size: 1.2rem;
-    color: #0f172a;
+    color: var(--text-primary);
     margin-bottom: 20px;
 }
 
@@ -168,15 +173,15 @@
 .table th {
     text-align: left;
     padding: 12px;
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 0.9rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .table td {
     padding: 15px 12px;
-    color: #334155;
-    border-bottom: 1px solid #f1f5f9;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-light);
 }
 
 .table tr:last-child td {

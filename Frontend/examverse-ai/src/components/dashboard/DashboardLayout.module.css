@@ -1,55 +1,19 @@
 .layout {
     display: flex;
     min-height: 100vh;
-    background-color: transparent;
+    background-color: var(--bg-primary);
 }
 
 .mainContent {
     flex-grow: 1;
-    margin-left: 260px;
+    margin-left: 280px;
     display: flex;
     flex-direction: column;
+    width: calc(100% - 280px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-.topbar {
-    height: 70px;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 40;
-}
-
-.welcomeMsg {
-    color: #e2e8f0;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.logoutBtn {
-    background: transparent;
-    border: 1px solid #ec4899;
-    color: #ec4899;
-    padding: 0.5rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-family: var(--font-display);
-    transition: all 0.3s;
-}
-
-.logoutBtn:hover {
-    background-color: rgba(236, 72, 153, 0.1);
-    box-shadow: 0 0 10px rgba(236, 72, 153, 0.4);
-    transform: translateY(-2px);
-}
-
-.pageContent {
+.contentArea {
     padding: 2rem;
     flex-grow: 1;
 }
@@ -61,6 +25,6 @@
     }
     
     .contentArea {
-        padding: 1rem; /* Less padding on mobile */
+        padding: 1rem;
     }
 }

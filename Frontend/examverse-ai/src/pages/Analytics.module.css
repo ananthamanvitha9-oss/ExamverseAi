@@ -10,12 +10,14 @@
 
 .header h1 {
     font-size: 2rem;
-    color: #1e293b;
+    color: var(--text-primary);
     margin: 0 0 0.5rem 0;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
 }
 
 .header p {
-    color: #64748b;
+    color: var(--text-secondary);
     margin: 0;
     font-size: 1.1rem;
 }
@@ -29,20 +31,20 @@
 }
 
 .summaryCard {
-    background: white;
+    background: var(--surface);
     padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .iconWrapper {
     width: 56px;
     height: 56px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,14 +57,14 @@
 }
 
 .cardLabel {
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
     margin: 0 0 0.25rem 0;
 }
 
 .cardValue {
-    color: #0f172a;
+    color: var(--text-primary);
     font-size: 1.75rem;
     font-weight: 700;
     margin: 0;
@@ -80,16 +82,16 @@
 }
 
 .chartCard {
-    background: white;
+    background: var(--surface);
     padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
 }
 
 .chartCard h3 {
     margin: 0 0 1.5rem 0;
-    color: #1e293b;
+    color: var(--text-primary);
     font-size: 1.1rem;
 }
 
@@ -104,14 +106,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #64748b;
+    color: var(--text-secondary);
 }
 
 .spinner {
     width: 40px;
     height: 40px;
-    border: 3px solid #e2e8f0;
-    border-top-color: #3b82f6;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--primary);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 1rem;

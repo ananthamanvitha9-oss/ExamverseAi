@@ -20,9 +20,9 @@ const Settings = () => {
                         onClick={() => setDarkMode(!darkMode)}
                         style={{
                             padding: '8px 16px',
-                            background: darkMode ? 'var(--accent-primary)' : 'var(--bg-secondary)',
+                            background: darkMode ? 'var(--primary)' : 'var(--bg-hover)',
                             color: darkMode ? 'white' : 'var(--text-primary)',
-                            border: '1px solid var(--border-color)',
+                            border: '1px solid var(--border-light)',
                             borderRadius: '20px',
                             cursor: 'pointer'
                         }}
@@ -34,7 +34,7 @@ const Settings = () => {
                     </span>
                 </div>
                 
-                <hr style={{ margin: '30px 0', border: 'none', borderTop: '1px solid var(--border-color)' }} />
+                <hr style={{ margin: '30px 0', border: 'none', borderTop: '1px solid var(--border-light)' }} />
                 
                 <h2>Security</h2>
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '20px' }} onSubmit={(e) => { e.preventDefault(); alert('Password change simulated.'); }}>

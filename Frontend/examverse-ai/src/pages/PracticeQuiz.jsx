@@ -62,7 +62,7 @@ const PracticeQuiz = () => {
         return (
             <DashboardLayout>
                 <div className={styles.loadingContainer}>
-                    <AlertCircle size={40} style={{color: '#ef4444', marginBottom: '1rem'}} />
+                    <AlertCircle size={40} style={{color: 'var(--error)', marginBottom: '1rem'}} />
                     <p>No questions available for this topic yet. Check back later!</p>
                 </div>
             </DashboardLayout>
@@ -106,8 +106,8 @@ const PracticeQuiz = () => {
                                 >
                                     <div className={styles.optionCircle}></div>
                                     <span className={styles.optionText}>{opt.option_text}</span>
-                                    {isSubmitted && opt.is_correct && <CheckCircle className={styles.resultIcon} size={20} color="#10b981" />}
-                                    {isSubmitted && selectedOption?.id === opt.id && !opt.is_correct && <XCircle className={styles.resultIcon} size={20} color="#ef4444" />}
+                                    {isSubmitted && opt.is_correct && <CheckCircle className={styles.resultIcon} size={20} color="var(--success)" />}
+                                    {isSubmitted && selectedOption?.id === opt.id && !opt.is_correct && <XCircle className={styles.resultIcon} size={20} color="var(--error)" />}
                                 </div>
                             );
                         })}

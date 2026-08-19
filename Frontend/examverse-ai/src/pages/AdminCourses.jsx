@@ -101,7 +101,7 @@ const AdminCourses = () => {
         <div className={styles.coursesContainer} style={{ width: '100%' }}>
             <div className={styles.header} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <h2>Course Management</h2>
-                <button onClick={() => openModal()} style={{ background: '#8b5cf6', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
+                <button onClick={() => openModal()} style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '10px 20px', borderRadius: 'var(--radius-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
                     <Plus size={18} /> Add New Course
                 </button>
             </div>
@@ -122,10 +122,10 @@ const AdminCourses = () => {
                             courses.map(course => (
                                 <tr key={course.id}>
                                     <td style={{ fontWeight: '500' }}>{course.name}</td>
-                                    <td><span style={{ background: '#374151', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>{course.category}</span></td>
+                                    <td><span style={{ background: 'var(--bg-hover)', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>{course.category}</span></td>
                                     <td>
                                         <span style={{ 
-                                            color: course.status === 'active' ? '#10b981' : course.status === 'draft' ? '#f59e0b' : '#ef4444',
+                                            color: course.status === 'active' ? 'var(--success)' : course.status === 'draft' ? 'var(--warning)' : 'var(--error)',
                                             fontWeight: 'bold',
                                             textTransform: 'capitalize'
                                         }}>
@@ -135,10 +135,10 @@ const AdminCourses = () => {
                                     <td>{course.duration}</td>
                                     <td>
                                         <div style={{ display: 'flex', gap: '10px' }}>
-                                            <button onClick={() => openModal(course)} style={{ background: 'transparent', border: 'none', color: '#8b5cf6', cursor: 'pointer' }} title="Edit Course">
+                                            <button onClick={() => openModal(course)} style={{ background: 'transparent', border: 'none', color: 'var(--primary)', cursor: 'pointer' }} title="Edit Course">
                                                 <Edit2 size={18} />
                                             </button>
-                                            <button onClick={() => handleDelete(course.id)} style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer' }} title="Delete Course">
+                                            <button onClick={() => handleDelete(course.id)} style={{ background: 'transparent', border: 'none', color: 'var(--error)', cursor: 'pointer' }} title="Delete Course">
                                                 <Trash2 size={18} />
                                             </button>
                                         </div>
@@ -157,44 +157,44 @@ const AdminCourses = () => {
             {/* Course Form Modal */}
             {isModalOpen && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, backdropFilter: 'blur(5px)' }}>
-                    <div style={{ background: '#1e1e2d', width: '90%', maxWidth: '500px', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <div style={{ background: 'var(--surface)', width: '90%', maxWidth: '500px', borderRadius: 'var(--radius-lg)', padding: '24px', border: '1px solid var(--border-light)' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                            <h3 style={{ margin: 0 }}>{editingCourse ? 'Edit Course' : 'Create New Course'}</h3>
-                            <button onClick={closeModal} style={{ background: 'transparent', border: 'none', color: '#a1a1aa', cursor: 'pointer' }}><X size={24} /></button>
+                            <h3 style={{ margin: 0, color: 'var(--text-primary)' }}>{editingCourse ? 'Edit Course' : 'Create New Course'}</h3>
+                            <button onClick={closeModal} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
 
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                             <div>
-                                <label style={{ display: 'block', marginBottom: '8px', color: '#a1a1aa' }}>Course Name</label>
+                                <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-secondary)' }}>Course Name</label>
                                 <input 
                                     type="text" 
                                     name="name" 
                                     value={formData.name} 
                                     onChange={handleInputChange} 
                                     required 
-                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#0f0f17', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+                                    style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
                                 />
                             </div>
 
                             <div>
-                                <label style={{ display: 'block', marginBottom: '8px', color: '#a1a1aa' }}>Description</label>
+                                <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-secondary)' }}>Description</label>
                                 <textarea 
                                     name="description" 
                                     value={formData.description} 
                                     onChange={handleInputChange} 
                                     rows="3"
-                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#0f0f17', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+                                    style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
                                 ></textarea>
                             </div>
 
                             <div style={{ display: 'flex', gap: '16px' }}>
                                 <div style={{ flex: 1 }}>
-                                    <label style={{ display: 'block', marginBottom: '8px', color: '#a1a1aa' }}>Category</label>
+                                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-secondary)' }}>Category</label>
                                     <select 
                                         name="category" 
                                         value={formData.category} 
                                         onChange={handleInputChange}
-                                        style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#0f0f17', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+                                        style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
                                     >
                                         <option value="UPSC">UPSC</option>
                                         <option value="SSC">SSC</option>
@@ -204,25 +204,25 @@ const AdminCourses = () => {
                                     </select>
                                 </div>
                                 <div style={{ flex: 1 }}>
-                                    <label style={{ display: 'block', marginBottom: '8px', color: '#a1a1aa' }}>Duration (Mins)</label>
+                                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-secondary)' }}>Duration (Mins)</label>
                                     <input 
                                         type="number" 
                                         name="duration" 
                                         value={formData.duration} 
                                         onChange={handleInputChange} 
                                         required 
-                                        style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#0f0f17', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+                                        style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label style={{ display: 'block', marginBottom: '8px', color: '#a1a1aa' }}>Status</label>
+                                <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-secondary)' }}>Status</label>
                                 <select 
                                     name="status" 
                                     value={formData.status} 
                                     onChange={handleInputChange}
-                                    style={{ width: '100%', padding: '12px', borderRadius: '8px', background: '#0f0f17', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+                                    style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
                                 >
                                     <option value="active">Active</option>
                                     <option value="draft">Draft</option>
@@ -230,7 +230,7 @@ const AdminCourses = () => {
                                 </select>
                             </div>
 
-                            <button type="submit" style={{ background: '#8b5cf6', color: 'white', border: 'none', padding: '14px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', marginTop: '10px' }}>
+                            <button type="submit" style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '14px', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 'bold', marginTop: '10px' }}>
                                 {editingCourse ? 'Save Changes' : 'Create Course'}
                             </button>
                         </form>

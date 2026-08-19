@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Clock, ChevronLeft, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
-import styles from './Dashboard.module.css';
+import styles from './MockTestInterface.module.css';
 
 const MockTestInterface = () => {
     const { id } = useParams();
@@ -14,6 +15,7 @@ const MockTestInterface = () => {
     const [timeLeft, setTimeLeft] = useState(0);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [submitResults, setSubmitResults] = useState(null);
 
     useEffect(() => {
         const fetchTest = async () => {
@@ -51,8 +53,6 @@ const MockTestInterface = () => {
         return `${m}:${s < 10 ? '0' : ''}${s}`;
     };
 
-    const [submitResults, setSubmitResults] = useState(null);
-
     const handleSelectOption = (qId, optionString) => {
         setAnswers({ ...answers, [qId]: optionString });
     };
@@ -71,13 +71,32 @@ const MockTestInterface = () => {
         }
     };
 
-    const currentQuestion = testData.questions[currentQuestionIndex];
+    if (loading) {
+        return (
+            <DashboardLayout>
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem 0' }}>
+                    <div className="spinner" style={{width: '40px', height: '40px', border: '3px solid var(--border-color)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite'}}></div>
+                </div>
+            </DashboardLayout>
+        );
+    }
+
+    if (!testData) {
+        return (
+            <DashboardLayout>
+                <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-secondary)' }}>
+                    <h2>Mock Test not found.</h2>
+                </div>
+            </DashboardLayout>
+        );
+    }
 
     if (isSubmitted) {
         if (!submitResults) {
             return (
                 <DashboardLayout>
-                    <div style={{ padding: '40px', textAlign: 'center' }}>
+                    <div className={styles.resultsContainer}>
+                        <div className="spinner" style={{width: '40px', height: '40px', border: '3px solid var(--border-color)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 2rem'}}></div>
                         <h2>Grading your test...</h2>
                     </div>
                 </DashboardLayout>
@@ -86,24 +105,33 @@ const MockTestInterface = () => {
 
         return (
             <DashboardLayout>
-                <div style={{ background: 'white', padding: '40px', borderRadius: '12px', textAlign: 'center' }}>
+                <div className={styles.resultsContainer}>
+                    <CheckCircle2 size={64} style={{ color: 'var(--success)', margin: '0 auto 1rem' }} />
                     <h2>Test Submitted!</h2>
-                    <h1>Your Score: {submitResults.score} / {submitResults.total}</h1>
-                    <h3 style={{ color: '#f59e0b' }}>🏆 Points Earned: +{submitResults.points_earned}</h3>
-                    <button className={styles.btnPrimary} onClick={() => navigate('/dashboard/mock-tests')}>Back to Tests</button>
+                    <h1>{submitResults.score} / {submitResults.total}</h1>
+                    <h3>🏆 Points Earned: +{submitResults.points_earned}</h3>
+                    <button className="btn btn-primary" onClick={() => navigate('/dashboard/tests')}>Back to Tests</button>
                     
-                    <div style={{ marginTop: '40px', textAlign: 'left' }}>
-                        <h3>Solutions:</h3>
+                    <div className={styles.solutionsList}>
+                        <h3 style={{ color: 'var(--text-primary)', marginBottom: 0 }}>Solutions & Review:</h3>
                         {testData.questions.map((q, idx) => {
                             const result = submitResults.results.find(r => r.question_id === q.id);
+                            const isCorrect = result?.is_correct;
                             return (
-                                <div key={q.id} style={{ padding: '15px', border: '1px solid #eee', marginBottom: '10px', borderRadius: '8px' }}>
+                                <div key={q.id} className={styles.solutionCard}>
                                     <strong>Q{idx+1}: {q.question_text}</strong>
-                                    <p style={{ color: result?.is_correct ? 'green' : 'red' }}>
+                                    <p className={isCorrect ? styles.correctText : styles.incorrectText} style={{ marginBottom: '0.5rem', fontWeight: 500 }}>
+                                        {isCorrect ? <CheckCircle2 size={16} style={{display:'inline', verticalAlign:'text-bottom', marginRight:'4px'}}/> : <AlertCircle size={16} style={{display:'inline', verticalAlign:'text-bottom', marginRight:'4px'}}/>}
                                         Your Answer: {result?.user_answer || 'Skipped'}
                                     </p>
-                                    <p style={{ color: 'green' }}>Correct Answer: {q.correct_option}</p>
-                                    <p style={{ fontSize: '0.9rem', color: '#666' }}>Explanation: {q.explanation}</p>
+                                    {!isCorrect && (
+                                        <p className={styles.correctText} style={{ fontWeight: 500 }}>
+                                            Correct Answer: {q.correct_option}
+                                        </p>
+                                    )}
+                                    <div className={styles.explanation}>
+                                        <strong>Explanation:</strong> {q.explanation}
+                                    </div>
                                 </div>
                             )
                         })}
@@ -113,84 +141,82 @@ const MockTestInterface = () => {
         );
     }
 
+    const currentQuestion = testData.questions[currentQuestionIndex];
+
     return (
         <DashboardLayout>
-            <div style={{ display: 'flex', gap: '20px', height: 'calc(100vh - 100px)' }}>
-                
+            <div className={styles.container}>
                 {/* Main Question Area */}
-                <div style={{ flex: 3, background: 'white', padding: '30px', borderRadius: '12px', display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '20px', marginBottom: '20px' }}>
+                <div className={styles.mainArea}>
+                    <div className={styles.header}>
                         <h3>{testData.title}</h3>
-                        <h3 style={{ color: timeLeft < 300 ? 'red' : 'inherit' }}>⏱ {formatTime(timeLeft)}</h3>
-                    </div>
-
-                    <div style={{ flex: 1 }}>
-                        <h4 style={{ fontSize: '1.2rem', marginBottom: '20px' }}>
-                            Q{currentQuestionIndex + 1}. {currentQuestion.question_text}
-                        </h4>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                            {[currentQuestion.option_a, currentQuestion.option_b, currentQuestion.option_c, currentQuestion.option_d].map((opt, idx) => (
-                                <button 
-                                    key={idx}
-                                    style={{
-                                        padding: '15px', 
-                                        textAlign: 'left', 
-                                        border: answers[currentQuestion.id] === opt ? '2px solid #2563eb' : '1px solid #ccc',
-                                        background: answers[currentQuestion.id] === opt ? '#eff6ff' : 'white',
-                                        borderRadius: '8px',
-                                        cursor: 'pointer',
-                                        fontSize: '1rem'
-                                    }}
-                                    onClick={() => handleSelectOption(currentQuestion.id, opt)}
-                                >
-                                    {String.fromCharCode(65 + idx)}. {opt}
-                                </button>
-                            ))}
+                        <div className={`${styles.timer} ${timeLeft < 300 ? styles.timerWarning : ''}`}>
+                            <Clock size={20} /> {formatTime(timeLeft)}
                         </div>
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+                    <div className={styles.questionContent}>
+                        <h4 className={styles.questionText}>
+                            <span style={{color: 'var(--primary)', marginRight: '0.5rem'}}>Q{currentQuestionIndex + 1}.</span> 
+                            {currentQuestion.question_text}
+                        </h4>
+
+                        <div className={styles.optionsGrid}>
+                            {[currentQuestion.option_a, currentQuestion.option_b, currentQuestion.option_c, currentQuestion.option_d].map((opt, idx) => {
+                                const isSelected = answers[currentQuestion.id] === opt;
+                                return (
+                                    <button 
+                                        key={idx}
+                                        className={`${styles.optionBtn} ${isSelected ? styles.selected : ''}`}
+                                        onClick={() => handleSelectOption(currentQuestion.id, opt)}
+                                    >
+                                        <span className={styles.optionLetter}>{String.fromCharCode(65 + idx)}.</span> 
+                                        <span>{opt}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className={styles.footer}>
                         <button 
-                            className={styles.btnSecondary} 
+                            className="btn btn-outline" 
                             disabled={currentQuestionIndex === 0}
                             onClick={() => setCurrentQuestionIndex(prev => prev - 1)}
                         >
-                            Previous
+                            <ChevronLeft size={18} /> Previous
                         </button>
                         
                         {currentQuestionIndex === testData.questions.length - 1 ? (
-                            <button className={styles.btnPrimary} onClick={handleSubmit}>Submit Test</button>
+                            <button className="btn btn-primary" onClick={handleSubmit}>
+                                Submit Test <CheckCircle2 size={18} style={{marginLeft: '0.5rem'}} />
+                            </button>
                         ) : (
                             <button 
-                                className={styles.btnPrimary}
+                                className="btn btn-primary"
                                 onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
                             >
-                                Next
+                                Next <ChevronRight size={18} />
                             </button>
                         )}
                     </div>
                 </div>
 
                 {/* Right Side Question Palette */}
-                <div style={{ flex: 1, background: 'white', padding: '20px', borderRadius: '12px' }}>
+                <div className={styles.paletteArea}>
                     <h4>Question Palette</h4>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '20px' }}>
+                    <div className={styles.paletteGrid}>
                         {testData.questions.map((q, idx) => {
                             const isAnswered = answers[q.id] !== undefined;
                             const isActive = currentQuestionIndex === idx;
+                            let btnClass = styles.paletteBtn;
+                            if (isActive) btnClass += ` ${styles.active}`;
+                            else if (isAnswered) btnClass += ` ${styles.answered}`;
+
                             return (
                                 <button 
                                     key={q.id}
-                                    style={{
-                                        padding: '10px',
-                                        borderRadius: '50%',
-                                        border: 'none',
-                                        background: isActive ? '#2563eb' : (isAnswered ? '#10b981' : '#e5e7eb'),
-                                        color: (isActive || isAnswered) ? 'white' : 'black',
-                                        cursor: 'pointer',
-                                        fontWeight: 'bold'
-                                    }}
+                                    className={btnClass}
                                     onClick={() => setCurrentQuestionIndex(idx)}
                                 >
                                     {idx + 1}
@@ -198,12 +224,16 @@ const MockTestInterface = () => {
                             );
                         })}
                     </div>
-                    <div style={{ marginTop: '30px', fontSize: '0.9rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                            <div style={{ width: '15px', height: '15px', background: '#10b981', borderRadius: '50%' }}></div> Answered
+                    
+                    <div className={styles.legend}>
+                        <div className={styles.legendItem}>
+                            <div className={styles.legendDot} style={{ background: 'var(--success)' }}></div> Answered
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <div style={{ width: '15px', height: '15px', background: '#e5e7eb', borderRadius: '50%' }}></div> Not Answered
+                        <div className={styles.legendItem}>
+                            <div className={styles.legendDot} style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)' }}></div> Not Answered
+                        </div>
+                        <div className={styles.legendItem}>
+                            <div className={styles.legendDot} style={{ background: 'var(--primary)' }}></div> Current
                         </div>
                     </div>
                 </div>

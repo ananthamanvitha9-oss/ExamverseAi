@@ -1,33 +1,36 @@
 .authContainer {
-    min-height: 80vh;
+    min-height: calc(100vh - 70px);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
+    background: var(--bg-primary);
     padding: 2rem;
     flex: 1;
 }
 
 .authCard {
-    background: #1e293b;
+    background: var(--surface);
     padding: 2.5rem 3rem;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     width: 100%;
     max-width: 440px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
 }
 
 .authCard h2 {
     margin: 0 0 0.25rem 0;
     font-size: 1.75rem;
-    color: #ffffff;
+    color: var(--text-primary);
     text-align: center;
     font-weight: 700;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
 }
 
 .authCard p {
     text-align: center;
-    color: #94a3b8;
+    color: var(--text-secondary);
     margin-bottom: 2rem;
     font-size: 0.95rem;
 }
@@ -47,23 +50,23 @@
 .formGroup label {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #cbd5e1;
+    color: var(--text-secondary);
 }
 
 .formGroup input {
     padding: 0.75rem 1rem;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #0f172a;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
     font-size: 1rem;
     outline: none;
     transition: all 0.2s;
 }
 
 .formGroup input:focus {
-    border-color: #38bdf8;
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .forgotPassword {
@@ -73,23 +76,23 @@
 }
 
 .forgotPassword a {
-    color: #94a3b8;
+    color: var(--text-secondary);
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .forgotPassword a:hover {
-    color: #38bdf8;
+    color: var(--primary);
 }
 
 .submitBtn {
     width: 100%;
-    padding: 0.75rem !important;
-    background: #59bfff !important;
-    color: #0f172a !important;
+    padding: 0.85rem !important;
+    background: var(--primary) !important;
+    color: white !important;
     border: none !important;
-    border-radius: 24px !important;
-    font-weight: 700 !important;
+    border-radius: var(--radius-md) !important;
+    font-weight: 600 !important;
     font-size: 1rem !important;
     box-shadow: none !important;
     transition: all 0.2s !important;
@@ -97,26 +100,25 @@
 }
 
 .submitBtn:hover {
-    background: #38bdf8 !important;
-    transform: translateY(-1px) !important;
+    background: var(--primary-dark) !important;
 }
 
 .authFooter {
     margin-top: 1.5rem !important;
     font-size: 0.9rem;
-    color: #94a3b8;
+    color: var(--text-secondary);
     text-align: center;
 }
 
 .authFooter a {
-    color: #59bfff;
+    color: var(--primary);
     font-weight: 600;
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .authFooter a:hover {
-    color: #38bdf8;
+    color: var(--primary-dark);
 }
 
 .divider {
@@ -124,7 +126,7 @@
     align-items: center;
     text-align: center;
     margin: 1.5rem 0;
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     font-weight: 500;
 }
@@ -133,7 +135,7 @@
 .divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .divider:not(:empty)::before {
@@ -149,10 +151,10 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    background-color: white;
-    color: #334155;
-    border: 1px solid #e2e8f0;
-    border-radius: 24px;
+    background-color: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
     padding: 0.75rem 1rem;
     font-size: 0.95rem;
     font-weight: 600;
@@ -167,18 +169,29 @@
 }
 
 .googleBtn:hover {
-    background-color: #f8fafc;
-    border-color: #cbd5e1;
+    background-color: var(--bg-hover);
+    border-color: var(--primary);
 }
 
 .errorAlert {
     background-color: rgba(239, 68, 68, 0.1);
-    color: #fca5a5;
+    color: var(--error);
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     margin-bottom: 1.5rem;
     font-size: 0.875rem;
     border: 1px solid rgba(239, 68, 68, 0.2);
+    text-align: center;
+}
+
+.successAlert {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    border: 1px solid rgba(16, 185, 129, 0.2);
     text-align: center;
 }
 

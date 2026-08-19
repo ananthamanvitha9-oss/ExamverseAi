@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import CourseCard from '../components/dashboard/CourseCard';
-import styles from './Dashboard.module.css';
+import styles from './Courses.module.css';
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
@@ -32,15 +32,20 @@ const Courses = () => {
 
     return (
         <DashboardLayout>
-            <div>
-                <h2 className={styles.sectionTitle} style={{ marginTop: 0 }}>Course Catalog</h2>
-                <p style={{ color: '#6b7280', marginBottom: '2rem' }}>Explore all available courses and enroll to start learning.</p>
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <h1 className={styles.title}>Course Catalog</h1>
+                    <p className={styles.subtitle}>Explore all available courses and enroll to start learning.</p>
+                </div>
                 
                 {loading ? (
-                    <p>Loading catalog...</p>
+                    <div className={styles.loading}>
+                        <div className="spinner" style={{width: '30px', height: '30px', border: '3px solid var(--border-color)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite', marginRight: '1rem'}}></div>
+                        Loading catalog...
+                    </div>
                 ) : (
                     <div className={styles.courseGrid}>
-                        {courses.map((course) => (
+                        {courses.length > 0 ? courses.map((course) => (
                             <CourseCard 
                                 key={course.id}
                                 id={course.id}
@@ -49,7 +54,12 @@ const Courses = () => {
                                 progress={course.progress}
                                 status={course.status}
                             />
-                        ))}
+                        )) : (
+                            <div className={styles.emptyState}>
+                                <h3>No courses available right now.</h3>
+                                <p>Check back later for new content!</p>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

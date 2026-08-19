@@ -5,18 +5,17 @@ import api from '../services/api';
 import { ChevronRight, ChevronDown, Folder, Book, FileText, Video, HelpCircle, BrainCircuit } from 'lucide-react';
 
 const materialIcons = {
-    'note': <FileText size={18} className={styles.icon} style={{color: '#8b5cf6'}}/>,
-    'video': <Video size={18} className={styles.icon} style={{color: '#ef4444'}}/>,
-    'mcq': <HelpCircle size={18} className={styles.icon} style={{color: '#f59e0b'}}/>,
-    'pyq': <HelpCircle size={18} className={styles.icon} style={{color: '#10b981'}}/>,
-    'quiz': <HelpCircle size={18} className={styles.icon} style={{color: '#3b82f6'}}/>,
-    'ai_prompt': <BrainCircuit size={18} className={styles.icon} style={{color: '#ec4899'}}/>
+    'note': <FileText size={18} className={styles.icon} style={{color: 'var(--secondary)'}}/>,
+    'video': <Video size={18} className={styles.icon} style={{color: 'var(--error)'}}/>,
+    'mcq': <HelpCircle size={18} className={styles.icon} style={{color: 'var(--warning)'}}/>,
+    'pyq': <HelpCircle size={18} className={styles.icon} style={{color: 'var(--success)'}}/>,
+    'quiz': <HelpCircle size={18} className={styles.icon} style={{color: 'var(--primary)'}}/>,
+    'ai_prompt': <BrainCircuit size={18} className={styles.icon} style={{color: 'var(--secondary)'}}/>
 };
 
 const TreeNode = ({ node, level = 0 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    // If it's a material node
     if (node.type) {
         return (
             <div className={styles.materialNode}>
@@ -26,7 +25,6 @@ const TreeNode = ({ node, level = 0 }) => {
         );
     }
 
-    // Determine children based on level
     let children = [];
     let badgeText = '';
     if (node.stages) { children = node.stages; badgeText = 'Exam'; }
@@ -40,7 +38,7 @@ const TreeNode = ({ node, level = 0 }) => {
         <div className={styles.node}>
             <div className={styles.nodeHeader} onClick={() => setIsOpen(!isOpen)}>
                 {isOpen ? <ChevronDown size={20} className={styles.icon}/> : <ChevronRight size={20} className={styles.icon}/>}
-                <Folder size={20} className={styles.icon} style={{color: level === 0 ? '#3b82f6' : '#64748b'}} />
+                <Folder size={20} className={styles.icon} style={{color: level === 0 ? 'var(--primary)' : 'var(--text-muted)'}} />
                 <span className={styles.title}>{node.name}</span>
                 <span className={styles.badge}>{badgeText}</span>
             </div>
@@ -53,7 +51,7 @@ const TreeNode = ({ node, level = 0 }) => {
             )}
             {isOpen && children.length === 0 && (
                 <div className={styles.nodeContent}>
-                    <p style={{color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic'}}>No content available yet.</p>
+                    <p style={{color: 'var(--text-muted)', fontSize: '0.9rem', fontStyle: 'italic'}}>No content available yet.</p>
                 </div>
             )}
         </div>
@@ -114,15 +112,24 @@ const StudyExplorer = () => {
                 <div className={styles.explorerCard}>
                     {loading ? (
                         <div style={{textAlign: 'center', padding: '2rem'}}>
-                            <BrainCircuit className={styles.spinner} size={40} style={{color: '#8b5cf6', animation: 'spin 2s linear infinite'}} />
+                            <BrainCircuit className={styles.spinner} size={40} style={{color: 'var(--primary)', animation: 'spin 2s linear infinite'}} />
                             <p style={{marginTop: '1rem', color: 'var(--text-secondary)'}}>Loading curriculum matrix...</p>
                         </div>
                     ) : (
                         <>
-                            <div style={{marginBottom: '1.5rem'}}>
-                                <label style={{marginRight: '1rem', fontWeight: 'bold'}}>Select Exam:</label>
+                            <div style={{marginBottom: '1.5rem', display: 'flex', alignItems: 'center'}}>
+                                <label style={{marginRight: '1rem', fontWeight: 'bold', color: 'var(--text-primary)'}}>Select Exam:</label>
                                 <select 
-                                    style={{padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1'}}
+                                    style={{
+                                        padding: '0.75rem 1rem', 
+                                        borderRadius: 'var(--radius-md)', 
+                                        border: '1px solid var(--border-color)',
+                                        background: 'var(--bg-primary)',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '1rem',
+                                        outline: 'none',
+                                        fontFamily: 'inherit'
+                                    }}
                                     value={selectedExamId || ''} 
                                     onChange={(e) => setSelectedExamId(e.target.value)}
                                 >
@@ -134,14 +141,14 @@ const StudyExplorer = () => {
 
                             {hierarchyLoading ? (
                                 <div style={{textAlign: 'center', padding: '2rem'}}>
-                                    <BrainCircuit className={styles.spinner} size={40} style={{color: '#8b5cf6', animation: 'spin 2s linear infinite'}} />
+                                    <BrainCircuit className={styles.spinner} size={40} style={{color: 'var(--primary)', animation: 'spin 2s linear infinite'}} />
                                     <p style={{marginTop: '1rem', color: 'var(--text-secondary)'}}>Loading curriculum matrix...</p>
                                 </div>
                             ) : hierarchy ? (
                                 <TreeNode node={hierarchy} />
                             ) : (
                                 <div style={{textAlign: 'center', padding: '3rem 1rem'}}>
-                                    <p>No Curriculum Found for this Exam.</p>
+                                    <p style={{color: 'var(--text-secondary)'}}>No Curriculum Found for this Exam.</p>
                                 </div>
                             )}
                         </>
