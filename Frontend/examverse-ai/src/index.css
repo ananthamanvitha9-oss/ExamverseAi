@@ -51,27 +51,27 @@
 }
 
 .dark {
-  /* DARK MODE TOKENS */
-  --bg-primary: #0B1120; /* Deep Navy */
-  --bg-secondary: #0F172A; 
-  --bg-hover: #1E293B;
+  /* DARK MODE TOKENS - Focus & Calm (Slate & Emerald Green) */
+  --bg-primary: #111827; /* Dark Slate Gray */
+  --bg-secondary: #1F2937; 
+  --bg-hover: #374151;
   
-  --surface: #1E293B; /* Dark Slate */
-  --surface-raised: #334155;
+  --surface: #1F2937; /* Soft Charcoal */
+  --surface-raised: #374151;
   
-  --primary: #6366F1; /* Slightly lighter for dark mode */
-  --primary-hover: #818CF8;
-  --primary-light: rgba(99, 102, 241, 0.15);
+  --primary: #10B981; /* Vibrant Emerald Green */
+  --primary-hover: #34D399;
+  --primary-light: rgba(16, 185, 129, 0.15);
   
-  --secondary: #8B5CF6; 
-  --secondary-hover: #A78BFA;
+  --secondary: #3B82F6; /* Soft Blue Accent */
+  --secondary-hover: #60A5FA;
   
-  --text-primary: #F8FAFC; 
-  --text-secondary: #94A3B8; 
-  --text-muted: #64748B;
+  --text-primary: #F9FAFB; 
+  --text-secondary: #9CA3AF; 
+  --text-muted: #6B7280;
   
-  --border-color: #334155; 
-  --border-light: #1E293B;
+  --border-color: #374151; 
+  --border-light: #1F2937;
   
   --success: #34D399;
   --success-bg: rgba(16, 185, 129, 0.15);
