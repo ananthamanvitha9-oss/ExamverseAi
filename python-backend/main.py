@@ -18,6 +18,15 @@ import uuid
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
 
+# Auto-seed the database if empty
+from seed_syllabus import seed_syllabus
+from seed_resources import seed as seed_resources
+try:
+    seed_syllabus()
+    seed_resources()
+except Exception as e:
+    print(f"Database seeding error: {e}")
+
 app = FastAPI(title="ExamVerse AI API (Python)")
 api_router = APIRouter(prefix="/api")
 
