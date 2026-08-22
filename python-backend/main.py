@@ -770,3 +770,24 @@ def save_mock_test_result(result: schemas.MockTestResultCreate, db: Session = De
     db.commit()
     db.refresh(db_result)
     return db_result
+
+# --- PHASE 7: CHATBOT AI INTEGRATION ---
+
+@api_router.post("/tutor/chat")
+def chat_with_ai_tutor(req: schemas.AiTutorRequest):
+    try:
+        response_text = generate_ai_tutor_response(
+            message=req.message,
+            subject=req.subject,
+            exam=req.exam,
+            language=req.language
+        )
+        return {"response": response_text}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.post("/tutor/")
+def get_ai_tutor_response(req: schemas.AiTutorRequest, db: Session = Depends(get_db)):
+    # We can eventually pass current_user here to track history
+    response_text = generate_ai_tutor_response(req.message, req.subject, req.exam, req.language)
+    return {"response": response_text}

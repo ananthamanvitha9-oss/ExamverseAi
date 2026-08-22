@@ -322,19 +322,52 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.value = '';
         chatInput.style.height = 'auto'; // Reset height
 
-        // Optional: Show loading state here
+        // Show loading state
+        const loadingId = 'loading-' + Date.now();
+        const loadingMsgDiv = document.createElement('div');
+        loadingMsgDiv.id = loadingId;
+        loadingMsgDiv.className = 'flex gap-2';
+        loadingMsgDiv.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-blue-100 text-primary flex items-center justify-center shrink-0">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+            </div>
+            <div class="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] flex items-center gap-1">
+                <span class="animate-bounce inline-block w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                <span class="animate-bounce inline-block w-1.5 h-1.5 bg-gray-400 rounded-full" style="animation-delay: 0.2s"></span>
+                <span class="animate-bounce inline-block w-1.5 h-1.5 bg-gray-400 rounded-full" style="animation-delay: 0.4s"></span>
+            </div>
+        `;
+        chatMessages.appendChild(loadingMsgDiv);
+        lucide.createIcons();
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Send to FastAPI Backend (Assuming /api/tutor/ endpoint exists)
+        // Send to FastAPI Backend
         try {
-            // Since we haven't strictly written the tutor endpoint in Phase 6, we'll mock the UI connection for now
-            // But here is where fetchWithAuth('/tutor', { method: 'POST', body: JSON.stringify({message: text}) }) would go.
+            const currentExam = document.getElementById('exam-selector').value || "UPSC";
             
-            setTimeout(() => {
-                addMessageToChat("That's a great question! I am currently being wired up to the Gemini API on the backend. Check back soon for my real answers!");
-            }, 1000);
+            // Note: Since this endpoint might not require auth yet in our backend, we can just use fetchWithAuth
+            const response = await fetchWithAuth('/tutor/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    message: text,
+                    exam: currentExam,
+                    subject: "General",
+                    language: "English"
+                })
+            });
+            
+            // Remove loading indicator
+            document.getElementById(loadingId).remove();
+
+            if (response && response.response) {
+                addMessageToChat(response.response);
+            } else {
+                addMessageToChat("I'm sorry, I couldn't generate a response right now.");
+            }
             
         } catch (e) {
             console.error(e);
+            document.getElementById(loadingId).remove();
             addMessageToChat("Sorry, I encountered an error connecting to the server.");
         }
     }
