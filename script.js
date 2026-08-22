@@ -385,3 +385,69 @@ document.addEventListener('DOMContentLoaded', () => {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
     });
+
+    // --- PHASE 8: AI STUDY PLAN LOGIC ---
+    const studyPlanBtn = document.getElementById('generate-study-plan-btn');
+    const studyPlanModal = document.getElementById('study-plan-modal');
+    const studyPlanPanel = document.getElementById('study-plan-panel');
+    const closeStudyPlanBtn = document.getElementById('close-study-plan');
+    const studyPlanContent = document.getElementById('study-plan-content');
+
+    function toggleStudyPlan() {
+        const isHidden = studyPlanModal.classList.contains('opacity-0');
+        if (isHidden) {
+            studyPlanModal.classList.remove('hidden');
+            setTimeout(() => {
+                studyPlanModal.classList.remove('opacity-0');
+                studyPlanPanel.classList.remove('scale-95');
+            }, 10);
+        } else {
+            studyPlanModal.classList.add('opacity-0');
+            studyPlanPanel.classList.add('scale-95');
+            setTimeout(() => {
+                studyPlanModal.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    closeStudyPlanBtn.addEventListener('click', toggleStudyPlan);
+
+    studyPlanBtn.addEventListener('click', async () => {
+        toggleStudyPlan();
+        
+        studyPlanContent.innerHTML = \<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
+            <i data-lucide="loader-2" class="w-8 h-8 animate-spin text-primary"></i>
+            <p>Analyzing your weak areas and generating a personalized schedule...</p>
+        </div>\;
+        lucide.createIcons();
+
+        try {
+            const currentExam = document.getElementById('exam-selector').value || "UPSC";
+            
+            // Reusing the tutor endpoint for now to generate a study plan
+            const response = await fetchWithAuth('/tutor/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    message: "Generate a 1-week structured study plan for me. I need to focus on my weak areas based on recent mock tests.",
+                    exam: currentExam,
+                    subject: "General",
+                    language: "English"
+                })
+            });
+
+            if (response && response.response) {
+                // Formatting markdown-like response roughly for HTML
+                const formattedHtml = response.response
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>\</strong>') // Bold
+                    .replace(/\n\n/g, '</p><p class="mt-2">') // Paragraphs
+                    .replace(/\n- /g, '<br>• '); // Bullets
+                    
+                studyPlanContent.innerHTML = \<div class="prose max-w-none"><p>\</p></div>\;
+            } else {
+                studyPlanContent.innerHTML = \<div class="text-red-500">Failed to generate study plan.</div>\;
+            }
+        } catch (e) {
+            studyPlanContent.innerHTML = \<div class="text-red-500">Error connecting to AI service.</div>\;
+        }
+    });
+

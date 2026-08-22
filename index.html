@@ -217,7 +217,7 @@
                             </div>
                         </div>
                         
-                        <button class="mt-4 w-full py-2 bg-blue-50 text-primary font-medium rounded-lg hover:bg-blue-100 transition-colors text-sm flex items-center justify-center gap-2">
+                        <button id="generate-study-plan-btn" class="mt-4 w-full py-2 bg-blue-50 text-primary font-medium rounded-lg hover:bg-blue-100 transition-colors text-sm flex items-center justify-center gap-2">
                             <i data-lucide="sparkles" class="w-4 h-4"></i> Generate AI Study Plan
                         </button>
                     </div>
@@ -262,6 +262,37 @@
             </div>
         </div>
     </main>
+
+    <!-- AI Study Plan Modal -->
+    <div id="study-plan-modal" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-gray-900/40 backdrop-blur-sm opacity-0 hidden">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl p-8 relative transform scale-95 transition-all duration-300 h-[80vh] flex flex-col" id="study-plan-panel">
+            <button id="close-study-plan" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
+                <div class="w-10 h-10 rounded bg-blue-100 text-primary flex items-center justify-center shrink-0">
+                    <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">Your AI Study Plan</h2>
+                    <p class="text-gray-500 text-sm">Generated based on your weak areas and target exam.</p>
+                </div>
+            </div>
+            
+            <div id="study-plan-content" class="flex-1 overflow-y-auto pr-2 space-y-4 text-gray-700 text-sm leading-relaxed">
+                <!-- Content will be injected here -->
+                <div class="flex items-center justify-center h-full text-gray-400">
+                    Click generate to build your personalized plan...
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end gap-3">
+                <button class="px-4 py-2 text-gray-600 font-medium hover:bg-gray-50 rounded-lg transition-colors">Download PDF</button>
+                <button class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-blue-800 transition-colors shadow-sm">Save to Dashboard</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Professional Auth Modal -->
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-gray-900/40 backdrop-blur-sm opacity-0 hidden">

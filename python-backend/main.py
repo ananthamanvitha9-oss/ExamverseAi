@@ -791,3 +791,24 @@ def get_ai_tutor_response(req: schemas.AiTutorRequest, db: Session = Depends(get
     # We can eventually pass current_user here to track history
     response_text = generate_ai_tutor_response(req.message, req.subject, req.exam, req.language)
     return {"response": response_text}
+
+@api_router.post("/generate-mock-test/")
+def generate_mock_test(req: schemas.MockTestGenerateRequest, db: Session = Depends(get_db)):
+    try:
+        # Call the Gemini AI to generate the test JSON
+        test_json_str = generate_ai_mock_test(
+            exam=req.exam,
+            subject=req.subject,
+            topic=req.topic,
+            difficulty=req.difficulty,
+            question_count=req.questionCount,
+            language=req.language
+        )
+        
+        # Clean the response to ensure it's valid JSON
+        from ai_service import clean_json_response
+        cleaned_json = clean_json_response(test_json_str)
+        
+        return {"status": "success", "data": json.loads(cleaned_json)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
