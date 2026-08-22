@@ -1,291 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ExamVerse AI | India's Smartest Exam Prep Platform</title>
-    <meta
-      name="description"
-      content="ExamVerse AI brings AI tutoring, mock tests, PYQs, notes, current affairs, progress tracking, and voice-led practice into one platform for every competitive exam in India."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./Frontend/css/style.css" />
-  </head>
-  <body>
-    <!-- Header with Logo and Navigation -->
-    <header class="hero">
-      <nav class="nav container">
-        <a class="brand" href="./index.html">
-          <img src="./images/logo.jpg" alt="ExamVerse AI Logo" width="160" height="40" style="border-radius:6px; vertical-align:middle; margin-right:8px;">
-          <span>ExamVerse AI</span>
-        </a>
-        <nav class="nav-links">
-          <a href="./index.html" style="color: var(--text);">Home</a>
-          <a href="./about.html">About</a>
-          <a href="./contact.html">Contact</a>
-          <a href="./login.html" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Login</a>
-          <a href="./register.html" class="btn btn-primary" style="padding: 0.5rem 1.1rem;">Register</a>
-        </nav>
-      </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examiverse AI - Professional Study Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF', // Deep blue
+                        secondary: '#F3F4F6', // Light gray background
+                        accent: '#10B981', // Success green
+                        textMain: '#1F2937', // Dark slate for readability
+                        textMuted: '#6B7280'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.279.0/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-secondary text-textMain font-sans min-h-screen flex overflow-hidden">
 
-      <!-- Hero Section -->
-      <section class="container hero-content">
-        <div class="hero-copy">
-          <p class="eyebrow">AI-powered learning for every Indian exam</p>
-          <h1>One app for every exam. One smarter path to success.</h1>
-          <p class="lead">
-            From UPSC to JEE, from SSC to CAT, ExamVerse AI helps students study faster,
-            practice smarter, and stay consistent with personalized AI guidance.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#cta">Start Learning</a>
-            <a class="btn btn-secondary" href="#features">Explore Features</a>
-          </div>
-          <ul class="hero-badges">
-            <li>AI Tutor</li>
-            <li>Mock Tests</li>
-            <li>PYQs</li>
-            <li>Current Affairs</li>
-            <li>Progress Tracking</li>
-          </ul>
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex z-20 shadow-sm relative">
+        <div class="h-16 flex items-center px-6 border-b border-gray-200">
+            <div class="w-8 h-8 rounded bg-primary text-white flex items-center justify-center font-bold text-lg mr-3">E</div>
+            <span class="text-xl font-bold tracking-tight text-primary">Examiverse</span>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto py-4">
+            <nav class="px-4 space-y-1">
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-blue-50 text-primary rounded-lg font-medium transition-colors">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <i data-lucide="book-open" class="w-5 h-5"></i> Syllabus & Material
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <i data-lucide="file-text" class="w-5 h-5"></i> Mock Tests
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <i data-lucide="bar-chart-2" class="w-5 h-5"></i> Analytics
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <i data-lucide="message-square" class="w-5 h-5"></i> AI Doubt Solver
+                </a>
+            </nav>
+
+            <div class="mt-8 px-4">
+                <h3 class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Target Exam</h3>
+                <select id="exam-selector" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="upsc">UPSC CSE</option>
+                    <option value="jee">JEE Advanced</option>
+                    <option value="neet">NEET UG</option>
+                    <option value="gate">GATE CS</option>
+                </select>
+            </div>
         </div>
 
-        <aside class="hero-card">
-          <div class="card-top">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>
-          <h3>Your study companion is ready</h3>
-          <p>Personalized schedules, instant doubt-solving, and real exam practice in one dashboard.</p>
-          <div class="mini-stats">
-            <div>
-              <strong>24/7</strong>
-              <span>AI support</span>
-            </div>
-            <div>
-              <strong>100+</strong>
-              <span>Mock tests</span>
-            </div>
-            <div>
-              <strong>1M+</strong>
-              <span>Practice questions</span>
-            </div>
-          </div>
-        </aside>
-      </section>
-    </header>
-
-    <main>
-      <!-- Features Section -->
-      <section id="features" class="section container">
-        <div class="section-heading">
-          <p class="eyebrow">Core Features</p>
-          <h2>Everything a serious aspirant needs, built into one platform.</h2>
+        <div class="p-4 border-t border-gray-200">
+            <button id="auth-btn" class="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">
+                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                    <i data-lucide="user" class="w-4 h-4 text-gray-500"></i>
+                </div>
+                <div class="text-sm text-left">
+                    <p class="font-medium text-gray-700">Guest User</p>
+                    <p class="text-xs text-gray-400">Sign in to sync</p>
+                </div>
+            </button>
         </div>
+    </aside>
 
-        <div class="feature-grid">
-          <article class="card">
-            <h3>AI Tutor</h3>
-            <p>Get concept explanations, doubt resolution, and personalized study support instantly 24/7.</p>
-          </article>
-
-          <article class="card">
-            <h3>Mock Tests</h3>
-            <p>Practice full-length tests with real exam-style questions, timers, and instant feedback.</p>
-          </article>
-
-          <article class="card">
-            <h3>Current Affairs</h3>
-            <p>Stay updated with curated daily and weekly current affairs summaries and quiz sets.</p>
-          </article>
-
-          <article class="card">
-            <h3>PYQs</h3>
-            <p>Access previous year questions organized by exam, subject, topic, and difficulty.</p>
-          </article>
-
-          <article class="card">
-            <h3>Notes</h3>
-            <p>Organize clean, searchable notes, lecture summaries, and key formula sheets.</p>
-          </article>
-
-          <article class="card">
-            <h3>Progress Tracking</h3>
-            <p>Track performance analytics, identify weak areas, and build momentum week after week.</p>
-          </article>
-
-          <article class="card">
-            <h3>Study Planner</h3>
-            <p>Create day-wise plans that adapt to your schedule, goals, and exam timeline.</p>
-          </article>
-
-          <article class="card">
-            <h3>AI Voice Assistant</h3>
-            <p>Learn hands-free with voice-based interaction for quick revision and audio support.</p>
-          </article>
-
-          <article class="card">
-            <h3>AI Interview Practice</h3>
-            <p>Prepare for personality tests and interviews with realistic AI mock interviewers.</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- Exams Section -->
-      <section id="exams" class="section section-alt">
-        <div class="container">
-          <div class="section-heading">
-            <p class="eyebrow">Supported Exams</p>
-            <h2>Built for India’s most competitive exam journeys.</h2>
-          </div>
-          <div class="pill-list">
-            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">UPSC</span>
-            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">SSC</span>
-            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">Banking</span>
-            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">Railways</span>
-            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">JEE</span>
-            <span style="font-weight: 700; border-color: var(--primary-2); color: var(--primary-2);">NEET</span>
-            <span>GATE</span>
-            <span>CAT</span>
-            <span>Defence</span>
-            <span>Police</span>
-            <span>APPSC</span>
-            <span>TSPSC</span>
-            <span>All State PSCs</span>
-            <span>CLAT</span>
-            <span>CUET</span>
-            <span>UGC NET</span>
-            <span>RRB</span>
-            <span>LIC</span>
-            <span>Insurance</span>
-            <span>Teaching</span>
-            <span>TET</span>
-            <span>CTET</span>
-            <span>NDA</span>
-            <span>CDS</span>
-            <span>AFCAT</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonials Section -->
-      <section id="testimonials" class="section container">
-        <div class="section-heading">
-          <p class="eyebrow">Student Success Stories</p>
-          <h2>What Our Top Rankers Say</h2>
-          <p style="color: var(--muted); max-width: 600px; margin: 0.5rem auto 0;">Real feedback from students who transformed their preparation with ExamVerse AI</p>
-        </div>
-        <div class="feature-grid">
-          <article class="card">
-            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
-              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, var(--primary), var(--primary-2)); display:flex; align-items:center; justify-content:center; font-weight:800; color:#04111f;">AR</div>
-              <div>
-                <h4 style="font-size:1rem; margin:0;">Ananya Roy</h4>
-                <span class="badge badge-green" style="font-size:0.75rem;">AIR 42 · JEE Advanced</span>
-              </div>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative z-10">
+        <!-- Header -->
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-sm">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-700">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <h1 class="text-xl font-semibold text-gray-800" id="header-title">UPSC CSE Preparation</h1>
             </div>
-            <p style="color:var(--muted); font-size:0.92rem; line-height:1.6;">"The AI Tutor explained organic reaction mechanisms step-by-step whenever I got stuck late at night. The mock test analytics helped me fix my negative marking!"</p>
-          </article>
-
-          <article class="card">
-            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
-              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #2ea043, #7ee787); display:flex; align-items:center; justify-content:center; font-weight:800; color:#04111f;">RS</div>
-              <div>
-                <h4 style="font-size:1rem; margin:0;">Rahul Sharma</h4>
-                <span class="badge badge-blue" style="font-size:0.75rem;">AIR 115 · UPSC CSE</span>
-              </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="relative hidden sm:block">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Search topics, PYQs..." class="pl-9 pr-4 py-1.5 border border-gray-300 rounded-full text-sm w-64 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                <button class="text-gray-500 hover:text-primary relative">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                </button>
             </div>
-            <p style="color:var(--muted); font-size:0.92rem; line-height:1.6;">"The daily Current Affairs summaries and topic-wise PYQs saved me hundreds of hours of manual research. Truly a game changer for UPSC aspirants."</p>
-          </article>
+        </header>
 
-          <article class="card">
-            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
-              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #ffc861, #ff9f43); display:flex; align-items:center; justify-content:center; font-weight:800; color:#04111f;">PV</div>
-              <div>
-                <h4 style="font-size:1rem; margin:0;">Pooja Verma</h4>
-                <span class="badge badge-amber" style="font-size:0.75rem;">Score: 705/720 · NEET UG</span>
-              </div>
+        <!-- Dashboard Content -->
+        <div class="flex-1 overflow-y-auto p-6 bg-secondary">
+            <div class="max-w-6xl mx-auto space-y-6">
+                
+                <!-- Overview Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Progress Card -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-sm text-gray-500 font-medium">Syllabus Covered</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">34%</h3>
+                            </div>
+                            <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                                <i data-lucide="book-check" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-1.5">
+                            <div class="bg-primary h-1.5 rounded-full" style="width: 34%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hours Card -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-sm text-gray-500 font-medium">Study Hours (This Week)</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">28.5 <span class="text-sm text-gray-400 font-normal">hrs</span></h3>
+                            </div>
+                            <div class="p-2 bg-green-50 text-green-600 rounded-lg">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-green-600 flex items-center gap-1 font-medium">
+                            <i data-lucide="trending-up" class="w-3 h-3"></i> +12% from last week
+                        </p>
+                    </div>
+
+                    <!-- Tests Card -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-sm text-gray-500 font-medium">Mock Tests Taken</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">12</h3>
+                            </div>
+                            <div class="p-2 bg-purple-50 text-purple-600 rounded-lg">
+                                <i data-lucide="file-check-2" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium">Avg Score: 68%</p>
+                    </div>
+
+                    <!-- AI Accuracy Card -->
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-sm text-gray-500 font-medium">Accuracy Profile</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">74%</h3>
+                            </div>
+                            <div class="p-2 bg-orange-50 text-orange-600 rounded-lg">
+                                <i data-lucide="target" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium">Needs improvement in History</p>
+                    </div>
+                </div>
+
+                <!-- Main Grid (Charts & Tasks) -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Study Analytics Chart -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-semibold text-gray-800">Weekly Performance Analytics</h3>
+                            <select class="text-sm border-gray-300 rounded focus:ring-primary focus:border-primary">
+                                <option>Last 7 Days</option>
+                                <option>Last 30 Days</option>
+                            </select>
+                        </div>
+                        <div class="relative h-64 w-full">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Pending Topics / To-Do -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-gray-800">Recommended Topics</h3>
+                            <button class="text-xs font-medium text-primary hover:underline">View All</button>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-4">Based on your recent mock test weaknesses.</p>
+                        
+                        <div class="flex-1 space-y-3" id="recommended-topics">
+                            <!-- Dynamic Content -->
+                            <div class="p-3 border border-gray-100 rounded-lg hover:border-gray-300 transition-colors cursor-pointer group">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Fundamental Rights (Art 12-35)</h4>
+                                        <p class="text-xs text-gray-500 mt-1">Indian Polity • High Weightage</p>
+                                    </div>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                                </div>
+                            </div>
+                            <div class="p-3 border border-gray-100 rounded-lg hover:border-gray-300 transition-colors cursor-pointer group">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Modern History: 1857 Revolt</h4>
+                                        <p class="text-xs text-gray-500 mt-1">History • Revision Needed</p>
+                                    </div>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="mt-4 w-full py-2 bg-blue-50 text-primary font-medium rounded-lg hover:bg-blue-100 transition-colors text-sm flex items-center justify-center gap-2">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> Generate AI Study Plan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Mock Tests -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="font-semibold text-gray-800">Recent Mock Tests</h3>
+                        <button class="text-sm font-medium text-primary hover:underline">Take New Test</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 text-gray-500">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">Test Name</th>
+                                    <th class="px-6 py-3 font-medium">Date</th>
+                                    <th class="px-6 py-3 font-medium">Score</th>
+                                    <th class="px-6 py-3 font-medium">Percentile</th>
+                                    <th class="px-6 py-3 font-medium">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" id="mock-test-table">
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-gray-800">UPSC Prelims Full Mock 1</td>
+                                    <td class="px-6 py-4 text-gray-500">Aug 20, 2026</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            105 / 200
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600">82nd</td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-primary hover:text-blue-800 font-medium">View Analysis</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
-            <p style="color:var(--muted); font-size:0.92rem; line-height:1.6;">"The high-yield NCERT notes and speed test drills improved my accuracy velocity significantly. Highly recommended for every competitive exam student!"</p>
-          </article>
         </div>
-      </section>
-
-      <!-- Practice Zone / Mock Tests Section -->
-      <section id="mock-tests" class="section container">
-        <div class="section-heading">
-          <p class="eyebrow">Practice Zone</p>
-          <h2>Try our live mock tests and practice papers</h2>
-        </div>
-        <div id="tests-container" class="tests-grid">
-          <div class="loading">Loading available tests...</div>
-        </div>
-      </section>
-
-      <!-- CTA / Registration Section -->
-      <section id="cta" class="section container">
-        <aside class="cta-box">
-          <h2>Ready to study with the smartest AI companion?</h2>
-          <p>Join the next generation of exam preparation with ExamVerse AI.</p>
-          
-          <form id="early-access-form" class="cta-form">
-            <div class="form-row">
-              <input type="text" id="student-name" placeholder="Full Name" required />
-              <input type="email" id="student-email" placeholder="Email Address" required />
-            </div>
-            <div class="form-row">
-              <input type="tel" id="student-phone" placeholder="Phone Number (Optional)" />
-              <select id="student-exam" required>
-                <option value="" disabled selected>Select Target Exam</option>
-                <option value="UPSC">UPSC Civil Services</option>
-                <option value="JEE Advanced">JEE (Main & Advanced)</option>
-                <option value="NEET">NEET (Medical Entrance)</option>
-                <option value="SSC CGL">SSC CGL</option>
-                <option value="Banking">Banking (IBPS/SBI PO)</option>
-                <option value="Railways">Railways (RRB NTPC)</option>
-                <option value="CAT">CAT (Management)</option>
-                <option value="GATE">GATE</option>
-                <option value="Other">Other Exam</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary btn-submit">Start Learning — Join Waitlist</button>
-          </form>
-          <div id="form-message" class="form-message hidden"></div>
-        </aside>
-      </section>
     </main>
 
-    <!-- Footer with Copyright, Contact, and Social Media Links -->
-    <footer class="footer">
-      <div class="container footer-content">
-        <p>© <span id="year"></span> ExamVerse AI. All rights reserved. Built for competitive exam learners in India.</p>
-        
-        <div class="footer-links">
-          <a href="./Frontend/contact.html">Contact Support</a>
-          <span>•</span>
-          <a href="mailto:support@examverse.ai">support@examverse.ai</a>
-          <span>•</span>
-          <a href="./Frontend/about.html">About Us</a>
-          <span>•</span>
-          <a href="./Frontend/courses.html">Courses</a>
+    <!-- Professional Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-gray-900/40 backdrop-blur-sm opacity-0 hidden">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8 relative transform scale-95 transition-all duration-300" id="auth-panel">
+            <button id="close-auth" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="text-center mb-8">
+                <div class="w-12 h-12 rounded bg-primary text-white flex items-center justify-center font-bold text-2xl mx-auto mb-4">E</div>
+                <h2 class="text-2xl font-bold text-gray-800">Sign in to Examiverse</h2>
+                <p class="text-gray-500 text-sm mt-2">Sync your study progress across devices.</p>
+            </div>
+            
+            <div class="space-y-4">
+                <button id="google-login-btn" class="w-full py-2.5 px-4 bg-white border border-gray-300 text-gray-700 font-medium rounded-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition-colors shadow-sm">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+                    Sign in with Google
+                </button>
+            </div>
+            <div class="mt-6 text-center text-xs text-gray-400">
+                By continuing, you agree to our Terms of Service and Privacy Policy.
+            </div>
         </div>
-
-        <div class="social-links">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub">GitHub ↗</a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter / X">Twitter ↗</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn ↗</a>
-          <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" title="Telegram">Telegram ↗</a>
-          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube">YouTube ↗</a>
-        </div>
-      </div>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
-  </body>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
 </html>

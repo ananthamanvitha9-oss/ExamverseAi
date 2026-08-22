@@ -171,3 +171,30 @@ class StudyResource(Base):
     description = Column(Text, nullable=True)
     topics_json = Column(Text, nullable=True) # List of topics as JSON string
     channels_json = Column(Text, nullable=True) # List of channels as JSON string
+
+# --- PHASE 6: PROFESSIONAL ANALYTICS MODELS ---
+
+class StudyLog(Base):
+    __tablename__ = "study_logs"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    hours_logged = Column(Float)
+    date = Column(String, default=lambda: datetime.now().strftime("%Y-%m-%d"))
+    notes = Column(Text, nullable=True)
+
+class UserSyllabusProgress(Base):
+    __tablename__ = "user_syllabus_progress"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    subtopic_id = Column(Integer, ForeignKey("subtopics.id"))
+    status = Column(String, default="pending") # pending, completed
+
+class MockTestResult(Base):
+    __tablename__ = "mock_test_results"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    exam_type = Column(String)
+    topic = Column(String)
+    score = Column(Float)
+    accuracy = Column(Float)
+    timestamp = Column(String, default=lambda: datetime.now().isoformat())

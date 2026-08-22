@@ -1,176 +1,268 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Set current year
-  const yearEl = document.getElementById('year');
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-  }
+    
+    // Auth Modal Logic
+    const authBtn = document.getElementById('auth-btn');
+    const authModal = document.getElementById('auth-modal');
+    const authPanel = document.getElementById('auth-panel');
+    const closeAuthBtn = document.getElementById('close-auth');
+    const googleLoginBtn = document.getElementById('google-login-btn');
 
-  const API_BASE_URL = 'http://localhost/examverse-backend';
+    function openAuth() {
+        authModal.classList.remove('hidden');
+        // Slight delay to allow display:block to apply before animating opacity
+        setTimeout(() => {
+            authModal.classList.remove('opacity-0');
+            authPanel.classList.remove('scale-95');
+            authPanel.classList.add('scale-100');
+        }, 10);
+    }
 
-  // 1. Fetch and render mock tests
-  const testsContainer = document.getElementById('tests-container');
-  if (testsContainer) {
-    fetch(`${API_BASE_URL}/api/mock-tests`)
-      .then(response => {
-        if (!response.ok) throw new Error('API network error');
-        return response.json();
-      })
-      .then(result => {
-        const tests = result.data || [];
-        if (tests.length === 0) {
-          testsContainer.innerHTML = '<div class="loading">No practice tests available at the moment.</div>';
-          return;
-        }
+    function closeAuth() {
+        authModal.classList.add('opacity-0');
+        authPanel.classList.remove('scale-100');
+        authPanel.classList.add('scale-95');
+        setTimeout(() => {
+            authModal.classList.add('hidden');
+        }, 300);
+    }
 
-        testsContainer.innerHTML = '';
-        tests.forEach(test => {
-          const card = document.createElement('article');
-          card.className = 'test-card';
-          
-          card.innerHTML = `
-            <div>
-              <div class="test-meta">
-                <span>Test ID: #${test.id}</span>
-                <span>Active</span>
-              </div>
-              <h3>${escapeHtml(test.title)}</h3>
-              <div class="test-details">
-                <span>⏱️ ${test.duration_minutes} Mins</span>
-                <span>📋 ${test.total_questions} Questions</span>
-                <span>🎯 Target: ${test.passing_score} Marks</span>
-              </div>
-            </div>
-            <button class="btn btn-secondary start-test-btn" data-id="${test.id}">Start Practice</button>
-          `;
-          
-          testsContainer.appendChild(card);
-        });
+    // Auto-open auth on first load (simulating the Lovable popup behavior)
+    setTimeout(openAuth, 500);
 
-        // Add dummy event listener for start test
-        document.querySelectorAll('.start-test-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const testId = e.target.getAttribute('data-id');
-            alert(`Ready to start Test #${testId}! This feature will be available in the full ExamVerse AI platform.`);
-          });
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching mock tests:', error);
-        // Render fallback UI in case database/backend is not yet active in Apache
-        renderFallbackTests(testsContainer);
-      });
-  }
-
-  // 2. Handle early access waitlist form submission
-  const earlyAccessForm = document.getElementById('early-access-form');
-  const formMessage = document.getElementById('form-message');
-
-  if (earlyAccessForm) {
-    earlyAccessForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('student-name').value.trim();
-      const email = document.getElementById('student-email').value.trim();
-      const phone = document.getElementById('student-phone').value.trim();
-      const exam = document.getElementById('student-exam').value;
-
-      formMessage.classList.add('hidden');
-      formMessage.className = 'form-message'; // Reset classes
-
-      const submitBtn = earlyAccessForm.querySelector('.btn-submit');
-      const originalBtnText = submitBtn.textContent;
-      submitBtn.textContent = 'Joining waitlist...';
-      submitBtn.disabled = true;
-
-      fetch(`${API_BASE_URL}/api/students`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, email, phone, exam })
-      })
-        .then(async response => {
-          const responseData = await response.json();
-          if (!response.ok) {
-            throw new Error(responseData.error || 'Failed to submit registration');
-          }
-          return responseData;
-        })
-        .then(data => {
-          formMessage.textContent = 'Success! You have been added to the ExamVerse AI Waitlist. See you on the inside!';
-          formMessage.classList.add('success');
-          formMessage.classList.remove('hidden');
-          earlyAccessForm.reset();
-        })
-        .catch(error => {
-          console.error('Waitlist submission error:', error);
-          formMessage.textContent = error.message || 'Server error. Please ensure XAMPP Apache & MySQL are running.';
-          formMessage.classList.add('error');
-          formMessage.classList.remove('hidden');
-        })
-        .finally(() => {
-          submitBtn.textContent = originalBtnText;
-          submitBtn.disabled = false;
-        });
+    authBtn.addEventListener('click', openAuth);
+    closeAuthBtn.addEventListener('click', closeAuth);
+    
+    // Close on backdrop click
+    authModal.addEventListener('click', (e) => {
+        if(e.target === authModal) closeAuth();
     });
-  }
+
+    // Google Login Popup
+    googleLoginBtn.addEventListener('click', () => {
+        const width = 500;
+        const height = 600;
+        const left = (window.innerWidth / 2) - (width / 2);
+        const top = (window.innerHeight / 2) - (height / 2);
+        
+        window.open(
+            "https://examverseai-mannu.onrender.com/api/auth/google/redirect", 
+            "Examiverse Auth", 
+            `width=${width},height=${height},top=${top},left=${left},toolbar=no,menubar=no,scrollbars=yes,resizable=yes`
+        );
+        
+        setTimeout(closeAuth, 1500);
+    });
+
+    // Chart.js Setup for Performance Analytics
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    let performanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Study Hours',
+                data: [3.5, 4.2, 3.8, 5.0, 4.5, 6.2, 5.8],
+                borderColor: '#1E40AF',
+                backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { borderDash: [4, 4] }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Exam Selector Logic to swap data
+    const examSelector = document.getElementById('exam-selector');
+    const headerTitle = document.getElementById('header-title');
+    const recommendedTopics = document.getElementById('recommended-topics');
+    const mockTestTable = document.getElementById('mock-test-table');
+
+    const examData = {
+        upsc: {
+            title: "UPSC CSE Preparation",
+            topics: [
+                { title: "Fundamental Rights (Art 12-35)", tag: "Indian Polity • High Weightage" },
+                { title: "Modern History: 1857 Revolt", tag: "History • Revision Needed" }
+            ],
+            tests: [
+                { name: "UPSC Prelims Full Mock 1", date: "Aug 20, 2026", score: "105 / 200", perc: "82nd" }
+            ]
+        },
+        jee: {
+            title: "JEE Advanced Preparation",
+            topics: [
+                { title: "Rotational Mechanics: Torque", tag: "Physics • High Weightage" },
+                { title: "Definite Integration", tag: "Mathematics • Revision Needed" }
+            ],
+            tests: [
+                { name: "JEE Adv Paper 1 Mock", date: "Aug 21, 2026", score: "112 / 180", perc: "89th" }
+            ]
+        },
+        neet: {
+            title: "NEET UG Preparation",
+            topics: [
+                { title: "Human Reproduction", tag: "Biology • High Weightage" },
+                { title: "Electrostatics", tag: "Physics • Revision Needed" }
+            ],
+            tests: [
+                { name: "NEET Full Syllabus Mock", date: "Aug 19, 2026", score: "620 / 720", perc: "94th" }
+            ]
+        },
+        gate: {
+            title: "GATE CS Preparation",
+            topics: [
+                { title: "B-Trees and Indexing", tag: "DBMS • High Weightage" },
+                { title: "TCP Congestion Control", tag: "Computer Networks • Revision Needed" }
+            ],
+            tests: [
+                { name: "GATE CS Full Mock 3", date: "Aug 22, 2026", score: "68 / 100", perc: "91st" }
+            ]
+        }
+    };
+
+    examSelector.addEventListener('change', (e) => {
+        const selected = e.target.value;
+        const data = examData[selected];
+        
+        // Update Header
+        headerTitle.textContent = data.title;
+        
+        // Update Topics
+        recommendedTopics.innerHTML = '';
+        data.topics.forEach(topic => {
+            recommendedTopics.innerHTML += `
+                <div class="p-3 border border-gray-100 rounded-lg hover:border-gray-300 transition-colors cursor-pointer group">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">${topic.title}</h4>
+                            <p class="text-xs text-gray-500 mt-1">${topic.tag}</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                    </div>
+                </div>
+            `;
+        });
+        
+        // Update Tests Table
+        mockTestTable.innerHTML = '';
+        data.tests.forEach(test => {
+            mockTestTable.innerHTML += `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 font-medium text-gray-800">${test.name}</td>
+                    <td class="px-6 py-4 text-gray-500">${test.date}</td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            ${test.score}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">${test.perc}</td>
+                    <td class="px-6 py-4">
+                        <button class="text-primary hover:text-blue-800 font-medium">View Analysis</button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        lucide.createIcons();
+    });
+
 });
 
-// Helper: Escape HTML strings to prevent XSS
-function escapeHtml(str) {
-  if (!str) return '';
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+    // --- PHASE 6: API INTEGRATION ---
+    const API_BASE_URL = 'http://localhost:8000/api'; // Local FastAPI URL for testing
 
-// Fallback Mock Tests if API server is not running or reachable
-function renderFallbackTests(container) {
-  const fallbackTests = [
-    { id: 1, title: 'UPSC Prelims Paper 1: General Studies Mock 1', duration_minutes: 120, total_questions: 100, passing_score: 90 },
-    { id: 2, title: 'JEE Advanced: Full Physics & Chemistry Practice', duration_minutes: 180, total_questions: 60, passing_score: 120 },
-    { id: 3, title: 'SSC CGL Tier-1: General Intelligence and Reasoning', duration_minutes: 60, total_questions: 25, passing_score: 35 }
-  ];
+    // Helper function for authorized requests
+    async function fetchWithAuth(endpoint, options = {}) {
+        const token = localStorage.getItem('examverse_token');
+        const headers = {
+            'Content-Type': 'application/json',
+            ...(token && { 'Authorization': Bearer  + token }),
+            ...options.headers
+        };
+        
+        try {
+            const response = await fetch(API_BASE_URL + endpoint, { ...options, headers });
+            if (!response.ok) throw new Error('API Error: ' + response.statusText);
+            return await response.json();
+        } catch (error) {
+            console.error('Fetch error:', error);
+            return null;
+        }
+    }
 
-  container.innerHTML = '';
-  
-  // Informative header that local backend server needs to be running for real data
-  const infoHeader = document.createElement('div');
-  infoHeader.className = 'loading';
-  infoHeader.style.padding = '0.5rem';
-  infoHeader.style.fontSize = '0.9rem';
-  infoHeader.innerHTML = '<span style="color: #ffc861;">⚠️ Running on Demo Mode.</span> Start XAMPP Apache server to load live tests from database.';
-  container.appendChild(infoHeader);
+    // 1. Fetch Study Logs and Update Chart
+    async function loadStudyLogs() {
+        const logs = await fetchWithAuth('/study-logs/');
+        if (logs && logs.length > 0) {
+            // Very basic mapping for the chart (in a real app, map dates to days of week)
+            const hours = logs.slice(-7).map(log => log.hours_logged);
+            
+            // Update chart data
+            performanceChart.data.datasets[0].data = hours;
+            performanceChart.update();
+        }
+    }
 
-  fallbackTests.forEach(test => {
-    const card = document.createElement('article');
-    card.className = 'test-card';
-    card.innerHTML = `
-      <div>
-        <div class="test-meta">
-          <span>Test ID: #${test.id}</span>
-          <span>Demo</span>
-        </div>
-        <h3>${test.title}</h3>
-        <div class="test-details">
-          <span>⏱️ ${test.duration_minutes} Mins</span>
-          <span>📋 ${test.total_questions} Questions</span>
-          <span>🎯 Target: ${test.passing_score} Marks</span>
-        </div>
-      </div>
-      <button class="btn btn-secondary start-test-btn" data-id="${test.id}">Start Practice</button>
-    `;
-    container.appendChild(card);
-  });
+    // 2. Mark Topic as Completed
+    async function markTopicCompleted(subtopicId) {
+        const result = await fetchWithAuth('/syllabus-progress/', {
+            method: 'POST',
+            body: JSON.stringify({
+                subtopic_id: subtopicId,
+                status: 'completed'
+            })
+        });
+        
+        if (result) {
+            alert('Topic marked as completed!');
+            // Re-fetch syllabus progress to update UI here...
+        }
+    }
 
-  document.querySelectorAll('.start-test-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const testId = e.target.getAttribute('data-id');
-      alert(`Ready to start Test #${testId}! (Demo Mode - Start XAMPP Apache for live platform).`);
-    });
-  });
-}
+    // 3. Save Mock Test Result
+    async function saveMockTest(examType, topic, score, accuracy) {
+        const result = await fetchWithAuth('/mock-test-results/', {
+            method: 'POST',
+            body: JSON.stringify({
+                exam_type: examType,
+                topic: topic,
+                score: score,
+                accuracy: accuracy
+            })
+        });
+        
+        if (result) {
+            console.log('Test saved successfully:', result);
+        }
+    }
 
+    // Example event listeners for the new API logic
+    // (Assuming we add a 'Log Hours' button in the HTML later)
+    window.logStudyHours = async (hours) => {
+        await fetchWithAuth('/study-logs/', {
+            method: 'POST',
+            body: JSON.stringify({ hours_logged: hours, notes: 'Manual entry from dashboard' })
+        });
+        loadStudyLogs(); // Refresh chart
+    };
+
+    // Load initial data if logged in
+    if (localStorage.getItem('examverse_token')) {
+        loadStudyLogs();
+    }

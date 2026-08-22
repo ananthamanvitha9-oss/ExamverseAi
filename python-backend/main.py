@@ -716,3 +716,57 @@ def delete_admin_course(course_id: int, current_user: models.User = Depends(get_
     global MOCK_COURSES
     MOCK_COURSES = [c for c in MOCK_COURSES if c["id"] != course_id]
     return {"message": "Course deleted"}
+
+# --- PHASE 6: PROFESSIONAL ANALYTICS ROUTES ---
+
+@api_router.post("/study-logs/", response_model=schemas.StudyLog)
+def create_study_log(log: schemas.StudyLogCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    db_log = models.StudyLog(
+        user_id=current_user.id,
+        hours_logged=log.hours_logged,
+        notes=log.notes
+    )
+    db.add(db_log)
+    db.commit()
+    db.refresh(db_log)
+    return db_log
+
+@api_router.get("/study-logs/", response_model=List[schemas.StudyLog])
+def get_study_logs(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    return db.query(models.StudyLog).filter(models.StudyLog.user_id == current_user.id).all()
+
+@api_router.post("/syllabus-progress/", response_model=schemas.UserSyllabusProgress)
+def update_syllabus_progress(progress: schemas.UserSyllabusProgressUpdate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    # Check if exists
+    db_progress = db.query(models.UserSyllabusProgress).filter(
+        models.UserSyllabusProgress.user_id == current_user.id,
+        models.UserSyllabusProgress.subtopic_id == progress.subtopic_id
+    ).first()
+    
+    if db_progress:
+        db_progress.status = progress.status
+    else:
+        db_progress = models.UserSyllabusProgress(
+            user_id=current_user.id,
+            subtopic_id=progress.subtopic_id,
+            status=progress.status
+        )
+        db.add(db_progress)
+    
+    db.commit()
+    db.refresh(db_progress)
+    return db_progress
+
+@api_router.post("/mock-test-results/", response_model=schemas.MockTestResult)
+def save_mock_test_result(result: schemas.MockTestResultCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    db_result = models.MockTestResult(
+        user_id=current_user.id,
+        exam_type=result.exam_type,
+        topic=result.topic,
+        score=result.score,
+        accuracy=result.accuracy
+    )
+    db.add(db_result)
+    db.commit()
+    db.refresh(db_result)
+    return db_result

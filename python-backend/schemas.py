@@ -201,3 +201,39 @@ class NoteSchema(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
+
+# --- PHASE 6: PROFESSIONAL ANALYTICS SCHEMAS ---
+
+class StudyLogCreate(BaseModel):
+    hours_logged: float
+    notes: Optional[str] = None
+
+class StudyLog(StudyLogCreate):
+    id: int
+    user_id: int
+    date: str
+    class Config:
+        from_attributes = True
+
+class UserSyllabusProgressUpdate(BaseModel):
+    subtopic_id: int
+    status: str
+
+class UserSyllabusProgress(UserSyllabusProgressUpdate):
+    id: int
+    user_id: int
+    class Config:
+        from_attributes = True
+
+class MockTestResultCreate(BaseModel):
+    exam_type: str
+    topic: str
+    score: float
+    accuracy: float
+
+class MockTestResult(MockTestResultCreate):
+    id: int
+    user_id: int
+    timestamp: str
+    class Config:
+        from_attributes = True
