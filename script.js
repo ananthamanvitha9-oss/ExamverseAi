@@ -266,3 +266,89 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('examverse_token')) {
         loadStudyLogs();
     }
+
+    // --- PHASE 7: CHATBOT UI LOGIC ---
+    const chatbotBtn = document.getElementById('open-chatbot-btn');
+    const chatbotModal = document.getElementById('chatbot-modal');
+    const closeChatbotBtn = document.getElementById('close-chatbot-btn');
+    const chatInput = document.getElementById('chat-input');
+    const sendChatBtn = document.getElementById('send-chat-btn');
+    const chatMessages = document.getElementById('chat-messages');
+
+    function toggleChatbot() {
+        const isHidden = chatbotModal.classList.contains('opacity-0');
+        if (isHidden) {
+            chatbotModal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            chatInput.focus();
+        } else {
+            chatbotModal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+        }
+    }
+
+    chatbotBtn.addEventListener('click', toggleChatbot);
+    closeChatbotBtn.addEventListener('click', toggleChatbot);
+
+    function addMessageToChat(text, isUser = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = isUser ? 'flex gap-2 flex-row-reverse' : 'flex gap-2';
+        
+        const avatar = document.createElement('div');
+        avatar.className = isUser 
+            ? 'w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center shrink-0'
+            : 'w-8 h-8 rounded-full bg-blue-100 text-primary flex items-center justify-center shrink-0';
+        avatar.innerHTML = isUser ? '<i data-lucide="user" class="w-4 h-4"></i>' : '<i data-lucide="sparkles" class="w-4 h-4"></i>';
+
+        const bubble = document.createElement('div');
+        bubble.className = isUser
+            ? 'bg-primary text-white px-4 py-2 rounded-2xl rounded-tr-none shadow-sm max-w-[85%]'
+            : 'bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-2xl rounded-tl-none shadow-sm max-w-[85%]';
+        bubble.textContent = text;
+
+        msgDiv.appendChild(avatar);
+        msgDiv.appendChild(bubble);
+        chatMessages.appendChild(msgDiv);
+        lucide.createIcons();
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function handleSendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // Add user message to UI
+        addMessageToChat(text, true);
+        chatInput.value = '';
+        chatInput.style.height = 'auto'; // Reset height
+
+        // Optional: Show loading state here
+
+        // Send to FastAPI Backend (Assuming /api/tutor/ endpoint exists)
+        try {
+            // Since we haven't strictly written the tutor endpoint in Phase 6, we'll mock the UI connection for now
+            // But here is where fetchWithAuth('/tutor', { method: 'POST', body: JSON.stringify({message: text}) }) would go.
+            
+            setTimeout(() => {
+                addMessageToChat("That's a great question! I am currently being wired up to the Gemini API on the backend. Check back soon for my real answers!");
+            }, 1000);
+            
+        } catch (e) {
+            console.error(e);
+            addMessageToChat("Sorry, I encountered an error connecting to the server.");
+        }
+    }
+
+    sendChatBtn.addEventListener('click', handleSendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSendMessage();
+        }
+    });
+
+    // Auto-resize textarea
+    chatInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
